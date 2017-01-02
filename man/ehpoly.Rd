@@ -5,34 +5,73 @@
 \title{Conduct an analysis of etiologic heterogeneity using polytomous logistic
 regression}
 \usage{
-ehpoly(fit, z)
+ehpoly(tm, rf, case, df)
 }
 \arguments{
-\item{fit}{a model fit from \code{multinom}}
+\item{tm}{a list of the names of the binary tumor markers.
+Each must have levels 0 or 1 for case subjects. This value will be missing
+for all control subjects.}
 
-\item{z}{design matrix for correspondence between disease subtypes and
-tumor markers. Number of rows should equal number of subtypes, number of
-columns should equal number of tumor markers. -1 indicates tumor marker
-positive within a subtype, 1 indicates tumor marker negative within a
-subtype.}
+\item{rf}{a list of the names of the binary or continuous risk factors.
+For binary risk factors the lowest level will be used as the reference level.}
+
+\item{case}{denotes the variable that contains each subject's status as a
+case or control. This value should be 1 for cases and 0 for controls.
+Argument must be supplied in quotes.}
+
+\item{df}{the name of the dataframe that contains the tumor markers and risk
+factors.}
 }
 \value{
-Returns a list. \code{beta} is the estimated parameters from
-the fit. \code{beta_se} is estimates of the standard
-errors of the parameters from the fit. \code{eh_pval}
-is a vector of the etiologic heterogeneity p-values. \code{or_ci_p}
-is a dataframe with a odds ratio (95% CI) for each risk factor/subtype
-combination, as well as a column of etiologic heterogeneity p-values.
-\code{beta_p} is a dataframe with the estimated parameters from the
- fit as well as a column of etiologic heterogeneity p-values.
-\code{gamma_p} is a dataframe with estimates of the tumor marker effects and
-their associated p-values.
+Returns a list.
+
+\code{beta} is a matrix containing the estimated beta parameters with a
+column for each risk factor and a row for each disease subtype.
+
+\code{beta_se} contains the associated standard errors.
+
+\code{eh_pval} is a vector of p-values for testing whether each risk factor
+differs across levels of the disease subtype.
+
+\code{gamma} is a matrix containing the estimated gamma parameters,
+obtained as linear combinations of the beta parameters with a column for each
+risk factor and a row for each tumor marker.
+
+\code{gamma_se} contains the associated standard errors.
+
+\code{gamma_p} is a matrix of p-values for testing whether each risk factor
+differs across levels of each tumor marker, with a column for each risk
+factor and a row for each tumor marker.
+
+\code{or_ci_p} is a dataframe with a odds ratio (95% CI) for each risk
+factor/subtype combination, as well as a column of etiologic heterogeneity
+p-values.
+
+\code{beta_se_p} is a dataframe with the estimated beta parameters (SE) for
+each risk factor/subtype combination, as well as a column of
+etiologic heterogeneity p-values.
+
+\code{gamma_se_p} is a dataframe with estimates of the gamma tumor marker
+effects (SE) and their associated p-values.
 }
 \description{
-#' \code{ehpoly} takes a multinomial logistic regression model fit and returns
-results related to the question of whether a risk factor differs across
-levels of a disease subtype, and whether a risk factor differs across levels
-of each individual tumor marker or which the disease subtypes are comprised.
+\code{ehpoly} takes a list of individual tumor markers and a
+list of risk factors and returns results related to the question of whether
+each risk factor differs across levels of the disease subtypes and the
+question of whether each risk factor differs across levels of each individual
+tumor marker of which the disease subtypes are comprised.
+
+Input is a dataframe that contains the individual tumor markers and the risk
+factors of interest. The tumor markers must be binary and must have levels
+0 or 1 for cases. The tumor markers must have a value of 999 for control
+subjects. For categorical tumor markers, a reference level should be selected
+and then indicator variables for each remaining level of the tumor marker
+should be created. For continuous tumor markers, categories should be formed
+and then indicator variables can be constructed as in the case of categorical
+tumor markers. Risk factors can be either binary or continuous. For
+categorical risk factors, a reference level should be selected and then
+indicator variables for each remaining level of the risk factor should be
+created. Categorical risk factors entered as is will be treated as ordinal.
 }
 \author{
 Emily C Zabor \email{zabore@mskcc.org}
