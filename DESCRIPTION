@@ -1,12 +1,15 @@
 Package: ehpoly
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Test for Etiologic Heterogeneity
+Version: 0.1.1
+Authors@R: person("Emily", "Zabor", email = "zabore@mskcc.org", role = c("aut", "cre"))
+Description: Use polytomous logistic regression to test for etiologic heterogeneity in risk factors both across disease subtypes and across individual tumor markers.
+Depends:
+    R (>= 3.1.0)
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports:
+    nnet,
+    aod
 RoxygenNote: 5.0.1
