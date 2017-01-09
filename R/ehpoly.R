@@ -158,7 +158,7 @@ ehpoly <- function(tm, rf, case, df) {
   d[d == 0] <- -1
 
   gamma_plr <- gamma_plr_se <- gamma_plr_pval <-
-    matrix(NA, ncol = ncol(beta_plr), nrow = 2)
+    matrix(NA, ncol = ncol(beta_plr), nrow = ncol(d))
   gamma_se_p <- NULL
   for(i in 1:ncol(d)) {
     for(j in 1:ncol(beta_plr)) {
