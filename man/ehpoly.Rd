@@ -61,9 +61,10 @@ each risk factor differs across levels of the disease subtypes and the
 question of whether each risk factor differs across levels of each individual
 tumor marker of which the disease subtypes are comprised.
 
-Input is a dataframe that contains the individual tumor markers and the risk
-factors of interest. The tumor markers must be binary and must have levels
-0 or 1 for cases. The tumor markers must have a value of 999 for control
+Input is a dataframe that contains the individual tumor markers, the risk
+factors of interest, and an indicator of case or control status.
+The tumor markers must be binary and must have levels
+0 or 1 for cases. The tumor markers should be left missing for control
 subjects. For categorical tumor markers, a reference level should be selected
 and then indicator variables for each remaining level of the tumor marker
 should be created. For continuous tumor markers, categories should be formed
