@@ -1,9 +1,9 @@
-Package: ehpoly
+Package: ethet
 Type: Package
-Title: Test for Etiologic Heterogeneity
+Title: Functions to study etiologic heterogeneity
 Version: 0.1.1
 Authors@R: person("Emily", "Zabor", email = "zabore@mskcc.org", role = c("aut", "cre"))
-Description: Use polytomous logistic regression to test for etiologic heterogeneity in risk factors both across disease subtypes and across individual tumor markers.
+Description: Functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers.
 Depends:
     R (>= 3.1.0)
 License: GPL-2
