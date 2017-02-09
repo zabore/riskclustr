@@ -12,4 +12,4 @@ LazyData: true
 Imports:
     nnet,
     aod
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
