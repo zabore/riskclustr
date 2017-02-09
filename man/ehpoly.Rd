@@ -77,4 +77,3 @@ created. Categorical risk factors entered as is will be treated as ordinal.
 \author{
 Emily C Zabor \email{zabore@mskcc.org}
 }
-

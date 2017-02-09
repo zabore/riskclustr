@@ -81,6 +81,11 @@ ehpoly <- function(tm, rf, case, df) {
   }) == TRUE)) {
     stop("All non-missing elements of tm must have values 0 or 1")
   }
+  
+  # Check if levels of case-control indicator are all 0 or 1
+  if(any(!(as.factor(df[, "case"]) %in% c("0", "1"))) == TRUE) {
+    stop("All elements of case must have values 0 or 1")
+  }
 
   k <- length(tm) # number of tumor markers
   p <- length(rf) # number of covariates
@@ -101,11 +106,11 @@ ehpoly <- function(tm, rf, case, df) {
   fit <- multinom(as.formula(paste0("sub ~ ", paste(rf, collapse = " + "))),
                   data = df, trace = FALSE)
 
-  beta_plr <- coef(fit)[, -1]
-  beta_se <- summary(fit)$standard.errors[, -1]
+  beta_plr <- matrix(coef(fit)[, -1], nrow = m)
+  beta_se <- matrix(summary(fit)$standard.errors[, -1], nrow = m)
   rownames(beta_plr) <- rownames(beta_se) <- levels(df$sub_name)
-  vcov_plr <- vcov(fit)
-
+  colnames(beta_plr) <- colnames(beta_se) <- fit$coefnames[-1]
+  
   # Calculate the ORs and 95% CIs
   or <- round(exp(beta_plr), 2)
   lci <- round(exp(beta_plr - qnorm(0.975) *
@@ -113,85 +118,74 @@ ehpoly <- function(tm, rf, case, df) {
   uci <- round(exp(beta_plr + qnorm(0.975) *
                      summary(fit)$standard.errors[, -1]), 2)
 
-
   ### Calculate the etiologic heterogeneity p-values
-  # Create two tables: 1) ORs, 95% CIs, p-values; 2) Betas, SEs, p-values
-  or_ci_p <- beta_se_p <- matrix(NA, nrow = p, ncol = (m + 1))
-  pval <- NA
-  for(i in 1:p) {
-    if(p == 1) {
-      or_ci_p[i, 1:m] <- paste0(or, " (", lci, " - ", uci, ")")
-      beta_se_p[i, 1:m] <- paste0(round(beta_plr, 2), " (",
-                                  round(beta_se, 2), ")")
-    } else {
-      or_ci_p[i, 1:m] <- t(paste0(or[, i], " (", lci[, i], " - ",
-                                  uci[, i], ")"))
-      beta_se_p[i, 1:m] <- t(paste0(round(beta_plr[, i], 2), " (",
-                                    round(beta_se[, i], 2), ")"))
-    }
-
-    B <- beta_plr[, i]
-    V <- vcov_plr[grep(fit$coefnames[i + 1], rownames(vcov_plr), fixed = T),
-                  grep(fit$coefnames[i + 1], rownames(vcov_plr), fixed = T)]
-    Lmat <- matrix(0, nrow = (m - 1), ncol = m)
-    for(j in 1:nrow(Lmat)) {
-      Lmat[j, j:(j+1)] <- c(1, -1)
-    }
-    pval[i] <- wald.test(b = B, Sigma = V, L = Lmat)$result$chi2["P"]
-    or_ci_p[i, (m + 1)] <- beta_se_p[i, (m + 1)] <- round(pval[i], 3)
-  }
-
+  # initiate null vectors
+  beta_se_p <- or_ci_p <- pval <- NULL
+  
+  # V is a list where each element is the vcov matrix for a diff RF
+  vcov_plr <- vcov(fit)
+  V <- lapply(fit$coefnames[-1], function(x) {
+    vcov_plr[grep(x, rownames(vcov_plr), fixed = T),
+             grep(x, rownames(vcov_plr), fixed = T)]})
+  
+  # Lmat is the contrast matrix to get the etiologic heterogeneity pvalue
+  Lmat <- matrix(0, nrow = (m - 1), ncol = m)
+  Lmat[row(Lmat) == col(Lmat)] <- 1
+  Lmat[row(Lmat) - col(Lmat) == -1] <- -1
+  
+  pval <- sapply(1:p, function(i) {
+    wald.test(b = beta_plr[, i], Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
+  
+  # Store results on both beta and OR scale
+  beta_se_p <- data.frame(t(matrix(paste0(round(beta_plr, 2), " (",
+                                          round(beta_se, 2), ")"), nrow = m)), 
+                          round(pval, 3), stringsAsFactors = FALSE)
+  
+  or_ci_p <- data.frame(t(matrix(paste0(or, " (", lci, " - ", uci, ")"), 
+                                 nrow = m)), 
+                        round(pval, 3), stringsAsFactors = FALSE)
+  
   # Format the resulting dataframes
-  or_ci_p <- as.data.frame(or_ci_p, stringsAsFactors = F)
-  beta_se_p <- as.data.frame(beta_se_p, stringsAsFactors = F)
   rownames(or_ci_p) <- rownames(beta_se_p) <- fit$coefnames[-1]
   colnames(or_ci_p) <- colnames(beta_se_p) <- c(levels(df$sub_name), "p_het")
   or_ci_p$p_het[or_ci_p$p_het == "0"] <- "<.001"
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
-
-
+  
   ### Calculate the gammas and their SEs and associated p-values
-  V <- vcov_plr[-seq(1, nrow(vcov_plr), ncol(beta_plr) + 1),
-                -seq(1, nrow(vcov_plr), ncol(beta_plr) + 1)]
-
   # Need to alter the st matrix to remove subtype and replace 0 with -1
-  d <- st[, 1:k]
+  gamma_plr <- gamma_plr_se <- gamma_plr_pval <- gamma_se_p <- NULL
+  
+  d <- as.matrix(st[, 1:k])
   d[d == 0] <- -1
-
-  gamma_plr <- gamma_plr_se <- gamma_plr_pval <-
-    matrix(NA, ncol = ncol(beta_plr), nrow = ncol(d))
-  gamma_se_p <- NULL
-  for(i in 1:ncol(d)) {
-    for(j in 1:ncol(beta_plr)) {
-
-      gamma_plr[i, j] <- sum(beta_plr[, j] * d[, i]) / (m / 2)
-
-      s <-  V[seq(j, nrow(V), ncol(beta_plr)), seq(j, nrow(V), ncol(beta_plr))]
-      l <- d[, i]
-
-      gamma_plr_se[i, j] <- sqrt((m / 2)^2 * (t(l) %*% s %*% l))
-
-      gamma_plr_pval[i, j] <- wald.test(b = beta_plr[, j], Sigma = s,
-                                        L = t(l))$result$chi2["P"]
-    }
-    gamma_se_p <- cbind(gamma_se_p,
-                        paste0(round(gamma_plr[i, ], 2), " (",
-                               round(gamma_plr_se[i, ], 2), ")"),
-                        round(gamma_plr_pval[i, ], 3))
-  }
+  
+  # Get the parameter ests as linear combo of betas
+  gamma_plr <- matrix(t(beta_plr) %*% d / (m / 2), nrow = p)
+  
+  # Get the standard error ests
+  gamma_plr_se <- t(sapply(V, function(x) sqrt((m / 2)^(-2) * 
+                                                 diag(t(d) %*% x %*% d))))
+  
+  # Calculate the p-values for each tumor marker
+  gamma_plr_pval <- matrix(sapply(1:k, function(j) {sapply(1:p, function(i) {
+    wald.test(b = beta_plr[, i], Sigma = V[[i]], 
+              L = t(d[, j]))$result$chi2["P"]})}), nrow = p)
+  
+  # Put results together into data frame
+  gamma_se_p <- data.frame(matrix(unlist(lapply(1:k, function(k) {
+    cbind(matrix(paste0(round(gamma_plr, 2), " (", round(gamma_plr_se, 2), ")"), 
+                 nrow = p)[, k], round(gamma_plr_pval[, k], 3))})), nrow = p),
+    stringsAsFactors = FALSE)
 
   # Format the results
-  colnames(gamma_plr) <- colnames(gamma_plr_se) <-
-    colnames(gamma_plr_pval) <- fit$coefnames[-1]
   rownames(gamma_plr) <- rownames(gamma_plr_se) <-
-    rownames(gamma_plr_pval) <- tm
-  gamma_se_p <- as.data.frame(gamma_se_p, stringsAsFactors = F)
+    rownames(gamma_plr_pval) <- rownames(gamma_se_p) <- fit$coefnames[-1]
+  colnames(gamma_plr) <- colnames(gamma_plr_se) <-
+    colnames(gamma_plr_pval) <- tm
   gamma_se_p[, seq(2, ncol(gamma_se_p), 2)][gamma_se_p[, seq(2, ncol(gamma_se_p), 2)]
-                                      == "0"] <- "<.001"
-  rownames(gamma_se_p) <- fit$coefnames[-1]
-  colnames(gamma_se_p) <- as.vector(sapply(1:k, function(x)
-  {c(paste(tm[x], "est"), paste(tm[x], "pval"))}))
-
+                                            == "0"] <- "<.001"
+  colnames(gamma_se_p) <- as.vector(sapply(1:k, function(x){
+    c(paste(tm[x], "est"), paste(tm[x], "pval"))}))
+  
   # Returns
   return(list(beta = beta_plr,
               beta_se = beta_se,
