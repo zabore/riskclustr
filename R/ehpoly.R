@@ -83,7 +83,7 @@ ehpoly <- function(tm, rf, case, df) {
   }
   
   # Check if levels of case-control indicator are all 0 or 1
-  if(any(!(as.factor(df[, "case"]) %in% c("0", "1"))) == TRUE) {
+  if(any(!(as.factor(df[, case]) %in% c("0", "1"))) == TRUE) {
     stop("All elements of case must have values 0 or 1")
   }
 
