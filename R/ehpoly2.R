@@ -20,6 +20,7 @@
 #' @param cls the name of the variable in the data that contains numeric class
 #' labels. This should be 0 for all controls. Argument must be supplied in
 #' quotes.
+#' @param m is the number of subtypes
 #' @param rf a list of the names of the binary or continuous risk factors.
 #' For binary risk factors the lowest level will be used as the reference level.
 #' @param df the name of the dataframe that contains the tumor markers and risk
@@ -47,7 +48,7 @@
 #'
 ################################################################################
 
-ehpoly2 <- function(cls, rf, df) {
+ehpoly2 <- function(cls, m, rf, df) {
 
   library(nnet)
   library(aod)

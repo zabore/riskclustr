@@ -5,12 +5,14 @@
 \title{Conduct an analysis of etiologic heterogeneity using polytomous logistic
 regression}
 \usage{
-ehpoly2(cls, rf, df)
+ehpoly2(cls, m, rf, df)
 }
 \arguments{
 \item{cls}{the name of the variable in the data that contains numeric class
 labels. This should be 0 for all controls. Argument must be supplied in
 quotes.}
+
+\item{m}{is the number of subtypes}
 
 \item{rf}{a list of the names of the binary or continuous risk factors.
 For binary risk factors the lowest level will be used as the reference level.}
