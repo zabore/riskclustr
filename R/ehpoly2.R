@@ -66,7 +66,7 @@ ehpoly2 <- function(cls, m, rf, df) {
 
   beta_plr <- matrix(coef(fit)[, -1], nrow = m)
   beta_se <- matrix(summary(fit)$standard.errors[, -1], nrow = m)
-  rownames(beta_plr) <- rownames(beta_se) <- levels(df$sub_name)
+  rownames(beta_plr) <- rownames(beta_se) <- levels(df[, cls])
   colnames(beta_plr) <- colnames(beta_se) <- fit$coefnames[-1]
 
   # Calculate the ORs and 95% CIs
@@ -105,7 +105,7 @@ ehpoly2 <- function(cls, m, rf, df) {
 
   # Format the resulting dataframes
   rownames(or_ci_p) <- rownames(beta_se_p) <- fit$coefnames[-1]
-  colnames(or_ci_p) <- colnames(beta_se_p) <- c(levels(df$sub_name), "p_het")
+  colnames(or_ci_p) <- colnames(beta_se_p) <- c(levels(df[, cls]), "p_het")
   or_ci_p$p_het[or_ci_p$p_het == "0"] <- "<.001"
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
 
