@@ -1,50 +1,51 @@
 ################################################################################
-#' Function to calculate the D metric in a case/control setting
+#' Calculate the D metric to measure the extent of etiologic heterogeneity in
+#' a case-control study
 #'
-#' @author Emily C Zabor \email{zabore@@mskcc.org}
-#'
-#' @description \code{ehCalcD} takes a data set and information about class
-#' membership and calculates the D metric.
-#'
-#' @param data a data frame with the covariates
-#' @param cls the class variable with values 0 through k, where 0 is for
-#' control subjects and 1:k are labels for the subtypes
-#' @param k is the number of classes
-#' @param formula is the model formula for the polytomous logistic regression
-#' model, with "resp" on the lhs and the covariates of interest, located in
-#' \code{data} on the rhs
-#'
-#' @return returns a 3-digit numeric value
-#'
-#' @references Begg CB, Zabor EC, Bernstein JL, Bernstein L,
-#' Press MF, Seshan VE. A conceptual and methodological framework
-#' for investigating etiologic heterogeneity. Stat Med 2013; 32(29):5039-52.
-#'
-#' @export
+#' @param formula an mFormula() model formula for a polytmous logistic
+#' regression model to be fit with mlogit() using the appropriate variable
+#' names from the data as interest e.g. formula = mFormula(class ~ 1 | x1 + x2)
+#' for a model with subtype variable class and two individual-specific
+#' predictors x1 and x2
+#' @param cls the names of the subtype variable in the data, should be
+#' supplied in quotes, e.g. cls = "class"
+#' @param M the number of subtypes. This could should not include controls, but
+#' only the number of subtypes among case subjects.
+#' @param data the name of the dataframe that contains the relevant variables
 #'
 ################################################################################
 
-ehCalcD <- function(data, cls, k, formula) {
-  ncontrol <- nrow(data[cls == 0, ])
-  ncase <- nrow(data[cls != 0, ])
-  fprob <- matrix(NA, ncontrol, k)
+ehCalcD <- function(data, cls, M, formula) {
 
-  for(i in 1:k) {
-    data$resp <- 1 * (cls == i)
-    data$csubset <- (cls == i | cls == 0) # labels all controls and all cases of class k as TRUE, all others FALSE
-    fit0 <- glm(formula, family = binomial, data, subset = csubset) # Fit model for class k
-    fprob[, i] <- predict(fit0, newdata = data[cls == 0, ], type = 'response') # pred prob for each class for controls
-  }
+  library(mlogit)
 
-  mus <- colSums(fprob) / ncontrol # mus are the average predicted probs for controls for each class
+  ncontrol <- nrow(data[data[, cls] == 0, ])
+  ncase <- nrow(data[data[, cls] != 0, ])
+  fprob <- matrix(NA, ncontrol, M)
+
+  # transform the data for use in mlogit
+  xx1 <- mlogit.data(xx, choice = cls, shape = "wide")
+
+  # fit the polytomous logistic regression model
+  mod <- mlogit(formula = formula, data = xx1)
+
+  # predicted risk for each class for controls only
+  fprob[, 1:M] <- fitted(mod, outcome = FALSE)[, 2:(M + 1)][
+    fitted(mod, outcome = FALSE)[, 1] == fitted(mod), ]
+
+  # mus are the average predicted probs for controls for each class
+  mus <- colMeans(fprob)
   pis <- mus / sum(mus)
 
-  D <- 0 # initialize D
-  for(i in 1:(k - 1)) {
-    for(j in (i + 1):k) {
-      D <- D + (1 / ncontrol) * pis[i] * pis[j] * (sum(fprob[, i]^2) / mus[i]^2 + sum(fprob[, j]^2) / mus[j]^2 -
-                                                     2 * sum(fprob[, i] * fprob[, j]) / (mus[i] * mus[j]))
+  # calculate D
+  D <- 0
+  for(i in 1:(M - 1)) {
+    for(j in (i + 1):M) {
+      D <- D + (1 / ncontrol) * pis[i] * pis[j] *
+        (sum(fprob[, i]^2) / mus[i]^2 + sum(fprob[, j]^2) /
+           mus[j]^2 - 2 * sum(fprob[, i] * fprob[, j]) / (mus[i] * mus[j]))
     }
   }
-  return(D = round(D, 3))
+
+  return(D = D)
 }
