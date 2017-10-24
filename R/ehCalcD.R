@@ -13,6 +13,8 @@
 #' only the number of subtypes among case subjects.
 #' @param data the name of the dataframe that contains the relevant variables
 #'
+#' @export
+#'
 ################################################################################
 
 ehCalcD <- function(data, cls, M, formula) {

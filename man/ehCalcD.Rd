@@ -2,34 +2,27 @@
 % Please edit documentation in R/ehCalcD.R
 \name{ehCalcD}
 \alias{ehCalcD}
-\title{Function to calculate the D metric in a case/control setting}
+\title{Calculate the D metric to measure the extent of etiologic heterogeneity in
+a case-control study}
 \usage{
-ehCalcD(data, cls, k, formula)
+ehCalcD(data, cls, M, formula)
 }
 \arguments{
-\item{data}{a data frame with the covariates}
+\item{data}{the name of the dataframe that contains the relevant variables}
 
-\item{cls}{the class variable with values 0 through k, where 0 is for
-control subjects and 1:k are labels for the subtypes}
+\item{cls}{the names of the subtype variable in the data, should be
+supplied in quotes, e.g. cls = "class"}
 
-\item{k}{is the number of classes}
+\item{M}{the number of subtypes. This could should not include controls, but
+only the number of subtypes among case subjects.}
 
-\item{formula}{is the model formula for the polytomous logistic regression
-model, with "resp" on the lhs and the covariates of interest, located in
-\code{data} on the rhs}
-}
-\value{
-returns a 3-digit numeric value
+\item{formula}{an mFormula() model formula for a polytmous logistic
+regression model to be fit with mlogit() using the appropriate variable
+names from the data as interest e.g. formula = mFormula(class ~ 1 | x1 + x2)
+for a model with subtype variable class and two individual-specific
+predictors x1 and x2}
 }
 \description{
-\code{ehCalcD} takes a data set and information about class
-membership and calculates the D metric.
-}
-\references{
-Begg CB, Zabor EC, Bernstein JL, Bernstein L,
-Press MF, Seshan VE. A conceptual and methodological framework
-for investigating etiologic heterogeneity. Stat Med 2013; 32(29):5039-52.
-}
-\author{
-Emily C Zabor \email{zabore@mskcc.org}
+Calculate the D metric to measure the extent of etiologic heterogeneity in
+a case-control study
 }
