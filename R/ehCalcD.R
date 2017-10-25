@@ -26,10 +26,10 @@ ehCalcD <- function(data, cls, M, formula) {
   fprob <- matrix(NA, ncontrol, M)
 
   # transform the data for use in mlogit
-  xx1 <- mlogit.data(xx, choice = cls, shape = "wide")
+  data2 <- mlogit.data(data, choice = cls, shape = "wide")
 
   # fit the polytomous logistic regression model
-  mod <- mlogit(formula = formula, data = xx1)
+  mod <- mlogit(formula = formula, data = data2)
 
   # predicted risk for each class for controls only
   fprob[, 1:M] <- fitted(mod, outcome = FALSE)[, 2:(M + 1)][
