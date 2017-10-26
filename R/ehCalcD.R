@@ -19,11 +19,10 @@
 
 ehCalcD <- function(data, cls, M, formula) {
 
-  library(mlogit)
+  suppressMessages(library(mlogit))
 
   ncontrol <- nrow(data[data[, cls] == 0, ])
   ncase <- nrow(data[data[, cls] != 0, ])
-  fprob <- matrix(NA, ncontrol, M)
 
   # transform the data for use in mlogit
   data2 <- mlogit.data(data, choice = cls, shape = "wide")
@@ -32,8 +31,7 @@ ehCalcD <- function(data, cls, M, formula) {
   mod <- mlogit(formula = formula, data = data2)
 
   # predicted risk for each class for controls only
-  fprob[, 1:M] <- fitted(mod, outcome = FALSE)[, 2:(M + 1)][
-    fitted(mod, outcome = FALSE)[, 1] == fitted(mod), ]
+  fprob <- mod$probabilities[data[, cls] == 0, -1]
 
   # mus are the average predicted probs for controls for each class
   mus <- colMeans(fprob)
