@@ -42,7 +42,7 @@ trueDsim <- function(N, M, pi, P, mu_m) {
   Km2 <- apply(r, 2, function(x) var(x) / mean(x)^2)
 
   # D measure
-  D <- sum(tp[2:(M + 1)] * Km2 / (1 - pi[1])) - K2
+  D <- sum(pi[2:(M + 1)] * Km2 / (1 - pi[1])) - K2
 
   return(D)
 }
