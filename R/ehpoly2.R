@@ -58,6 +58,11 @@ ehpoly2 <- function(cls, m, rf, df) {
     stop("Class labels must be supplied as a numeric vector")
   }
 
+  # Check if there are any colons in a variable and stop if so
+  if(any(grep("^[^:]+:", rfs)) == TRUE) {
+    stop("Risk factor names cannot include colons. Please rename the offending risk factor and try again.")
+  }
+
   p <- length(rf) # number of covariates
 
   ### Fit the polytomous logistic regression model
@@ -83,8 +88,8 @@ ehpoly2 <- function(cls, m, rf, df) {
   # V is a list where each element is the vcov matrix for a diff RF
   vcov_plr <- vcov(fit)
   V <- lapply(fit$coefnames[-1], function(x) {
-    vcov_plr[grep(x, rownames(vcov_plr), fixed = T),
-             grep(x, rownames(vcov_plr), fixed = T)]})
+    vcov_plr[which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
+             which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)]})
 
   # Lmat is the contrast matrix to get the etiologic heterogeneity pvalue
   Lmat <- matrix(0, nrow = (m - 1), ncol = m)
