@@ -61,7 +61,7 @@ ehpoly2 <- function(cls, m, rf, df) {
   p <- length(rf) # number of covariates
 
   ### Fit the polytomous logistic regression model
-  fit <- multinom(as.formula(paste0("cls ~ ", paste(rf, collapse = " + "))),
+  fit <- multinom(as.formula(paste0(cls " ~ ", paste(rf, collapse = " + "))),
                   data = df, trace = FALSE)
 
   beta_plr <- matrix(coef(fit)[, -1], nrow = m)
