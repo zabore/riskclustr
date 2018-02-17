@@ -1,7 +1,7 @@
-Package: ethet
+Package: riskclustr
 Type: Package
 Title: Functions to study etiologic heterogeneity
-Version: 0.1.1
+Version: 0.5.1
 Authors@R: person("Emily", "Zabor", email = "zabore@mskcc.org", role = c("aut", "cre"))
 Description: Functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers.
 Depends:
