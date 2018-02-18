@@ -28,7 +28,6 @@
 #' ehCalcD(mform, "class", 4, df)
 #'
 #' @references
-#'
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
 #' Seshan, V. E. (2013). A conceptual and methodological framework for
 #' investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.
