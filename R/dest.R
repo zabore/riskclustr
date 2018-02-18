@@ -40,7 +40,7 @@
 
 dest <- function(formula, cls, M, data) {
 
-  if(any(class(formula) != "mFormula")) {
+  if(any(class(formula) == "mFormula") == FALSE) {
     stop("The formula argument must be of class mFormula. Please correctly specify the model formula and try again.")
   }
 
