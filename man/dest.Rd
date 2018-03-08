@@ -33,9 +33,10 @@ t(matrix(c(1.5, 0, 0.75, 0.25, 0.25, 0.75, 0, 1.5), ncol = 4))
 df <- data.frame(class = class, x1 = x[, 1], x2 = x[, 2])
 
 # specify the model formula
+library(mlogit)
 mform <- mFormula(class ~ 1 | x1 + x2)
 
-ehCalcD(mform, "class", 4, df)
+dest(mform, "class", 4, df)
 
 }
 \references{

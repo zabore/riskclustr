@@ -23,9 +23,10 @@
 #' df <- data.frame(class = class, x1 = x[, 1], x2 = x[, 2])
 #'
 #' # specify the model formula
+#' library(mlogit)
 #' mform <- mFormula(class ~ 1 | x1 + x2)
 #'
-#' ehCalcD(mform, "class", 4, df)
+#' dest(mform, "class", 4, df)
 #'
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
