@@ -5,7 +5,7 @@
 \title{Conduct an analysis of etiologic heterogeneity for pre-defined subtypes
 using polytomous logistic regression}
 \usage{
-plrsub(cls, m, rf, data)
+plrsub(cls, m, rf, data, weight = NULL)
 }
 \arguments{
 \item{cls}{the name of the variable in the data that contains numeric class
@@ -19,6 +19,9 @@ For binary risk factors the lowest level will be used as the reference level.}
 
 \item{data}{the name of the dataframe that contains the tumor markers and risk
 factors.}
+
+\item{weight}{an optional argument to weights in the \code{mlogit} call.
+Defaults to NULL.}
 }
 \value{
 Returns a list.
@@ -51,7 +54,9 @@ Risk factors can be either binary or continuous. For categorical risk
 factors, a reference level should be selected and then indicator variables
 for each remaining level of the risk factor should be created.
 Categorical risk factors entered as is will be treated as ordinal.
-Class labels for the cases can be specified as a vector.
+Class labels for the cases can be specified as a vector. The multinomial
+logistic regression model is fit using the \code{mlogit} function from the
+\code{mlogit} package.
 }
 \examples{
 

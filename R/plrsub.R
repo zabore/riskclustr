@@ -15,7 +15,9 @@
 #' factors, a reference level should be selected and then indicator variables
 #' for each remaining level of the risk factor should be created.
 #' Categorical risk factors entered as is will be treated as ordinal.
-#' Class labels for the cases can be specified as a vector.
+#' Class labels for the cases can be specified as a vector. The multinomial
+#' logistic regression model is fit using the \code{mlogit} function from the
+#' \code{mlogit} package.
 #'
 #' @param cls the name of the variable in the data that contains numeric class
 #' labels. This should be 0 for all controls. Argument must be supplied in
@@ -25,6 +27,8 @@
 #' For binary risk factors the lowest level will be used as the reference level.
 #' @param data the name of the dataframe that contains the tumor markers and risk
 #' factors.
+#' @param weight an optional argument to weights in the \code{mlogit} call.
+#' Defaults to NULL.
 #'
 #' @return Returns a list.
 #'
@@ -59,9 +63,9 @@
 #'
 ################################################################################
 
-plrsub <- function(cls, m, rf, data) {
+plrsub <- function(cls, m, rf, data, weight = NULL) {
 
-  library(nnet)
+  suppressWarnings(suppressMessages(library(mlogit)))
   library(aod)
 
   # Check if cls is a numeric vector
@@ -76,21 +80,30 @@ plrsub <- function(cls, m, rf, data) {
 
   p <- length(rf) # number of covariates
 
-  ### Fit the polytomous logistic regression model
-  fit <- multinom(as.formula(paste0(cls, " ~ ", paste(rf, collapse = " + "))),
-                  data = data, trace = FALSE)
+  # write the formula
+  mform <- mFormula(as.formula(paste0(cls, " ~ 1 |",
+                                      paste(rf, collapse = " + "))))
 
-  beta_plr <- matrix(coef(fit)[, -1], nrow = m)
-  beta_se <- matrix(summary(fit)$standard.errors[, -1], nrow = m)
-  rownames(beta_plr) <- rownames(beta_se) <- levels(as.factor(data[, cls]))[-1]
-  colnames(beta_plr) <- colnames(beta_se) <- fit$coefnames[-1]
+  # transform the data for use in mlogit
+  data2 <- mlogit.data(data, choice = cls, shape = "wide")
+
+  # fit the polytomous logistic regression model
+  if(is.null(weight)) {
+    fit <- mlogit(formula = mform, data = data2)} else {
+      data2$w <- data2[[weight]]
+      fit <- mlogit(formula = mform, data = data2, weights = w)}
+
+  coefnames <- unique(sapply(strsplit(rownames(summary(fit)$CoefTable), ":"),
+                             "[[", 2))[-1]
+  beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, ]
+  beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, ]
+  colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[, cls]))[-1]
+  rownames(beta_plr) <- rownames(beta_se) <- coefnames
 
   # Calculate the ORs and 95% CIs
   or <- round(exp(beta_plr), 2)
-  lci <- round(exp(beta_plr - qnorm(0.975) *
-                     summary(fit)$standard.errors[, -1]), 2)
-  uci <- round(exp(beta_plr + qnorm(0.975) *
-                     summary(fit)$standard.errors[, -1]), 2)
+  lci <- round(exp(beta_plr - qnorm(0.975) * beta_se), 2)
+  uci <- round(exp(beta_plr + qnorm(0.975) * beta_se), 2)
 
   ### Calculate the etiologic heterogeneity p-values
   # initiate null vectors
@@ -98,7 +111,7 @@ plrsub <- function(cls, m, rf, data) {
 
   # V is a list where each element is the vcov matrix for a diff RF
   vcov_plr <- vcov(fit)
-  V <- lapply(fit$coefnames[-1], function(x) {
+  V <- lapply(coefnames, function(x) {
     vcov_plr[which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
              which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)]})
 
@@ -108,21 +121,20 @@ plrsub <- function(cls, m, rf, data) {
   Lmat[row(Lmat) - col(Lmat) == -1] <- -1
 
   pval <- sapply(1:p, function(i) {
-    wald.test(b = beta_plr[, i], Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
+    wald.test(b = beta_plr[i, ], Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
 
   # Store results on both beta and OR scale
-  beta_se_p <- data.frame(t(matrix(paste0(round(beta_plr, 2), " (",
-                                          round(beta_se, 2), ")"), nrow = m)),
+  beta_se_p <- data.frame(matrix(paste0(round(beta_plr, 2), " (",
+                                        round(beta_se, 2), ")"), ncol = m),
                           round(pval, 3), stringsAsFactors = FALSE)
 
-  or_ci_p <- data.frame(t(matrix(paste0(or, " (", lci, " - ", uci, ")"),
-                                 nrow = m)),
+  or_ci_p <- data.frame(matrix(paste0(or, " (", lci, " - ", uci, ")"), ncol = m),
                         round(pval, 3), stringsAsFactors = FALSE)
 
   # Format the resulting dataframes
-  rownames(or_ci_p) <- rownames(beta_se_p) <- fit$coefnames[-1]
-  colnames(or_ci_p) <- colnames(beta_se_p) <- c(levels(as.factor(data[, cls]))[-1],
-                                                "p_het")
+  rownames(or_ci_p) <- rownames(beta_se_p) <- coefnames
+  colnames(or_ci_p) <- colnames(beta_se_p) <-
+    c(levels(as.factor(data[, cls]))[-1], "p_het")
   or_ci_p$p_het[or_ci_p$p_het == "0"] <- "<.001"
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
 
