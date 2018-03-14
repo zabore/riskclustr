@@ -2,7 +2,7 @@
 % Please edit documentation in R/plrsub.R
 \name{plrsub}
 \alias{plrsub}
-\title{Conduct an analysis of etiologic heterogeneity for pre-defined subtyps
+\title{Conduct an analysis of etiologic heterogeneity for pre-defined subtypes
 using polytomous logistic regression}
 \usage{
 plrsub(cls, m, rf, data)

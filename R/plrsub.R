@@ -1,5 +1,5 @@
 ################################################################################
-#' Conduct an analysis of etiologic heterogeneity for pre-defined subtyps
+#' Conduct an analysis of etiologic heterogeneity for pre-defined subtypes
 #' using polytomous logistic regression
 #'
 #' @author Emily C Zabor \email{zabore@@mskcc.org}

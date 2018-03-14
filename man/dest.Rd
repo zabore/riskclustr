@@ -4,7 +4,7 @@
 \alias{dest}
 \title{Estimate the incremental explained risk variation}
 \usage{
-dest(formula, cls, M, data)
+dest(formula, cls, M, data, weight = NULL)
 }
 \arguments{
 \item{formula}{an mFormula() model formula for a polytmous logistic
@@ -18,6 +18,9 @@ control subjects, should be supplied in quotes, e.g. cls = "class"}
 only the number of subtypes among case subjects}
 
 \item{data}{the name of the dataframe that contains the relevant variables}
+
+\item{weight}{an optional argument to weights in the \code{mlogit} call.
+Defaults to NULL.}
 }
 \description{
 \code{dest} estimates the incremental explained risk variation
