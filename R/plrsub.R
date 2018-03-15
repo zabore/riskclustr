@@ -27,8 +27,6 @@
 #' For binary risk factors the lowest level will be used as the reference level.
 #' @param data the name of the dataframe that contains the tumor markers and risk
 #' factors.
-#' @param weight an optional argument to weights in the \code{mlogit} call.
-#' Defaults to NULL.
 #'
 #' @return Returns a list.
 #'
@@ -63,7 +61,7 @@
 #'
 ################################################################################
 
-plrsub <- function(cls, m, rf, data, weight = NULL) {
+plrsub <- function(cls, m, rf, data) {
 
   suppressWarnings(suppressMessages(library(mlogit)))
   library(aod)
@@ -88,10 +86,7 @@ plrsub <- function(cls, m, rf, data, weight = NULL) {
   data2 <- mlogit.data(data, choice = cls, shape = "wide")
 
   # fit the polytomous logistic regression model
-  if(is.null(weight)) {
-    fit <- mlogit(formula = mform, data = data2)} else {
-      data2$w <- data2[[weight]]
-      fit <- mlogit(formula = mform, data = data2, weights = w)}
+  fit <- mlogit(formula = mform, data = data2)
 
   coefnames <- unique(sapply(strsplit(rownames(summary(fit)$CoefTable), ":"),
                              "[[", 2))[-1]

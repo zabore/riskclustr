@@ -12,8 +12,6 @@
 #' @param M the number of subtypes. This could should not include controls, but
 #' only the number of subtypes among case subjects
 #' @param data the name of the dataframe that contains the relevant variables
-#' @param weight an optional argument to weights in the \code{mlogit} call.
-#' Defaults to NULL.
 #'
 #' @examples
 #'
@@ -40,7 +38,7 @@
 #'
 ################################################################################
 
-dest <- function(formula, cls, M, data, weight = NULL) {
+dest <- function(formula, cls, M, data) {
 
   if(any(class(formula) == "mFormula") == FALSE) {
     stop("The formula argument must be of class mFormula. Please correctly specify the model formula and try again.")
@@ -55,11 +53,7 @@ dest <- function(formula, cls, M, data, weight = NULL) {
   data2 <- mlogit.data(data, choice = cls, shape = "wide")
 
   # fit the polytomous logistic regression model
-  if(is.null(weight)) {
-    mod <- mlogit(formula = formula, data = data2)}
-  else {
-    data2$w <- data2[[weight]]
-    mod <- mlogit(formula = formula, data = data2, weights = w)}
+  mod <- mlogit(formula = formula, data = data2)
 
   # predicted risk for each class for controls only
   fprob <- mod$probabilities[data[, cls] == 0, -1]
