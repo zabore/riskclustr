@@ -2,6 +2,7 @@
 
 export(dest)
 export(fstat_bin)
+export(ksq)
 export(minmc)
 export(plrsub)
 export(plrtm)

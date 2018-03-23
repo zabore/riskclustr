@@ -9,8 +9,8 @@
 #' names from the data of interest, see Examples
 #' @param cls the name of the subtype variable in the data, where 0 indicates
 #' control subjects, should be supplied in quotes, e.g. cls = "class"
-#' @param M the number of subtypes. This could should not include controls, but
-#' only the number of subtypes among case subjects
+#' @param M the number of subtypes. This should not include controls, but
+#' only the number of subtypes among case subjects. For M>=2.
 #' @param data the name of the dataframe that contains the relevant variables
 #'
 #' @examples
