@@ -56,7 +56,7 @@ dest <- function(formula, cls, M, data) {
   mod <- mlogit(formula = formula, data = data2)
 
   # predicted risk for each class for controls only
-  fprob <- mod$probabilities[data[, cls] == 0, -1]
+  fprob <- mod$probabilities[which(data[, cls] == 0), -1]
 
   # mus are the average predicted probs for controls for each class
   mus <- colMeans(fprob)
