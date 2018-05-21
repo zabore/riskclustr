@@ -55,9 +55,9 @@ dstarest <- function(formula, cls, M, data) {
   # needs to have a reference level of 0
   # use the highest frequency class as reference for stability
   tcls <- table(data[cls])
-  data$mcls <- (data$class != (which(tcls == max(tcls))[1])) * data$class
-  data$origclass <- data$class
-  data$class <- data$mcls
+  data$mcls <- (data[cls] != (which(tcls == max(tcls))[1])) * data[cls]
+  data$origclass <- data[cls]
+  data[cls] <- data$mcls
 
   # transform the data for use in mlogit
   data2 <- mlogit.data(data, choice = cls, shape = "wide")
