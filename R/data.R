@@ -46,4 +46,3 @@
 #'     \item{y30}{Continuous tumor marker 30}
 #' }
 "subtype_data"
-

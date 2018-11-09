@@ -26,10 +26,12 @@ tA <- rbind(matrix(rep(0, N * pi[1] * M), N * pi[1], M), tA)
 x1 <- matrix(rnorm(N * P1), N, P1) + tA %*% t(mu_m)
 
 # generate binary risk factor data
-x2 <- c(rbinom(N * pi[1], 1, 0.1),
-        rbinom(N * pi[2], 1, 0.2),
-        rbinom(N * pi[3], 1, 0.4),
-        rbinom(N * pi[4], 1, 0.6))
+x2 <- c(
+  rbinom(N * pi[1], 1, 0.1),
+  rbinom(N * pi[2], 1, 0.2),
+  rbinom(N * pi[3], 1, 0.4),
+  rbinom(N * pi[4], 1, 0.6)
+)
 
 x <- cbind(x1, x2)
 colnames(x) <- paste0("x", seq(1:ncol(x)))
@@ -45,25 +47,34 @@ tmC <- matrix(rnorm(N * K_C), N, K_C)
 y1 <- tail(cbind(tmA, tmC), -N * pi[1])
 
 # then add NA for all controls
-y <- rbind(matrix(rep(NA, ncol(y1) * N * pi[1]), N * pi[1], ncol(y1)),
-           y1)
+y <- rbind(
+  matrix(rep(NA, ncol(y1) * N * pi[1]), N * pi[1], ncol(y1)),
+  y1
+)
 colnames(y) <- paste0("y", seq(1:ncol(y)))
 
 
 # combine all data and save
 subtype_data <- as.data.frame(
-  cbind(subtype = c(rep(0, N * pi[1]), tAcls),
-        x,
-        y))
+  cbind(
+    subtype = c(rep(0, N * pi[1]), tAcls),
+    x,
+    y
+  )
+)
 
 subtype_data <- dplyr::mutate(subtype_data,
-                       subtype_name = dplyr::case_when(
-                         subtype == 0 ~ "Control",
-                         subtype == 1 ~ "Subtype A",
-                         subtype == 2 ~ "Subtype B",
-                         subtype == 3 ~ "Subtype C"))
+  subtype_name = dplyr::case_when(
+    subtype == 0 ~ "Control",
+    subtype == 1 ~ "Subtype A",
+    subtype == 2 ~ "Subtype B",
+    subtype == 3 ~ "Subtype C"
+  )
+)
 
-subtype_data <- dplyr::select(subtype_data,
-                              subtype, subtype_name, dplyr::everything())
+subtype_data <- dplyr::select(
+  subtype_data,
+  subtype, subtype_name, dplyr::everything()
+)
 
 usethis::use_data(subtype_data, overwrite = TRUE)

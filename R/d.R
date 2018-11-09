@@ -30,8 +30,7 @@
 #'
 
 d <- function(formula, var, M, data) {
-
-  if(any(class(formula) == "mFormula") == FALSE) {
+  if (any(class(formula) == "mFormula") == FALSE) {
     stop("The formula argument must be of class mFormula. Please correctly specify the model formula and try again.")
   }
 
@@ -53,11 +52,11 @@ d <- function(formula, var, M, data) {
 
   # calculate D
   D <- 0
-  for(i in 1:(M - 1)) {
-    for(j in (i + 1):M) {
+  for (i in 1:(M - 1)) {
+    for (j in (i + 1):M) {
       D <- D + (1 / ncontrol) * pis[i] * pis[j] *
         (sum(fprob[, i]^2) / mus[i]^2 + sum(fprob[, j]^2) /
-           mus[j]^2 - 2 * sum(fprob[, i] * fprob[, j]) / (mus[i] * mus[j]))
+          mus[j]^2 - 2 * sum(fprob[, i] * fprob[, j]) / (mus[i] * mus[j]))
     }
   }
 
