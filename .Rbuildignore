@@ -1,2 +1,8 @@
+^codecov\.yml$
+^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
+^dev$
+^README\.Rmd$
+^docs$
