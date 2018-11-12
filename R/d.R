@@ -10,8 +10,9 @@
 #' @param formula an \code{mlogit::mFormula()} model formula for a polytmous
 #' logistic regression model to be fit with \code{mlogit()} using the
 #' appropriate variable names from the data of interest
-#' @param var the name of the subtype variable in the data, where 0 indicates
-#' control subjects, should be supplied in quotes, e.g. var = "subtype"
+#' @param label the name of the subtype variable in the data.
+#' This should be a numeric variable with values 0 through M, where 0 indicates
+#' control subjects, should be supplied in quotes, e.g. label = "subtype"
 #' @param M the number of subtypes. This should not include controls, but
 #' only the number of subtypes among case subjects. For M>=2.
 #' @param data the name of the dataframe that contains the relevant variables
@@ -33,24 +34,41 @@
 #' @export
 #'
 
-d <- function(formula, var, M, data) {
+d <- function(formula, label, M, data) {
+
+  # Check if the model formula is class mFormula
   if (any(class(formula) == "mFormula") == FALSE) {
     stop("The formula argument must be of class mFormula. Please correctly specify the model formula and try again.")
   }
 
-  ncontrol <- nrow(data[data[, var] == 0, ])
-  ncase <- nrow(data[data[, var] != 0, ])
+  # Check if the label variable is numeric/integer
+  if (!class(data[[label]]) %in% c("numeric", "integer")) {
+    stop("The argument to label must be numeric or integer. Arguments of type character and factor are not supported, please see the documentation.")
+  }
+
+  # Check if the label variable starts with 0
+  if (min(data[[label]] != 0)) {
+    stop("The argument to label should start with 0. 0 indicates control subjects and cases should be labeled 1 through M, the total number of subtypes.")
+  }
+
+  # Check if M is a numeric variable >=2
+  if (class(M) != "numeric" | M < 2) {
+    stop("The argument to M, the total number of subtypes, must be a numeric value >=2.")
+  }
+
+  ncontrol <- nrow(data[data[, label] == 0, ])
+  ncase <- nrow(data[data[, label] != 0, ])
 
   # transform the data for use in mlogit
-  data2 <- mlogit::mlogit.data(data, choice = var, shape = "wide")
+  data2 <- mlogit::mlogit.data(data, choice = label, shape = "wide")
 
   # fit the polytomous logistic regression model
   mod <- mlogit::mlogit(formula = formula, data = data2)
 
-  # predicted risk for each class for controls only
-  fprob <- mod$probabilities[which(data[, var] == 0), -1]
+  # predicted risk for each label for controls only
+  fprob <- mod$probabilities[which(data[, label] == 0), -1]
 
-  # mus are the average predicted probs for controls for each class
+  # mus are the average predicted probs for controls for each label
   mus <- colMeans(fprob)
   pis <- mus / sum(mus)
 

@@ -4,15 +4,16 @@
 \alias{d}
 \title{Estimate the incremental explained risk variation}
 \usage{
-d(formula, var, M, data)
+d(formula, label, M, data)
 }
 \arguments{
 \item{formula}{an \code{mlogit::mFormula()} model formula for a polytmous
 logistic regression model to be fit with \code{mlogit()} using the
 appropriate variable names from the data of interest}
 
-\item{var}{the name of the subtype variable in the data, where 0 indicates
-control subjects, should be supplied in quotes, e.g. var = "subtype"}
+\item{label}{the name of the subtype variable in the data.
+This should be a numeric variable with values 0 through M, where 0 indicates
+control subjects, should be supplied in quotes, e.g. label = "subtype"}
 
 \item{M}{the number of subtypes. This should not include controls, but
 only the number of subtypes among case subjects. For M>=2.}
