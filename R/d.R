@@ -56,6 +56,11 @@ d <- function(formula, label, M, data) {
     stop("The argument to M, the total number of subtypes, must be a numeric value >=2.")
   }
 
+  # Check if M is equal to the number of non-zero levels of label
+  if (length(levels(factor(data[[label]][data[[label]] != 0]))) != M) {
+    stop("M is not equal to the number of non-zero levels in the variable supplied to label. Please make sure M reflects the number of subtypes in the data.")
+  }
+
   ncontrol <- nrow(data[data[, label] == 0, ])
   ncase <- nrow(data[data[, label] != 0, ])
 

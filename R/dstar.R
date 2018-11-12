@@ -58,6 +58,11 @@ dstar <- function(formula, label, M, data) {
     stop("The argument to M, the total number of subtypes, must be a numeric value >=2.")
   }
 
+  # Check if M is equal to the number of levels of label
+  if (length(levels(factor(data[[label]]))) != M) {
+    stop("M is not equal to the number of levels in the variable supplied to label. Please make sure M reflects the number of subtypes in the data.")
+  }
+
   # sample size (all cases)
   ncase <- nrow(data)
 
