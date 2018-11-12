@@ -81,4 +81,3 @@ test_that("d prints message when M is not equal to the number of subtypes in the
     fixed = TRUE
   )
 })
-
