@@ -1,7 +1,11 @@
 #' Estimate the incremental explained risk variation
 #'
 #' @description \code{d} estimates the incremental explained risk variation
-#' across a set of pre-specified disease subtypes in a case-control study
+#' across a set of pre-specified disease subtypes in a case-control study.
+#' This function takes a model formula and a wide dataset and does the needed
+#' transformation on the dataset to get the correct format, fits the polytomous
+#' logistic regression model, and calculates D based on the resulting risk
+#' predictions.
 #'
 #' @param formula an \code{mlogit::mFormula()} model formula for a polytmous
 #' logistic regression model to be fit with \code{mlogit()} using the

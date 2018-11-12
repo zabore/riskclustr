@@ -6,6 +6,12 @@ output: github_document
 
 [![Coverage status](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://codecov.io/github/zabore/riskclustr?branch=master)
 
+[![CRAN status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
+
+[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+
+[![Build Status](https://travis-ci.com/zabore/riskclustr.svg?branch=master)](https://travis-ci.com/zabore/riskclustr)
+
 # riskclustr
 
 `riskclustr` is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors.
