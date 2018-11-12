@@ -3,12 +3,9 @@
 
 [![Coverage
 status](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://codecov.io/github/zabore/riskclustr?branch=master)
-
 [![Build
 Status](https://travis-ci.com/zabore/riskclustr.svg?branch=master)](https://travis-ci.com/zabore/riskclustr)
-
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
-
 [![CRAN
 status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
 
