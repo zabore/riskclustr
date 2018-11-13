@@ -73,8 +73,7 @@ Briefly, whereas the variance and covariance terms in the equation for $D$ are a
 To demonstrate the usage, first let's limit the `subtype_data` to the cases only. Controls are denoted by a `0` for the `subtype` variable.
 
 ```{r}
-subtype_cases <- dplyr::filter(subtype_data, 
-                               subtype != 0)
+subtype_cases <- subtype_data[subtype_data$subtype != 0, ]
 ```
 
 We can use the same model formula saved to object `mform` that was specified for the case-control example, to obtain a case-only estimate of $D^\ast$ for the pre-specified `subtype` variable and based on all three risk factors.
