@@ -7,7 +7,7 @@ Description: riskclustr is a collection of functions related to the study of eti
 Depends:
     R (>= 3.4)
 License: GPL-2
-URL: https://github.com/zabore/riskclustr
+URL: http://www.emilyzabor.com/riskclustr/, https://github.com/zabore/riskclustr
 BugReports: https://github.com/zabore/riskclustr/issues
 Encoding: UTF-8
 Imports:
