@@ -7,7 +7,7 @@ Description: riskclustr is a collection of functions related to the study of eti
 Depends:
     R (>= 3.4)
 License: GPL-2
-URL: http://www.emilyzabor.com/riskclustr/
+URL: https://github.com/zabore/riskclustr
 BugReports: https://github.com/zabore/riskclustr/issues
 Encoding: UTF-8
 Imports:
@@ -23,4 +23,5 @@ RoxygenNote: 6.1.0
 VignetteBuilder: knitr
 Suggests: 
     testthat,
-    covr
+    covr,
+    rmarkdown

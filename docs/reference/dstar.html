@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated subtype data — subtype_data • riskclustr</title>
+<title>Estimate the incremental explained risk variation in a case-only study — dstar • riskclustr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,14 +30,14 @@
 
 
 
-<meta property="og:title" content="Simulated subtype data — subtype_data" />
+<meta property="og:title" content="Estimate the incremental explained risk variation in a case-only study — dstar" />
 
-<meta property="og:description" content="A dataset containing 2000 patients: 1200 cases and 800 controls.
-There are three subtypes, and both numeric and character subtype labels.
-There are three risk factors, two continuous and one binary,
-which are all related to the three subtypes.
-There are also 30 continuous tumor markers, 15 of which are related to
-the subtypes, which could be used in a clustering analysis." />
+<meta property="og:description" content="dstar estimates the incremental explained risk variation
+across a set of pre-specified disease subtypes in a case-only study.
+This function takes a model formula and a wide dataset and does the needed
+transformation on the dataset to get the correct format, fits the polytomous
+logistic regression model, and calculates D based on the resulting risk
+predictions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -114,72 +114,77 @@ the subtypes, which could be used in a clustering analysis." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated subtype data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/zabore/riskclustr/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>subtype_data.Rd</code></div>
+    <h1>Estimate the incremental explained risk variation in a case-only study</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zabore/riskclustr/blob/master/R/dstar.R'><code>R/dstar.R</code></a></small>
+    <div class="hidden name"><code>dstar.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>A dataset containing 2000 patients: 1200 cases and 800 controls.
-There are three subtypes, and both numeric and character subtype labels.
-There are three risk factors, two continuous and one binary,
-which are all related to the three subtypes.
-There are also 30 continuous tumor markers, 15 of which are related to
-the subtypes, which could be used in a clustering analysis.</p>
+    <p><code>dstar</code> estimates the incremental explained risk variation
+across a set of pre-specified disease subtypes in a case-only study.
+This function takes a model formula and a wide dataset and does the needed
+transformation on the dataset to get the correct format, fits the polytomous
+logistic regression model, and calculates D based on the resulting risk
+predictions.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>subtype_data</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>dstar</span>(<span class='no'>formula</span>, <span class='no'>label</span>, <span class='no'>M</span>, <span class='no'>data</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>formula</th>
+      <td><p>an mFormula() model formula for a polytmous logistic
+regression model to be fit with mlogit() using the appropriate variable
+names from the data of interest.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>the name of the subtype variable in the data with values 1
+through M. Should be supplied in quotes, e.g. label = "subtype".
+The highest frequency subtype will be used as the reference subtype in
+model</p></td>
+    </tr>
+    <tr>
+      <th>M</th>
+      <td><p>the number of subtypes among case subjects. For M&gt;=2.</p></td>
+    </tr>
+    <tr>
+      <th>data</th>
+      <td><p>the name of the dataframe that contains the relevant variables</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>A data frame with 2000 rows--one row per patient</p><dl class='dl-horizontal'>
-<dt>subtype</dt><dd><p>Numeric subtype label, 0 for control subjects</p></dd>
-<dt>subtype_name</dt><dd><p>Character subtype label</p></dd>
-<dt>x1</dt><dd><p>Continuous risk factor 1</p></dd>
-<dt>x2</dt><dd><p>Continuous risk factor 2</p></dd>
-<dt>x3</dt><dd><p>Binary risk factor</p></dd>
-<dt>y1</dt><dd><p>Continuous tumor marker 1</p></dd>
-<dt>y2</dt><dd><p>Continuous tumor marker 2</p></dd>
-<dt>y3</dt><dd><p>Continuous tumor marker 3</p></dd>
-<dt>y4</dt><dd><p>Continuous tumor marker 4</p></dd>
-<dt>y5</dt><dd><p>Continuous tumor marker 5</p></dd>
-<dt>y6</dt><dd><p>Continuous tumor marker 6</p></dd>
-<dt>y7</dt><dd><p>Continuous tumor marker 7</p></dd>
-<dt>y8</dt><dd><p>Continuous tumor marker 8</p></dd>
-<dt>y9</dt><dd><p>Continuous tumor marker 9</p></dd>
-<dt>y10</dt><dd><p>Continuous tumor marker 10</p></dd>
-<dt>y11</dt><dd><p>Continuous tumor marker 11</p></dd>
-<dt>y12</dt><dd><p>Continuous tumor marker 12</p></dd>
-<dt>y13</dt><dd><p>Continuous tumor marker 13</p></dd>
-<dt>y14</dt><dd><p>Continuous tumor marker 14</p></dd>
-<dt>y15</dt><dd><p>Continuous tumor marker 15</p></dd>
-<dt>y16</dt><dd><p>Continuous tumor marker 16</p></dd>
-<dt>y17</dt><dd><p>Continuous tumor marker 17</p></dd>
-<dt>y18</dt><dd><p>Continuous tumor marker 18</p></dd>
-<dt>y19</dt><dd><p>Continuous tumor marker 19</p></dd>
-<dt>y20</dt><dd><p>Continuous tumor marker 20</p></dd>
-<dt>y21</dt><dd><p>Continuous tumor marker 21</p></dd>
-<dt>y22</dt><dd><p>Continuous tumor marker 22</p></dd>
-<dt>y23</dt><dd><p>Continuous tumor marker 23</p></dd>
-<dt>y24</dt><dd><p>Continuous tumor marker 24</p></dd>
-<dt>y25</dt><dd><p>Continuous tumor marker 25</p></dd>
-<dt>y26</dt><dd><p>Continuous tumor marker 26</p></dd>
-<dt>y27</dt><dd><p>Continuous tumor marker 27</p></dd>
-<dt>y28</dt><dd><p>Continuous tumor marker 28</p></dd>
-<dt>y29</dt><dd><p>Continuous tumor marker 29</p></dd>
-<dt>y30</dt><dd><p>Continuous tumor marker 30</p></dd>
-</dl>
+    <p>Begg, C. B., Seshan, V. E., Zabor, E. C., Furberg, H., Arora, A.,
+Shen, R., . . . Hsieh, J. J. (2014). Genomic investigation of etiologic
+heterogeneity: methodologic challenges. BMC Med Res Methodol, 14, 138.
+doi: 10.1186/1471-2288-14-138</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># specify the model formula for three risk factors, x1, x2 and x3</span>
+<span class='no'>mform</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>mlogit</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></span>(<span class='no'>subtype</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>)
+
+<span class='co'># calculate D*</span>
+<span class='co'># Exclude controls from data as this is a case-only calculation</span>
+<span class='fu'>dstar</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>3</span>, <span class='no'>subtype_data</span>[<span class='no'>subtype_data</span>$<span class='no'>subtype</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, ])</div><div class='output co'>#&gt; [1] 0.5589295</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#references">References</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

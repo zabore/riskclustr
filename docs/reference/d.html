@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Estimate the incremental explained risk variation — d • riskclustr</title>
+<title>Estimate the incremental explained risk variation in a case-control study — d • riskclustr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -30,10 +30,14 @@
 
 
 
-<meta property="og:title" content="Estimate the incremental explained risk variation — d" />
+<meta property="og:title" content="Estimate the incremental explained risk variation in a case-control study — d" />
 
 <meta property="og:description" content="d estimates the incremental explained risk variation
-across a set of pre-specified disease subtypes in a case-control study" />
+across a set of pre-specified disease subtypes in a case-control study.
+This function takes a model formula and a wide dataset and does the needed
+transformation on the dataset to get the correct format, fits the polytomous
+logistic regression model, and calculates D based on the resulting risk
+predictions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,17 +74,34 @@ across a set of pre-specified disease subtypes in a case-control study" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fa fa-home"></span>
      
   </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutorials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/calculate_d.html">Estimate the extent of etiologic heterogeneity</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/zabore/riskclustr">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -93,19 +114,23 @@ across a set of pre-specified disease subtypes in a case-control study" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Estimate the incremental explained risk variation</h1>
-    
+    <h1>Estimate the incremental explained risk variation in a case-control study</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zabore/riskclustr/blob/master/R/d.R'><code>R/d.R</code></a></small>
     <div class="hidden name"><code>d.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
     <p><code>d</code> estimates the incremental explained risk variation
-across a set of pre-specified disease subtypes in a case-control study</p>
+across a set of pre-specified disease subtypes in a case-control study.
+This function takes a model formula and a wide dataset and does the needed
+transformation on the dataset to get the correct format, fits the polytomous
+logistic regression model, and calculates D based on the resulting risk
+predictions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>d</span>(<span class='no'>formula</span>, <span class='no'>var</span>, <span class='no'>M</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>d</span>(<span class='no'>formula</span>, <span class='no'>label</span>, <span class='no'>M</span>, <span class='no'>data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -117,9 +142,10 @@ logistic regression model to be fit with <code>mlogit()</code> using the
 appropriate variable names from the data of interest</p></td>
     </tr>
     <tr>
-      <th>var</th>
-      <td><p>the name of the subtype variable in the data, where 0 indicates
-control subjects, should be supplied in quotes, e.g. var = "subtype"</p></td>
+      <th>label</th>
+      <td><p>the name of the subtype variable in the data.
+This should be a numeric variable with values 0 through M, where 0 indicates
+control subjects, should be supplied in quotes, e.g. label = "subtype"</p></td>
     </tr>
     <tr>
       <th>M</th>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/d.R
 \name{d}
 \alias{d}
-\title{Estimate the incremental explained risk variation}
+\title{Estimate the incremental explained risk variation in a case-control study}
 \usage{
 d(formula, label, M, data)
 }

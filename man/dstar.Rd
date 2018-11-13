@@ -2,7 +2,7 @@
 % Please edit documentation in R/dstar.R
 \name{dstar}
 \alias{dstar}
-\title{Estimate the incremental explained risk variation in case-only study}
+\title{Estimate the incremental explained risk variation in a case-only study}
 \usage{
 dstar(formula, label, M, data)
 }

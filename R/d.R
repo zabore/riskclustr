@@ -1,4 +1,4 @@
-#' Estimate the incremental explained risk variation
+#' Estimate the incremental explained risk variation in a case-control study
 #'
 #' @description \code{d} estimates the incremental explained risk variation
 #' across a set of pre-specified disease subtypes in a case-control study.

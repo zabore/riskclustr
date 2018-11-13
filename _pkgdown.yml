@@ -1,0 +1,33 @@
+url: http://www.emilyzabor.com/riskclustr
+
+template:
+  params:
+    bootswatch: paper
+
+navbar:
+  type: default
+  left:
+  - icon: fa-home
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Tutorials
+    menu:
+    - text: "Estimate the extent of etiologic heterogeneity"
+      href: articles/calculate_d.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/zabore/riskclustr
+
+reference:
+  - title: "Estimate the extent of etiologic heterogeneity"
+    contents:
+      - d
+      - dstar
+
+  - title: "Example Datasets"
+    desc: >
+      Simulated data to illustrate package use
+    contents:
+      - subtype_data
+

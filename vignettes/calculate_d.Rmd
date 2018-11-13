@@ -1,0 +1,92 @@
+---
+title: "Tutorial: Estimate the extent of etiologic heterogeneity"
+author: "Emily C. Zabor"
+date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial: Estimate the extent of etiologic heterogeneity}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+This tutorial will introduce you to the calculations underlying estimation of the extent of etiologic heterogeneity in either a case-control or case-only study. 
+
+This tutorial will also demonstrate how to use the functions included in this package based on a simulated example dataset named `subtype_data`. This simulated dataset contains 1200 case subjects and 800 control subjects. Cases are split into three pre-defined etiologically distinct subtypes. There are also 30 continuous markers available on the cases that could be used in clustering to identify candidate subtypes. There are two continuous risk factors and one binary risk factor available on all subjects.
+
+
+## Case-control methods
+
+The primary methodology was introduced in detail in:
+
+> Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE. A conceptual and methodological framework for investigating etiologic heterogeneity. *Stat Med.* 2013;32(29):5039-52.
+
+The method involves identifying a pre-defined subtype solution involving a set of $M$ disease subtypes, and calculating a measure of etiologic heterogeneity. 
+
+In a case-control study, the measure of etiologic heterogeneity is denoted $D$. To calculate $D$, one must first perform polytomous logistic regression of the known risk factors for disease on the subtypes and obtain estimated risk predictions from this model for each of the subtypes for each control subject. Since the measure is population-based it is calculated solely using the study controls. Let $i$ denote these control subjects $i=1, \ldots, N_H$, where $N_H$ denotes the total number of non-diseased control subjects, and let $m$ index the set of disease subtypes, $m=1, \ldots, M$. The risk predictions obtained from the polytomous logistic regression model for the $i$th individual are denoted $r_{mi}$ such that the total risk of disease for that individual is $r_i = \sum_{m=1}^M r_{mi}$. Let the coefficients of variation of the subtype risks in the population be denoted $C_m^2 = v_m / \mu_m^2$ where $v_m = N_H^{-1}\sum_{i=1}^{N_H} r_{mi}^2 - \mu_m^2$ and $\mu_m = N_H^{-1}\sum_{i=1}^{N_H} r_{mi}$. Let the corresponding total coefficient of variation be denoted $C^2 = v / \mu^2$, where $\mu$ and $v$ are the overall disease risk mean and variance. Then the measure of etiologic heterogeneity is defined as
+
+$$D = \sum_{m=1}^M \pi_m C_m^2 - C^2,$$
+
+where $\pi_m$ represents the prevalence of the $m$th disease subtype. 
+
+To estimate $D$, we use the `d()` function.
+
+The calculation of $D$ using `d()` relies on the `mlogit` function from the `mlogit` package to fit the polytomous logistic regression model.
+
+First, we need to specify the model formula using an `mFormula` object from the `mlogit` package. For example, we can use the pre-specified numeric `subtype` variable as the outcome and all three risk factors as predictors.
+
+```{r}
+mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
+```
+
+Then we can supply this to the `formula` argument of `d()`, along with specification of the name of the subtype variable, the number of subtypes, and the dataset. Note that the variable name supplied to the `label` argument must be a quoted string.
+
+```{r}
+library(riskclustr)
+
+d(
+  formula = mform,
+  label = "subtype",
+  M = 3, 
+  data = subtype_data
+)
+```
+
+
+## Case-only methods
+
+When control subjects are not available, then a case-only approximation of $D$, denoted $D^\ast$, can be applied. The details of this calculation can be found in:
+
+> Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of etiologic heterogeneity: methodologic challenges. *BMC Med Res Methodol.* 2014;14:138. Published 2014 Dec 22. doi:10.1186/1471-2288-14-138
+
+Briefly, whereas the variance and covariance terms in the equation for $D$ are averaged over the controls in the case-control setting, in a case-only setting they are averaged over the cases, which represent a risk-biased sample from the population. The goal of an analysis of this type is not to interpret the magnitude of $D^\ast$, but rather to use $D^\ast$ to rank different subtyping schemes and identify the one that maximizes etiologic heterogeneity.
+
+To demonstrate the usage, first let's limit the `subtype_data` to the cases only. Controls are denoted by a `0` for the `subtype` variable.
+
+```{r}
+subtype_cases <- dplyr::filter(subtype_data, 
+                               subtype != 0)
+```
+
+We can use the same model formula saved to object `mform` that was specified for the case-control example, to obtain a case-only estimate of $D^\ast$ for the pre-specified `subtype` variable and based on all three risk factors.
+
+Then we specify the arguments to `dstar()` as before, but supplying our new case-only dataset to the `data` argument.
+
+```{r}
+dstar(
+  formula = mform,
+  label = "subtype",
+  M = 3, 
+  data = subtype_cases
+)
+```
+

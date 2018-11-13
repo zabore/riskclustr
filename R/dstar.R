@@ -1,5 +1,4 @@
-################################################################################
-#' Estimate the incremental explained risk variation in case-only study
+#' Estimate the incremental explained risk variation in a case-only study
 #'
 #' @description \code{dstar} estimates the incremental explained risk variation
 #' across a set of pre-specified disease subtypes in a case-only study.
@@ -35,7 +34,6 @@
 #'
 #' @export
 #'
-################################################################################
 
 dstar <- function(formula, label, M, data) {
   if (any(class(formula) == "mFormula") == FALSE) {
