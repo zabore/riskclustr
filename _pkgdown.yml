@@ -2,7 +2,7 @@ url: http://www.emilyzabor.com/riskclustr/
 
 template:
   params:
-    bootswatch: paper
+    bootswatch: lumen
 
 navbar:
   type: default
