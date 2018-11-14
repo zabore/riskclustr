@@ -7,9 +7,10 @@
 #' logistic regression model, and calculates D based on the resulting risk
 #' predictions.
 #'
-#' @param formula an mFormula() model formula for a polytmous logistic
-#' regression model to be fit with mlogit() using the appropriate variable
-#' names from the data of interest.
+#' @param formula an \code{\link[mlogit]{mFormula}} model formula for a
+#' polytmous logistic regression model to be fit with
+#' \code{\link[mlogit]{mlogit}} using the specified variable names from the
+#' data of interest.
 #' @param label the name of the subtype variable in the data with values 1
 #' through M. Should be supplied in quotes, e.g. label = "subtype".
 #' The highest frequency subtype will be used as the reference subtype in
@@ -24,7 +25,7 @@
 #'
 #' # calculate D*
 #' # Exclude controls from data as this is a case-only calculation
-#' dstar(mform, "subtype", 3, subtype_data[subtype_data$subtype > 0, ])
+#' dstar(mform, "subtype", 4, subtype_data[subtype_data$subtype > 0, ])
 #'
 #' @references
 #' Begg, C. B., Seshan, V. E., Zabor, E. C., Furberg, H., Arora, A.,

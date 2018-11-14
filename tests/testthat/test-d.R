@@ -5,10 +5,10 @@ test_that("d produces expected value", {
     round(d(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data
     ), 3),
-    0.643
+    0.410
   )
 })
 
@@ -18,7 +18,7 @@ test_that("d prints message when formula mis-specified", {
     d(
       formula(subtype ~ x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data
     ),
     "The formula argument must be of class mFormula. Please correctly specify the model formula and try again.",
@@ -32,7 +32,7 @@ test_that("d prints message when label variable is not numeric", {
     d(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype_name",
-      3,
+      4,
       subtype_data
     ),
     "The argument to label must be numeric or integer. Arguments of type character and factor are not supported, please see the documentation.",
@@ -46,7 +46,7 @@ test_that("d prints message when subtype variable doesn't start with 0", {
     d(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data[subtype_data$subtype > 0, ]
     ),
     "The argument to label should start with 0. 0 indicates control subjects and cases should be labeled 1 through M, the total number of subtypes.",

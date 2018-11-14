@@ -2,3 +2,5 @@
 
 export(d)
 export(dstar)
+export(eh_test_marker)
+export(eh_test_subtype)

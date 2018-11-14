@@ -48,7 +48,7 @@ First, we need to specify the model formula using an `mFormula` object from the 
 mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
 ```
 
-Then we can supply this to the `formula` argument of `d()`, along with specification of the name of the subtype variable, the number of subtypes, and the dataset. Note that the variable name supplied to the `label` argument must be a quoted string.
+Then we can supply this to the `formula` argument of `d()`, along with specification of the name of the subtype variable, the number of subtypes, and the dataset. Note that the variable name supplied to the `label` argument must be a quoted string. The subtype variable must be a numeric variable where controls are coded as 0 and cases are coded as 1 through M according to the subtype to which they belong. 
 
 ```{r}
 library(riskclustr)
@@ -56,7 +56,7 @@ library(riskclustr)
 d(
   formula = mform,
   label = "subtype",
-  M = 3, 
+  M = 4, 
   data = subtype_data
 )
 ```
@@ -78,13 +78,13 @@ subtype_cases <- subtype_data[subtype_data$subtype != 0, ]
 
 We can use the same model formula saved to object `mform` that was specified for the case-control example, to obtain a case-only estimate of $D^\ast$ for the pre-specified `subtype` variable and based on all three risk factors.
 
-Then we specify the arguments to `dstar()` as before, but supplying our new case-only dataset to the `data` argument.
+Then we specify the arguments to `dstar()` as before, but supplying our new case-only dataset to the `data` argument. Now, the subtype variable must be numeric, with cases coded as 1 through M according to the subtype to which they belong. 
 
 ```{r}
 dstar(
   formula = mform,
   label = "subtype",
-  M = 3, 
+  M = 4, 
   data = subtype_cases
 )
 ```

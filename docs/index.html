@@ -54,6 +54,9 @@
 <li>
       <a href="articles/calculate_d.html">Estimate the extent of etiologic heterogeneity</a>
     </li>
+    <li>
+      <a href="articles/eh_test.html">Test for etiologic heterogeneity</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -84,14 +87,14 @@
 <div id="riskclustr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#riskclustr" class="anchor"></a>riskclustr</h1></div>
-<p><code>riskclustr</code> is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors.</p>
+<p>Etiologic heterogeneity refers to the concept of subtypes of disease that are influenced by different risk factors. Likely the best known example of this is in breast cancer research, where subtypes are often formed based on immunohistochemical staining of estrogen receptor (ER), progesterone receptor (PR) and human epidermal growth factor receptor 2 (HER2). Risk factors including patient characteristics such as age and BMI as well as hormonal risk factors such as age at menarche, parity, and menopausal status have been shown to have different relative risks for these disease subtypes.</p>
+<p><code>riskclustr</code> is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual disease markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study or case-only study, and provide p-values to test for etiologic heterogeneity with respect to either disease subtypes or individual disease markers in the context of a case-control study.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the production version of <code>riskclustr</code> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"zabore/riskclustr"</span>)</a></code></pre></div>
-<p>and the development version with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"zabore/riskclustr"</span>, <span class="dt">ref =</span> <span class="st">"development"</span>)</a></code></pre></div>
+<p>You can install <code>riskclustr</code> by running:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"zabore/riskclustr"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(riskclustr)</a></code></pre></div>
 </div>
 </div>
   </div>

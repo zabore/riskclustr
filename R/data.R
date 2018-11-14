@@ -1,16 +1,23 @@
 #' Simulated subtype data
 #'
 #' A dataset containing 2000 patients: 1200 cases and 800 controls.
-#' There are three subtypes, and both numeric and character subtype labels.
-#' There are three risk factors, two continuous and one binary,
-#' which are all related to the three subtypes.
-#' There are also 30 continuous tumor markers, 15 of which are related to
-#' the subtypes, which could be used in a clustering analysis.
+#' There are four subtypes, and both numeric and character subtype labels.
+#' The subtypes are formed by cross-classification of two binary disease markers,
+#' disease marker 1 and disease marker 2.
+#' There are three risk factors, two continuous and one binary. One of the
+#' continuous risk factors and the binary risk factor are related to the
+#' disease subtypes.
+#' There are also 30 continuous tumor markers, 20 of which are related to
+#' the subtypes and 10 of which represent noise, which could be used in a
+#' clustering analysis.
 #'
 #' @format A data frame with 2000 rows--one row per patient
 #' \describe{
+#'     \item{case}{Indicator of case control status, 1 for cases and 0 for controls}
 #'     \item{subtype}{Numeric subtype label, 0 for control subjects}
 #'     \item{subtype_name}{Character subtype label}
+#'     \item{marker1}{Disease marker 1}
+#'     \item{marker2}{Disease marker 2}
 #'     \item{x1}{Continuous risk factor 1}
 #'     \item{x2}{Continuous risk factor 2}
 #'     \item{x3}{Binary risk factor}

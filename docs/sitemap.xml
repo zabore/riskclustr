@@ -4,7 +4,13 @@
     <loc>http://www.emilyzabor.com/riskclustr//index.html</loc>
   </url>
   <url>
+    <loc>http://www.emilyzabor.com/riskclustr//reference/eh_test_subtype.html</loc>
+  </url>
+  <url>
     <loc>http://www.emilyzabor.com/riskclustr//reference/dstar.html</loc>
+  </url>
+  <url>
+    <loc>http://www.emilyzabor.com/riskclustr//reference/eh_test_marker.html</loc>
   </url>
   <url>
     <loc>http://www.emilyzabor.com/riskclustr//reference/subtype_data.html</loc>
@@ -14,5 +20,8 @@
   </url>
   <url>
     <loc>http://www.emilyzabor.com/riskclustr//articles/calculate_d.html</loc>
+  </url>
+  <url>
+    <loc>http://www.emilyzabor.com/riskclustr//articles/eh_test.html</loc>
   </url>
 </urlset>

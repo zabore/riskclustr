@@ -4,17 +4,17 @@
 
 set.seed(20181109)
 
-M <- 3
+M <- 4
 N <- 2000
-pi <- c(0.4, 0.2, 0.2, 0.2)
+pi <- c(0.4, 0.15, 0.15, 0.15, 0.15)
 P1 <- 2
-mu_m <- matrix(c(1.5, 0.75, 0, 0, 0.75, 1.5), ncol = 3, byrow = T)
-K_A <- 15
-K_C <- 15
+mu_m <- matrix(c(1.5, 0.75, 0.25, 0, 0.25, 0.3, 0.3, 0.25), ncol = 4, byrow = T)
+K_A <- 20
+K_C <- 10
 a <- 2.1
-b <- 1.8
-lambda_Am <- matrix(rep(c(a, 0, a, 0, a), times = c(5, 15, 5, 15, 5)), ncol = 3)
-lambda_Bj <- matrix(rep(c(b, 0, b, 0, b), times = c(5, 15, 5, 15, 5)), ncol = 3)
+lambda_Am <- matrix(rep(c(a, 0, a, 0, a, 0, a),
+                        times = c(5, 20, 5, 20, 5, 20, 5)),
+                    ncol = 4)
 
 # generate etiologically distinct subtypes indicator matrix
 tAcls <- rep(1:M, N * pi[2:(M + 1)])
@@ -30,7 +30,8 @@ x2 <- c(
   rbinom(N * pi[1], 1, 0.1),
   rbinom(N * pi[2], 1, 0.2),
   rbinom(N * pi[3], 1, 0.4),
-  rbinom(N * pi[4], 1, 0.6)
+  rbinom(N * pi[4], 1, 0.6),
+  rbinom(N * pi[4], 1, 0.3)
 )
 
 x <- cbind(x1, x2)
@@ -54,6 +55,7 @@ y <- rbind(
 colnames(y) <- paste0("y", seq(1:ncol(y)))
 
 
+
 # combine all data and save
 subtype_data <- as.data.frame(
   cbind(
@@ -68,13 +70,27 @@ subtype_data <- dplyr::mutate(subtype_data,
     subtype == 0 ~ "Control",
     subtype == 1 ~ "Subtype A",
     subtype == 2 ~ "Subtype B",
-    subtype == 3 ~ "Subtype C"
-  )
+    subtype == 3 ~ "Subtype C",
+    subtype == 4 ~ "Subtype D"
+  ),
+  marker1 = dplyr::case_when(
+    subtype == 1 ~ 0,
+    subtype == 2 ~ 0,
+    subtype == 3 ~ 1,
+    subtype == 4 ~ 1
+  ),
+  marker2 = dplyr::case_when(
+    subtype == 1 ~ 0,
+    subtype == 2 ~ 1,
+    subtype == 3 ~ 0,
+    subtype == 4 ~ 1
+  ),
+  case = ifelse(subtype == 0, 0, 1)
 )
 
 subtype_data <- dplyr::select(
   subtype_data,
-  subtype, subtype_name, dplyr::everything()
+  case, subtype, subtype_name, marker1, marker2, dplyr::everything()
 )
 
 usethis::use_data(subtype_data, overwrite = TRUE)

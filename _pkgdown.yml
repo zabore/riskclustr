@@ -15,6 +15,8 @@ navbar:
     menu:
     - text: "Estimate the extent of etiologic heterogeneity"
       href: articles/calculate_d.html
+    - text: "Test for etiologic heterogeneity"
+      href: articles/eh_test.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/zabore/riskclustr
@@ -24,6 +26,10 @@ reference:
     contents:
       - d
       - dstar
+  - title: "Test for etiologic heterogeneity"
+    contents:
+      - eh_test_subtype
+      - eh_test_marker
 
   - title: "Example Datasets"
     desc: >

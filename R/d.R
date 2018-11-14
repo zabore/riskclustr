@@ -7,9 +7,10 @@
 #' logistic regression model, and calculates D based on the resulting risk
 #' predictions.
 #'
-#' @param formula an \code{mlogit::mFormula()} model formula for a polytmous
-#' logistic regression model to be fit with \code{mlogit()} using the
-#' appropriate variable names from the data of interest
+#' @param formula an \code{\link[mlogit]{mFormula}} model formula for a
+#' polytmous logistic regression model to be fit with
+#' \code{\link[mlogit]{mlogit}} using the specified variable names from the
+#' data of interest
 #' @param label the name of the subtype variable in the data.
 #' This should be a numeric variable with values 0 through M, where 0 indicates
 #' control subjects, should be supplied in quotes, e.g. label = "subtype"
@@ -23,7 +24,7 @@
 #' mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
 #'
 #' # calculate D
-#' d(mform, "subtype", 3, subtype_data)
+#' d(mform, "subtype", 4, subtype_data)
 #'
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &

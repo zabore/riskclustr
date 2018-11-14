@@ -7,9 +7,10 @@
 dstar(formula, label, M, data)
 }
 \arguments{
-\item{formula}{an mFormula() model formula for a polytmous logistic
-regression model to be fit with mlogit() using the appropriate variable
-names from the data of interest.}
+\item{formula}{an \code{\link[mlogit]{mFormula}} model formula for a
+polytmous logistic regression model to be fit with
+\code{\link[mlogit]{mlogit}} using the specified variable names from the
+data of interest.}
 
 \item{label}{the name of the subtype variable in the data with values 1
 through M. Should be supplied in quotes, e.g. label = "subtype".
@@ -35,7 +36,7 @@ mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
 
 # calculate D*
 # Exclude controls from data as this is a case-only calculation
-dstar(mform, "subtype", 3, subtype_data[subtype_data$subtype > 0, ])
+dstar(mform, "subtype", 4, subtype_data[subtype_data$subtype > 0, ])
 
 }
 \references{

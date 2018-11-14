@@ -5,10 +5,10 @@ test_that("dstar produces expected value", {
     round(dstar(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data[subtype_data$subtype > 0, ]
     ), 3),
-    0.559
+    0.402
   )
 })
 
@@ -18,7 +18,7 @@ test_that("dstar prints message when formula mis-specified", {
     dstar(
       formula(subtype ~ x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data[subtype_data$subtype > 0, ]
     ),
     "The formula argument must be of class mFormula. Please correctly specify the model formula and try again.",
@@ -32,7 +32,7 @@ test_that("dstar prints message when label variable is not numeric", {
     dstar(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype_name",
-      3,
+      4,
       subtype_data[subtype_data$subtype > 0, ]
     ),
     "The argument to label must be numeric or integer. Arguments of type character and factor are not supported, please see the documentation.",
@@ -46,7 +46,7 @@ test_that("dstar prints message when subtype variable doesn't start with 1", {
     dstar(
       mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3),
       "subtype",
-      3,
+      4,
       subtype_data[subtype_data$subtype > 1, ]
     ),
     "The argument to label should start with 1. Cases should be labeled with subtypes 1 through M, the total number of subtypes.",

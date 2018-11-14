@@ -1,0 +1,50 @@
+---
+title: "Tutorial: test for etiologic heterogeneity in a case-control study"
+author: "Emily C. Zabor"
+date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial: test for etiologic heterogeneity in a case-control study}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+In epidemiologic studies polytomous logistic regression is commonly used in the study of etiologic heterogeneity when data are from a case-control study, and the method has good statistical properties. Although polytomous logistic regression can be implemented using available software, the additional calculations needed to perform a thorough analysis of etiologic heterogeneity are cumbersome. To facilitate use of this method we provide functions `eh_test_subtype` and `eh_test_marker` to address two key questions regarding etiologic heterogeneity:
+
+1. Do risk factor effects differ according to disease subtypes?
+2. Do risk factor effects differ according to the individual disease markers that combine to form disease subtypes?
+
+
+Whether disease subtypes are pre-specified or formed by cross-classification of individual disease markers, the resulting polytomous logistic regression model is the same. Let $i$ index study subjects, $i = 1, \ldots, N$, let $m$ index disease subtypes, $m = 0, \ldots M$, where $m=0$ denotes control subjects, and let $p$ index risk factors, $p = 1, \ldots, P$.The polytomous logistic regression model is specified as
+
+$$\Pr(Y = m | \mathbf{X}) = \frac{\exp(\mathbf{X}^T \mathbf{\beta}_{\boldsymbol{\cdot} m})}{\mathbf{1} + \exp(\mathbf{X}^T \mathbf{\beta}) \mathbf{1}}$$
+where $\mathbf{X}$ is the $(P+1) \times N$ matrix of risk factor values, with the first row all ones for the intercept, and $\mathbf{\beta}$ is the $(P+1) \times M$ matrix of regression coefficients. $\mathbf{\beta}_{\boldsymbol{\cdot} m}$ indicates the $m$th column of the matrix $\mathbf{\beta}$ and $\mathbf{1}$ represents a vector of ones of length $M$.
+
+
+## Pre-specified subtypes
+
+If disease subtypes are pre-specified, either based on clustering high-dimensional disease marker data or based on a single disease marker or combinations of disease markers, then statistical tests for etiologic heterogeneity according to each risk factor can be conducted using the `eh_test_subtype` function. 
+
+Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, $\hat{\mathbf{\beta}}$, and the associated estimated variance-covariance matrix, $\widehat{cov}(\hat{\mathbf{\beta}})$, are obtained directly from the resulting polytomous logistic regression model. These estimates can be obtained using many standard statistical software programs. Each $\beta_{pm}$ parameter represents the log odds ratio for a one-unit change in risk factor $p$ for subtype $m$ disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor $p$ using a joint Wald test of the hypothesis 
+
+$$H_{0_\beta}: \mathbf{L} \mathbf{\beta}_{p \boldsymbol{\cdot}}^T = 0$$ 
+where $\mathbf{\beta}_{p \boldsymbol{\cdot}}$ is the row of $\mathbf{\beta}$ corresponding to the $p$th risk factor and $\mathbf{L}$ is the appropriate $(M-1) \times M$ contrast matrix such that cells where row($\mathbf{L}$) - col($\mathbf{L}$) = 0 have value 1, cells where row($\mathbf{L}$) - col($\mathbf{L}$) = -1 have value -1, and the remaining cells have value 0.
+
+
+## Subtypes formed by cross-classification of disease markers
+
+The setting here is one in which binary disease markers are cross-classified to form disease subtypes.
+
+
+Let $k$ index disease markers, $k = 1, \ldots, K$. Here the $M$ disease subtypes are formed by cross-classification of the $K$ binary tumor markers, so that we have $M = 2^K$ disease subtypes.
+

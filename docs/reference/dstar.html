@@ -91,6 +91,9 @@ predictions." />
     <li>
       <a href="../articles/calculate_d.html">Estimate the extent of etiologic heterogeneity</a>
     </li>
+    <li>
+      <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -137,9 +140,10 @@ predictions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>an mFormula() model formula for a polytmous logistic
-regression model to be fit with mlogit() using the appropriate variable
-names from the data of interest.</p></td>
+      <td><p>an <code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></code> model formula for a
+polytmous logistic regression model to be fit with
+<code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code> using the specified variable names from the
+data of interest.</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -173,7 +177,7 @@ doi: 10.1186/1471-2288-14-138</p>
 
 <span class='co'># calculate D*</span>
 <span class='co'># Exclude controls from data as this is a case-only calculation</span>
-<span class='fu'>dstar</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>3</span>, <span class='no'>subtype_data</span>[<span class='no'>subtype_data</span>$<span class='no'>subtype</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, ])</div><div class='output co'>#&gt; [1] 0.5589295</div><div class='input'>
+<span class='fu'>dstar</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>4</span>, <span class='no'>subtype_data</span>[<span class='no'>subtype_data</span>$<span class='no'>subtype</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, ])</div><div class='output co'>#&gt; [1] 0.4022017</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

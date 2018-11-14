@@ -33,11 +33,15 @@
 <meta property="og:title" content="Simulated subtype data — subtype_data" />
 
 <meta property="og:description" content="A dataset containing 2000 patients: 1200 cases and 800 controls.
-There are three subtypes, and both numeric and character subtype labels.
-There are three risk factors, two continuous and one binary,
-which are all related to the three subtypes.
-There are also 30 continuous tumor markers, 15 of which are related to
-the subtypes, which could be used in a clustering analysis." />
+There are four subtypes, and both numeric and character subtype labels.
+The subtypes are formed by cross-classification of two binary disease markers,
+disease marker 1 and disease marker 2.
+There are three risk factors, two continuous and one binary. One of the
+continuous risk factors and the binary risk factor are related to the
+disease subtypes.
+There are also 30 continuous tumor markers, 20 of which are related to
+the subtypes and 10 of which represent noise, which could be used in a
+clustering analysis." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -91,6 +95,9 @@ the subtypes, which could be used in a clustering analysis." />
     <li>
       <a href="../articles/calculate_d.html">Estimate the extent of etiologic heterogeneity</a>
     </li>
+    <li>
+      <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -122,11 +129,15 @@ the subtypes, which could be used in a clustering analysis." />
     <div class="ref-description">
     
     <p>A dataset containing 2000 patients: 1200 cases and 800 controls.
-There are three subtypes, and both numeric and character subtype labels.
-There are three risk factors, two continuous and one binary,
-which are all related to the three subtypes.
-There are also 30 continuous tumor markers, 15 of which are related to
-the subtypes, which could be used in a clustering analysis.</p>
+There are four subtypes, and both numeric and character subtype labels.
+The subtypes are formed by cross-classification of two binary disease markers,
+disease marker 1 and disease marker 2.
+There are three risk factors, two continuous and one binary. One of the
+continuous risk factors and the binary risk factor are related to the
+disease subtypes.
+There are also 30 continuous tumor markers, 20 of which are related to
+the subtypes and 10 of which represent noise, which could be used in a
+clustering analysis.</p>
     
     </div>
 
@@ -135,8 +146,11 @@ the subtypes, which could be used in a clustering analysis.</p>
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p>A data frame with 2000 rows--one row per patient</p><dl class='dl-horizontal'>
+<dt>case</dt><dd><p>Indicator of case control status, 1 for cases and 0 for controls</p></dd>
 <dt>subtype</dt><dd><p>Numeric subtype label, 0 for control subjects</p></dd>
 <dt>subtype_name</dt><dd><p>Character subtype label</p></dd>
+<dt>marker1</dt><dd><p>Disease marker 1</p></dd>
+<dt>marker2</dt><dd><p>Disease marker 2</p></dd>
 <dt>x1</dt><dd><p>Continuous risk factor 1</p></dd>
 <dt>x2</dt><dd><p>Continuous risk factor 2</p></dd>
 <dt>x3</dt><dd><p>Binary risk factor</p></dd>

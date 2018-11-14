@@ -7,9 +7,10 @@
 d(formula, label, M, data)
 }
 \arguments{
-\item{formula}{an \code{mlogit::mFormula()} model formula for a polytmous
-logistic regression model to be fit with \code{mlogit()} using the
-appropriate variable names from the data of interest}
+\item{formula}{an \code{\link[mlogit]{mFormula}} model formula for a
+polytmous logistic regression model to be fit with
+\code{\link[mlogit]{mlogit}} using the specified variable names from the
+data of interest}
 
 \item{label}{the name of the subtype variable in the data.
 This should be a numeric variable with values 0 through M, where 0 indicates
@@ -34,7 +35,7 @@ predictions.
 mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
 
 # calculate D
-d(mform, "subtype", 3, subtype_data)
+d(mform, "subtype", 4, subtype_data)
 
 }
 \references{

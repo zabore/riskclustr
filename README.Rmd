@@ -12,19 +12,16 @@ output: github_document
 
 # riskclustr
 
-`riskclustr` is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors.
+Etiologic heterogeneity refers to the concept of subtypes of disease that are influenced by different risk factors. Likely the best known example of this is in breast cancer research, where subtypes are often formed based on immunohistochemical staining of estrogen receptor (ER), progesterone receptor (PR) and human epidermal growth factor receptor 2 (HER2). Risk factors including patient characteristics such as age and BMI as well as hormonal risk factors such as age at menarche, parity, and menopausal status have been shown to have different relative risks for these disease subtypes.
+
+`riskclustr` is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual disease markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study or case-only study, and provide p-values to test for etiologic heterogeneity with respect to either disease subtypes or individual disease markers in the context of a case-control study.
 
 
 ## Installation
 
-You can install the production version of `riskclustr` with:
+You can install `riskclustr` by running:
 
 ```{r, eval = FALSE}
 devtools::install_github("zabore/riskclustr")
-```
-
-and the development version with:
-
-```{r, eval = FALSE}
-devtools::install_github("zabore/riskclustr", ref = "development")
+library(riskclustr)
 ```

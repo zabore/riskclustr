@@ -91,6 +91,9 @@ predictions." />
     <li>
       <a href="../articles/calculate_d.html">Estimate the extent of etiologic heterogeneity</a>
     </li>
+    <li>
+      <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -137,9 +140,10 @@ predictions.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>formula</th>
-      <td><p>an <code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mlogit::mFormula()</a></code> model formula for a polytmous
-logistic regression model to be fit with <code>mlogit()</code> using the
-appropriate variable names from the data of interest</p></td>
+      <td><p>an <code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></code> model formula for a
+polytmous logistic regression model to be fit with
+<code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code> using the specified variable names from the
+data of interest</p></td>
     </tr>
     <tr>
       <th>label</th>
@@ -172,7 +176,7 @@ doi: 10.1002/sim.5902</p>
 <span class='no'>mform</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>mlogit</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></span>(<span class='no'>subtype</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>)
 
 <span class='co'># calculate D</span>
-<span class='fu'>d</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>3</span>, <span class='no'>subtype_data</span>)</div><div class='output co'>#&gt; [1] 0.6427697</div><div class='input'>
+<span class='fu'>d</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>4</span>, <span class='no'>subtype_data</span>)</div><div class='output co'>#&gt; [1] 0.4100995</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
