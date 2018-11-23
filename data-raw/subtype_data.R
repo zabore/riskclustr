@@ -13,8 +13,10 @@ K_A <- 20
 K_C <- 10
 a <- 2.1
 lambda_Am <- matrix(rep(c(a, 0, a, 0, a, 0, a),
-                        times = c(5, 20, 5, 20, 5, 20, 5)),
-                    ncol = 4)
+  times = c(5, 20, 5, 20, 5, 20, 5)
+),
+ncol = 4
+)
 
 # generate etiologically distinct subtypes indicator matrix
 tAcls <- rep(1:M, N * pi[2:(M + 1)])

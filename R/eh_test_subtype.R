@@ -87,7 +87,7 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   }
 
   # Check if there are any colons in a variable name and stop if so
-  if(any(grep("^[^:]+:", factors)) == TRUE) {
+  if (any(grep("^[^:]+:", factors)) == TRUE) {
     stop("Risk factor names cannot include colons. Please rename the offending risk factor and try again.")
   }
 
@@ -95,7 +95,8 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
 
   # write the formula
   mform <- mlogit::mFormula(
-    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + "))))
+    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + ")))
+  )
 
   # transform the data for use in mlogit
   data2 <- mlogit::mlogit.data(data, choice = label, shape = "wide")
@@ -103,8 +104,10 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   # fit the polytomous logistic regression model
   fit <- mlogit::mlogit(formula = mform, data = data2)
 
-  coefnames <- unique(sapply(strsplit(rownames(summary(fit)$CoefTable), ":"),
-                             "[[", 2))[-1]
+  coefnames <- unique(sapply(
+    strsplit(rownames(summary(fit)$CoefTable), ":"),
+    "[[", 2
+  ))[-1]
   beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = M, byrow = T)[-1, ]
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = M, byrow = T)[-1, ]
   colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[, label]))[-1]
@@ -122,8 +125,11 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   # V is a list where each element is the vcov matrix for a diff RF
   vcov_plr <- stats::vcov(fit)
   V <- lapply(coefnames, function(x) {
-    vcov_plr[which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
-             which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)]})
+    vcov_plr[
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)
+    ]
+  })
 
   # Lmat is the contrast matrix to get the etiologic heterogeneity pvalue
   Lmat <- matrix(0, nrow = (M - 1), ncol = M)
@@ -131,19 +137,28 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   Lmat[row(Lmat) - col(Lmat) == -1] <- -1
 
   pval <- sapply(1:p, function(i) {
-    aod::wald.test(b = beta_plr[i, ],
-                   Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
+    aod::wald.test(
+      b = beta_plr[i, ],
+      Sigma = V[[i]], L = Lmat
+    )$result$chi2["P"]
+  })
   pval <- as.data.frame(pval)
   rownames(pval) <- coefnames
   colnames(pval) <- "p_het"
 
   # Store results on both beta and OR scale
-  beta_se_p <- data.frame(matrix(paste0(round(beta_plr, digits), " (",
-                                        round(beta_se, digits), ")"), ncol = M),
-                          round(pval, 3), stringsAsFactors = FALSE)
+  beta_se_p <- data.frame(matrix(paste0(
+    round(beta_plr, digits), " (",
+    round(beta_se, digits), ")"
+  ), ncol = M),
+  round(pval, 3),
+  stringsAsFactors = FALSE
+  )
 
   or_ci_p <- data.frame(matrix(paste0(or, " (", lci, "-", uci, ")"), ncol = M),
-                        round(pval, 3), stringsAsFactors = FALSE)
+    round(pval, 3),
+    stringsAsFactors = FALSE
+  )
 
   # Format the resulting dataframes
   rownames(or_ci_p) <- rownames(beta_se_p) <- coefnames
@@ -153,9 +168,11 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
 
   # Returns
-  return(list(beta = beta_plr,
-              beta_se = beta_se,
-              eh_pval = pval,
-              or_ci_p = or_ci_p,
-              beta_se_p = beta_se_p))
+  return(list(
+    beta = beta_plr,
+    beta_se = beta_se,
+    eh_pval = pval,
+    or_ci_p = or_ci_p,
+    beta_se_p = beta_se_p
+  ))
 }

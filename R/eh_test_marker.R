@@ -87,27 +87,34 @@
 eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   # Check if levels of each element in tm have only values 0 or 1
-  if(any(sapply(lapply(markers, function(x) {
-    levels(as.factor(data[, x]))}),
-    function(y) {any(!(y %in% c("0", "1")))}) == TRUE)) {
+  if (any(sapply(
+    lapply(markers, function(x) {
+      levels(as.factor(data[, x]))
+    }),
+    function(y) {
+      any(!(y %in% c("0", "1")))
+    }
+  ) == TRUE)) {
     stop("All non-missing elements of tm must have values 0 or 1")
   }
 
   # Check if levels of case-control indicator are all 0 or 1
-  if(any(!(as.factor(data[, case]) %in% c("0", "1"))) == TRUE) {
+  if (any(!(as.factor(data[, case]) %in% c("0", "1"))) == TRUE) {
     stop("All elements of case must have values 0 or 1")
   }
 
   # Check if there are any colons in a variable name and stop if so
-  if(any(grep("^[^:]+:", factors)) == TRUE) {
+  if (any(grep("^[^:]+:", factors)) == TRUE) {
     stop("Risk factor names cannot include colons. Please rename the offending risk factor and try again.")
   }
 
   k <- length(markers) # number of tumor markers
   p <- length(factors) # number of covariates
-  st <- expand.grid(rep(list(c(0, 1)), k)) #subtype by tm matrix
+  st <- expand.grid(rep(list(c(0, 1)), k)) # subtype by tm matrix
   colnames(st) <- markers # columns of matrix have names of tumor markers
-  st$sub_name <- apply(st, 1, function(x) {paste(x, collapse = "/")})
+  st$sub_name <- apply(st, 1, function(x) {
+    paste(x, collapse = "/")
+  })
   st$sub <- rownames(st)
   m <- nrow(st) # number of subtypes
 
@@ -120,7 +127,8 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   # write the formula
   mform <- mlogit::mFormula(
-    stats::as.formula(paste0("sub ~ 1 |", paste(factors, collapse = " + "))))
+    stats::as.formula(paste0("sub ~ 1 |", paste(factors, collapse = " + ")))
+  )
 
   # transform the data for use in mlogit
   data2 <- mlogit::mlogit.data(data, choice = "sub", shape = "wide")
@@ -128,8 +136,10 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   # fit the polytomous logistic regression model
   fit <- mlogit::mlogit(formula = mform, data = data2)
 
-  coefnames <- unique(sapply(strsplit(rownames(summary(fit)$CoefTable), ":"),
-                             "[[", 2))[-1]
+  coefnames <- unique(sapply(
+    strsplit(rownames(summary(fit)$CoefTable), ":"),
+    "[[", 2
+  ))[-1]
   beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, ]
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, ]
   colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[, "sub"]))[-1]
@@ -147,8 +157,11 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   # V is a list where each element is the vcov matrix for a diff RF
   vcov_plr <- stats::vcov(fit)
   V <- lapply(coefnames, function(x) {
-    vcov_plr[which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
-             which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)]})
+    vcov_plr[
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)
+    ]
+  })
 
   # Lmat is the contrast matrix to get the etiologic heterogeneity pvalue
   Lmat <- matrix(0, nrow = (m - 1), ncol = m)
@@ -156,18 +169,28 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   Lmat[row(Lmat) - col(Lmat) == -1] <- -1
 
   pval <- sapply(1:p, function(i) {
-    aod::wald.test(b = beta_plr[i, ],
-                   Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
+    aod::wald.test(
+      b = beta_plr[i, ],
+      Sigma = V[[i]], L = Lmat
+    )$result$chi2["P"]
+  })
   names(pval) <- coefnames
 
   # Store results on both beta and OR scale
-  beta_se_p <- data.frame(t(matrix(paste0(round(beta_plr, digits), " (",
-                                          round(beta_se, digits), ")"), nrow = m)),
-                          round(pval, 3), stringsAsFactors = FALSE)
+  beta_se_p <- data.frame(t(matrix(paste0(
+    round(beta_plr, digits), " (",
+    round(beta_se, digits), ")"
+  ), nrow = m)),
+  round(pval, 3),
+  stringsAsFactors = FALSE
+  )
 
   or_ci_p <- data.frame(t(matrix(paste0(or, " (", lci, "-", uci, ")"),
-                                 nrow = m)),
-                        round(pval, 3), stringsAsFactors = FALSE)
+    nrow = m
+  )),
+  round(pval, 3),
+  stringsAsFactors = FALSE
+  )
 
   # Format the resulting dataframes
   rownames(or_ci_p) <- rownames(beta_se_p) <- coefnames
@@ -188,28 +211,40 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   # Get the standard error ests
   gamma_plr_se <- t(sapply(V, function(x) sqrt((m / 2)^(-2) *
-                                                 diag(t(d) %*% x %*% d))))
+      diag(t(d) %*% x %*% d))))
 
   # Calculate the p-values for each tumor marker
-  gamma_plr_pval <- matrix(sapply(1:k, function(j) {sapply(1:p, function(i) {
-    aod::wald.test(b = beta_plr[i, ], Sigma = V[[i]],
-              L = t(d[, j]))$result$chi2["P"]})}), nrow = p)
+  gamma_plr_pval <- matrix(sapply(1:k, function(j) {
+    sapply(1:p, function(i) {
+      aod::wald.test(
+        b = beta_plr[i, ], Sigma = V[[i]],
+        L = t(d[, j])
+      )$result$chi2["P"]
+    })
+  }), nrow = p)
 
   # Put results together into data frame
   gamma_se_p <- data.frame(
     matrix(
       unlist(
         lapply(1:k, function(k) {
-          cbind(matrix(paste0(round(gamma_plr, 2),
-                              " (",
-                              round(gamma_plr_se, 2),
-                              ")"),
-                       nrow = p)[, k],
-                round(gamma_plr_pval[, k], 3)
-                )
-          })
-        ),
-      nrow = p), stringsAsFactors = FALSE)
+          cbind(
+            matrix(paste0(
+              round(gamma_plr, 2),
+              " (",
+              round(gamma_plr_se, 2),
+              ")"
+            ),
+            nrow = p
+            )[, k],
+            round(gamma_plr_pval[, k], 3)
+          )
+        })
+      ),
+      nrow = p
+    ),
+    stringsAsFactors = FALSE
+  )
 
   # Format the results
   rownames(gamma_plr) <-
@@ -225,24 +260,27 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   # format p-values < 0.001
   gamma_se_p[, seq(2, ncol(gamma_se_p), 2)][gamma_se_p[, seq(2, ncol(gamma_se_p), 2)]
-                                            == "0"] <- "<.001"
+  == "0"] <- "<.001"
 
   colnames(gamma_se_p) <- as.vector(
     sapply(1:k, function(x) {
-      c(paste(markers[[x]], "est"),
+      c(
+        paste(markers[[x]], "est"),
         paste(markers[[x]], "pval")
-        )
-      })
-    )
+      )
+    })
+  )
 
   # Returns
-  return(list(beta = beta_plr,
-              beta_se = beta_se,
-              eh_pval = pval,
-              gamma = gamma_plr,
-              gamma_se = gamma_plr_se,
-              gamma_pval = gamma_plr_pval,
-              or_ci_p = or_ci_p,
-              beta_se_p = beta_se_p,
-              gamma_se_p = gamma_se_p))
+  return(list(
+    beta = beta_plr,
+    beta_se = beta_se,
+    eh_pval = pval,
+    gamma = gamma_plr,
+    gamma_se = gamma_plr_se,
+    gamma_pval = gamma_plr_pval,
+    or_ci_p = or_ci_p,
+    beta_se_p = beta_se_p,
+    gamma_se_p = gamma_se_p
+  ))
 }

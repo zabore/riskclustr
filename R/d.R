@@ -58,7 +58,8 @@ d <- function(label, M, factors, data) {
 
   # write the formula
   mform <- mlogit::mFormula(
-    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + "))))
+    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + ")))
+  )
 
   ncontrol <- nrow(data[data[, label] == 0, ])
   ncase <- nrow(data[data[, label] != 0, ])

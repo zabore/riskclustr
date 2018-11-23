@@ -61,7 +61,8 @@ dstar <- function(label, M, factors, data) {
 
   # write the formula
   mform <- mlogit::mFormula(
-    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + "))))
+    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + ")))
+  )
 
   # sample size (all cases)
   ncase <- nrow(data)
