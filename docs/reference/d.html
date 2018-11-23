@@ -36,8 +36,8 @@
 across a set of pre-specified disease subtypes in a case-control study.
 This function takes a model formula and a wide dataset and does the needed
 transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model, and calculates D based on the resulting risk
-predictions." />
+logistic regression model using mlogit,
+and calculates D based on the resulting risk predictions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,37 +128,36 @@ predictions." />
 across a set of pre-specified disease subtypes in a case-control study.
 This function takes a model formula and a wide dataset and does the needed
 transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model, and calculates D based on the resulting risk
-predictions.</p>
+logistic regression model using <code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>,
+and calculates D based on the resulting risk predictions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>d</span>(<span class='no'>formula</span>, <span class='no'>label</span>, <span class='no'>M</span>, <span class='no'>data</span>)</pre>
+    <pre class="usage"><span class='fu'>d</span>(<span class='no'>label</span>, <span class='no'>M</span>, <span class='no'>factors</span>, <span class='no'>data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>formula</th>
-      <td><p>an <code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></code> model formula for a
-polytmous logistic regression model to be fit with
-<code><a href='http://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code> using the specified variable names from the
-data of interest</p></td>
-    </tr>
-    <tr>
       <th>label</th>
-      <td><p>the name of the subtype variable in the data.
-This should be a numeric variable with values 0 through M, where 0 indicates
-control subjects, should be supplied in quotes, e.g. label = "subtype"</p></td>
+      <td><p>the name of the subtype variable in the data. This should be a
+numeric variable with values 0 through M, where 0 indicates control subjects.
+Must be supplied in quotes, e.g. <code>label = "subtype"</code>.
+quotes.</p></td>
     </tr>
     <tr>
       <th>M</th>
-      <td><p>the number of subtypes. This should not include controls, but
-only the number of subtypes among case subjects. For M&gt;=2.</p></td>
+      <td><p>is the number of subtypes. For M&gt;=2.</p></td>
+    </tr>
+    <tr>
+      <th>factors</th>
+      <td><p>a list of the names of the binary or continuous risk factors.
+For binary risk factors the lowest level will be used as the reference level.
+e.g. <code>factors = list("age", "sex", "race")</code>.</p></td>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>the name of the dataframe that contains the relevant variables</p></td>
+      <td><p>the name of the dataframe that contains the relevant variables.</p></td>
     </tr>
     </table>
     
@@ -172,11 +171,11 @@ doi: 10.1002/sim.5902</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'># specify the model formula for three risk factors, x1, x2 and x3</span>
-<span class='no'>mform</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>mlogit</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/mlogit/topics/mFormula'>mFormula</a></span>(<span class='no'>subtype</span> ~ <span class='fl'>1</span> <span class='kw'>|</span> <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>)
-
-<span class='co'># calculate D</span>
-<span class='fu'>d</span>(<span class='no'>mform</span>, <span class='st'>"subtype"</span>, <span class='fl'>4</span>, <span class='no'>subtype_data</span>)</div><div class='output co'>#&gt; [1] 0.4100995</div><div class='input'>
+<span class='fu'>d</span>(
+ <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
+ <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+ <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x2"</span>),
+ <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>)</div><div class='output co'>#&gt; [1] 0.2494268</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

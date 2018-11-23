@@ -74,12 +74,12 @@
 #' @examples
 #'
 #' # Run for two binary tumor markers, which will combine to form four subtypes
-#' eh_test_marker(list("marker1", "marker2"),
-#'                list("x1", "x2", "x3"),
-#'                "case",
-#'                subtype_data,
-#'                digits = 2)
-#'
+#' eh_test_marker(
+#'     markers = list("marker1", "marker2"),
+#'     factors = list("x1", "x2", "x3"),
+#'     case = "case",
+#'     data = subtype_data,
+#'     digits = 2)
 #'
 #' @export
 #'
@@ -165,7 +165,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
                                           round(beta_se, digits), ")"), nrow = m)),
                           round(pval, 3), stringsAsFactors = FALSE)
 
-  or_ci_p <- data.frame(t(matrix(paste0(or, " (", lci, " - ", uci, ")"),
+  or_ci_p <- data.frame(t(matrix(paste0(or, " (", lci, "-", uci, ")"),
                                  nrow = m)),
                         round(pval, 3), stringsAsFactors = FALSE)
 

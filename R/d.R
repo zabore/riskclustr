@@ -4,27 +4,26 @@
 #' across a set of pre-specified disease subtypes in a case-control study.
 #' This function takes a model formula and a wide dataset and does the needed
 #' transformation on the dataset to get the correct format, fits the polytomous
-#' logistic regression model, and calculates D based on the resulting risk
-#' predictions.
+#' logistic regression model using \code{\link[mlogit]{mlogit}},
+#' and calculates D based on the resulting risk predictions.
 #'
-#' @param formula an \code{\link[mlogit]{mFormula}} model formula for a
-#' polytmous logistic regression model to be fit with
-#' \code{\link[mlogit]{mlogit}} using the specified variable names from the
-#' data of interest
-#' @param label the name of the subtype variable in the data.
-#' This should be a numeric variable with values 0 through M, where 0 indicates
-#' control subjects, should be supplied in quotes, e.g. label = "subtype"
-#' @param M the number of subtypes. This should not include controls, but
-#' only the number of subtypes among case subjects. For M>=2.
-#' @param data the name of the dataframe that contains the relevant variables
+#' @param label the name of the subtype variable in the data. This should be a
+#' numeric variable with values 0 through M, where 0 indicates control subjects.
+#' Must be supplied in quotes, e.g. \code{label = "subtype"}.
+#' quotes.
+#' @param M is the number of subtypes. For M>=2.
+#' @param factors a list of the names of the binary or continuous risk factors.
+#' For binary risk factors the lowest level will be used as the reference level.
+#' e.g. \code{factors = list("age", "sex", "race")}.
+#' @param data the name of the dataframe that contains the relevant variables.
 #'
 #' @examples
 #'
-#' # specify the model formula for three risk factors, x1, x2 and x3
-#' mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
-#'
-#' # calculate D
-#' d(mform, "subtype", 4, subtype_data)
+#' d(
+#'  label = "subtype",
+#'  M = 4,
+#'  factors = list("x1", "x2", "x2"),
+#'  data = subtype_data)
 #'
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
@@ -35,12 +34,7 @@
 #' @export
 #'
 
-d <- function(formula, label, M, data) {
-
-  # Check if the model formula is class mFormula
-  if (any(class(formula) == "mFormula") == FALSE) {
-    stop("The formula argument must be of class mFormula. Please correctly specify the model formula and try again.")
-  }
+d <- function(label, M, factors, data) {
 
   # Check if the label variable is numeric/integer
   if (!class(data[[label]]) %in% c("numeric", "integer")) {
@@ -62,6 +56,10 @@ d <- function(formula, label, M, data) {
     stop("M is not equal to the number of non-zero levels in the variable supplied to label. Please make sure M reflects the number of subtypes in the data.")
   }
 
+  # write the formula
+  mform <- mlogit::mFormula(
+    stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + "))))
+
   ncontrol <- nrow(data[data[, label] == 0, ])
   ncase <- nrow(data[data[, label] != 0, ])
 
@@ -69,7 +67,7 @@ d <- function(formula, label, M, data) {
   data2 <- mlogit::mlogit.data(data, choice = label, shape = "wide")
 
   # fit the polytomous logistic regression model
-  mod <- mlogit::mlogit(formula = formula, data = data2)
+  mod <- mlogit::mlogit(formula = mform, data = data2)
 
   # predicted risk for each label for controls only
   fprob <- mod$probabilities[which(data[, label] == 0), -1]

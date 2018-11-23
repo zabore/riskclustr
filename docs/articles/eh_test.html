@@ -82,7 +82,7 @@
       <h1>Tutorial: test for etiologic heterogeneity in a case-control study</h1>
                         <h4 class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: November 14, 2018</h4>
+            <h4 class="date">Last updated: November 23, 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/eh_test.Rmd"><code>vignettes/eh_test.Rmd</code></a></small>
       <div class="hidden name"><code>eh_test.Rmd</code></div>
@@ -97,23 +97,319 @@
 <p>In epidemiologic studies polytomous logistic regression is commonly used in the study of etiologic heterogeneity when data are from a case-control study, and the method has good statistical properties. Although polytomous logistic regression can be implemented using available software, the additional calculations needed to perform a thorough analysis of etiologic heterogeneity are cumbersome. To facilitate use of this method we provide functions <code>eh_test_subtype</code> and <code>eh_test_marker</code> to address two key questions regarding etiologic heterogeneity:</p>
 <ol style="list-style-type: decimal">
 <li>Do risk factor effects differ according to disease subtypes?</li>
-<li>Do risk factor effects differ according to the individual disease markers that combine to form disease subtypes?</li>
+<li>Do risk factor effects differ according to individual disease markers that combine to form disease subtypes?</li>
 </ol>
-<p>Whether disease subtypes are pre-specified or formed by cross-classification of individual disease markers, the resulting polytomous logistic regression model is the same. Let <span class="math inline">\(i\)</span> index study subjects, <span class="math inline">\(i = 1, \ldots, N\)</span>, let <span class="math inline">\(m\)</span> index disease subtypes, <span class="math inline">\(m = 0, \ldots M\)</span>, where <span class="math inline">\(m=0\)</span> denotes control subjects, and let <span class="math inline">\(p\)</span> index risk factors, <span class="math inline">\(p = 1, \ldots, P\)</span>.The polytomous logistic regression model is specified as</p>
+<p>Whether disease subtypes are pre-specified or formed by cross-classification of individual disease markers, the resulting polytomous logistic regression model is the same. Let <span class="math inline">\(i\)</span> index study subjects, <span class="math inline">\(i = 1, \ldots, N\)</span>, let <span class="math inline">\(m\)</span> index disease subtypes, <span class="math inline">\(m = 0, \ldots M\)</span>, where <span class="math inline">\(m=0\)</span> denotes control subjects, and let <span class="math inline">\(p\)</span> index risk factors, <span class="math inline">\(p = 1, \ldots, P\)</span>. The polytomous logistic regression model is specified as</p>
 <p><span class="math display">\[\Pr(Y = m | \mathbf{X}) = \frac{\exp(\mathbf{X}^T \mathbf{\beta}_{\boldsymbol{\cdot} m})}{\mathbf{1} + \exp(\mathbf{X}^T \mathbf{\beta}) \mathbf{1}}\]</span> where <span class="math inline">\(\mathbf{X}\)</span> is the <span class="math inline">\((P+1) \times N\)</span> matrix of risk factor values, with the first row all ones for the intercept, and <span class="math inline">\(\mathbf{\beta}\)</span> is the <span class="math inline">\((P+1) \times M\)</span> matrix of regression coefficients. <span class="math inline">\(\mathbf{\beta}_{\boldsymbol{\cdot} m}\)</span> indicates the <span class="math inline">\(m\)</span>th column of the matrix <span class="math inline">\(\mathbf{\beta}\)</span> and <span class="math inline">\(\mathbf{1}\)</span> represents a vector of ones of length <span class="math inline">\(M\)</span>.</p>
 </div>
-<div id="pre-specified-subtypes" class="section level2">
+<div id="subtype" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pre-specified-subtypes" class="anchor"></a>Pre-specified subtypes</h2>
+<a href="#subtype" class="anchor"></a>Pre-specified subtypes</h2>
 <p>If disease subtypes are pre-specified, either based on clustering high-dimensional disease marker data or based on a single disease marker or combinations of disease markers, then statistical tests for etiologic heterogeneity according to each risk factor can be conducted using the <code>eh_test_subtype</code> function.</p>
-<p>Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, <span class="math inline">\(\hat{\mathbf{\beta}}\)</span>, and the associated estimated variance-covariance matrix, <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}})\)</span>, are obtained directly from the resulting polytomous logistic regression model. These estimates can be obtained using many standard statistical software programs. Each <span class="math inline">\(\beta_{pm}\)</span> parameter represents the log odds ratio for a one-unit change in risk factor <span class="math inline">\(p\)</span> for subtype <span class="math inline">\(m\)</span> disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor <span class="math inline">\(p\)</span> using a joint Wald test of the hypothesis</p>
-<p><span class="math display">\[H_{0_\beta}: \mathbf{L} \mathbf{\beta}_{p \boldsymbol{\cdot}}^T = 0\]</span> where <span class="math inline">\(\mathbf{\beta}_{p \boldsymbol{\cdot}}\)</span> is the row of <span class="math inline">\(\mathbf{\beta}\)</span> corresponding to the <span class="math inline">\(p\)</span>th risk factor and <span class="math inline">\(\mathbf{L}\)</span> is the appropriate <span class="math inline">\((M-1) \times M\)</span> contrast matrix such that cells where row(<span class="math inline">\(\mathbf{L}\)</span>) - col(<span class="math inline">\(\mathbf{L}\)</span>) = 0 have value 1, cells where row(<span class="math inline">\(\mathbf{L}\)</span>) - col(<span class="math inline">\(\mathbf{L}\)</span>) = -1 have value -1, and the remaining cells have value 0.</p>
+<p>Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, <span class="math inline">\(\hat{\mathbf{\beta}}\)</span>, and the associated estimated variance-covariance matrix, <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}})\)</span>, are obtained directly from the resulting polytomous logistic regression model. These estimates can be obtained using many standard statistical software programs. Each <span class="math inline">\(\beta_{pm}\)</span> parameter represents the log odds ratio for a one-unit change in risk factor <span class="math inline">\(p\)</span> for subtype <span class="math inline">\(m\)</span> disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor <span class="math inline">\(p\)</span> using a Wald test of the hypothesis</p>
+<p><span class="math display">\[H_{0_{\beta_{p.}}}: \beta_{p1} = \dots = \beta_{pM}\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the 4 pre-specified disease subtypes in variable <code>subtype</code> using the following line of code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">mod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span>(</a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">label =</span> <span class="st">"subtype"</span>, </a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">M =</span> <span class="dv">4</span>, </a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">factors =</span> <span class="kw">list</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>), </a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">data =</span> subtype_data)</a></code></pre></div>
+<p>See function documentation for details of function arguments.</p>
+<p>The resulting estimates <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> can be accessed with</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>beta)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">1.5555082</td>
+<td align="right">0.8232515</td>
+<td align="right">0.2410591</td>
+<td align="right">0.1086845</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">0.3031594</td>
+<td align="right">0.4335048</td>
+<td align="right">0.3518870</td>
+<td align="right">0.3714092</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.8000998</td>
+<td align="right">1.9909315</td>
+<td align="right">3.0115985</td>
+<td align="right">1.5594139</td>
+</tr>
+</tbody>
+</table>
+<p>the associated standard deviation estimates <span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}\)</span> with</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>beta_se)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">1</th>
+<th align="right">2</th>
+<th align="right">3</th>
+<th align="right">4</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">0.0875330</td>
+<td align="right">0.0749353</td>
+<td align="right">0.0758686</td>
+<td align="right">0.0693273</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">0.0783898</td>
+<td align="right">0.0732283</td>
+<td align="right">0.0759600</td>
+<td align="right">0.0697852</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.2246070</td>
+<td align="right">0.1833106</td>
+<td align="right">0.1783101</td>
+<td align="right">0.1823138</td>
+</tr>
+</tbody>
+</table>
+<p>and the heterogeneity p-values with</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>eh_pval)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">p_het</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">0.4778092</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>An overall formatted dataframe containing the <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> (<span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}\)</span>) and heterogeneity p-values <code>p_het</code> to test the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> can be obtained as</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>beta_se_p)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">p_het</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="left">1.56 (0.09)</td>
+<td align="left">0.82 (0.07)</td>
+<td align="left">0.24 (0.08)</td>
+<td align="left">0.11 (0.07)</td>
+<td align="left">&lt;.001</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="left">0.3 (0.08)</td>
+<td align="left">0.43 (0.07)</td>
+<td align="left">0.35 (0.08)</td>
+<td align="left">0.37 (0.07)</td>
+<td align="left">0.478</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="left">0.8 (0.22)</td>
+<td align="left">1.99 (0.18)</td>
+<td align="left">3.01 (0.18)</td>
+<td align="left">1.56 (0.18)</td>
+<td align="left">&lt;.001</td>
+</tr>
+</tbody>
+</table>
+<p>Because it is often of interest to examine associations in a case-control study on the odds ratio (OR) scale rather than the original parameter estimate scale, it is also possible to obtain a matrix containing <span class="math inline">\(OR=\exp(\hat{\mathbf{\beta}})\)</span>, along with 95% confidence intervals and heterogeneity p-values <code>p_het</code> to the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> using</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>or_ci_p)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">1</th>
+<th align="left">2</th>
+<th align="left">3</th>
+<th align="left">4</th>
+<th align="left">p_het</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="left">4.74 (3.99-5.62)</td>
+<td align="left">2.28 (1.97-2.64)</td>
+<td align="left">1.27 (1.1-1.48)</td>
+<td align="left">1.11 (0.97-1.28)</td>
+<td align="left">&lt;.001</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="left">1.35 (1.16-1.58)</td>
+<td align="left">1.54 (1.34-1.78)</td>
+<td align="left">1.42 (1.23-1.65)</td>
+<td align="left">1.45 (1.26-1.66)</td>
+<td align="left">0.478</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="left">2.23 (1.43-3.46)</td>
+<td align="left">7.32 (5.11-10.49)</td>
+<td align="left">20.32 (14.33-28.82)</td>
+<td align="left">4.76 (3.33-6.8)</td>
+<td align="left">&lt;.001</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="subtypes-formed-by-cross-classification-of-disease-markers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subtypes-formed-by-cross-classification-of-disease-markers" class="anchor"></a>Subtypes formed by cross-classification of disease markers</h2>
-<p>The setting here is one in which binary disease markers are cross-classified to form disease subtypes.</p>
+<p>If disease subtypes are formed by cross-classifying individual binary disease markers, then statistical tests for associations between risk factors and individual disease markers canc be conducted using the <code>eh_test_marker</code> funtion.</p>
 <p>Let <span class="math inline">\(k\)</span> index disease markers, <span class="math inline">\(k = 1, \ldots, K\)</span>. Here the <span class="math inline">\(M\)</span> disease subtypes are formed by cross-classification of the <span class="math inline">\(K\)</span> binary tumor markers, so that we have <span class="math inline">\(M = 2^K\)</span> disease subtypes.</p>
+<p>To evaluate the independent influences of individual disease markers, it is convenient to transform the parameters in <span class="math inline">\(\mathbf{\beta}\)</span> using the one-to-one linear transformation</p>
+<p><span class="math display">\[\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.\]</span> <span class="math display">\[\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.\]</span> Here <span class="math inline">\(\mathbf{L}\)</span> is an <span class="math inline">\(M \times K\)</span> contrast matrix such that the entries are -1 if tumor marker <span class="math inline">\(k\)</span> is absent for disease subtype <span class="math inline">\(m\)</span> and 1 if tumor marker <span class="math inline">\(k\)</span> is present for disease subtype <span class="math inline">\(m\)</span>. <span class="math inline">\(\mathbf{\gamma}\)</span> is then the <span class="math inline">\((P+1) \times K\)</span> matrix of parameters that reflect the independent effects of distinct tumor markers. Each element of the <span class="math inline">\(\mathbf{\gamma}\)</span> parameters represents the average of differences in log odds ratios between disease subtypes defined by different levels of the <span class="math inline">\(k\)</span>th tumor marker with respect to the <span class="math inline">\(p\)</span>th risk factor when the other tumor markers are held constant. Variance estimates corresponding to each <span class="math inline">\(\hat{\gamma}_{pk}\)</span> are obtained using</p>
+<p><span class="math display">\[\widehat{var}(\hat{\gamma}_{pk}) = \left(\frac{M}{2}\right)^{-2} \mathbf{L}_{\boldsymbol{\cdot} k}^T \widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}}^T) \mathbf{L}_{\boldsymbol{\cdot} k}\]</span> where <span class="math inline">\(\mathbf{L}_{\boldsymbol{\cdot} k}\)</span> is the <span class="math inline">\(k\)</span>th column of the <span class="math inline">\(\mathbf{L}\)</span> matrix and the estimated variance-covariance matrix <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}})\)</span> for each risk factor <span class="math inline">\(p\)</span> is obtained directly from the polytomous logistic regression model.</p>
+<p>Hypothesis tests for the question of whether a risk factor effect differs across levels of each individual disease marker of which the disease subtypes are comprised can be conducted separately for each combination of risk factor <span class="math inline">\(p\)</span> and tumor marker <span class="math inline">\(k\)</span> using a Wald test of the hypothesis</p>
+<p><span class="math display">\[H_{0_{{\gamma_{pk}}}}: \gamma_{pk} = 0.\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the two individual disease markers <code>marker</code> and <code>marker2</code>. These markers will be cross-classified to fit the polytomous logisitc regression model to obtain the <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> estimates, which are then transformed in order to obtain estimates and hypothesis tests related to the individual disease markers.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">mod2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eh_test_marker.html">eh_test_marker</a></span>(</a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">markers =</span> <span class="kw">list</span>(<span class="st">"marker1"</span>, <span class="st">"marker2"</span>),</a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">factors =</span> <span class="kw">list</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">case =</span> <span class="st">"case"</span>,</a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="dt">data =</span> subtype_data)</a></code></pre></div>
+<p>See function documentation for details of function arguments.</p>
+<p>The resulting estimates <span class="math inline">\(\hat{\mathbf{\gamma}}\)</span> can be accessed with</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod2<span class="op">$</span>gamma)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">marker1</th>
+<th align="right">marker2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">-1.0145081</td>
+<td align="right">-0.4323157</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">-0.0066840</td>
+<td align="right">0.0749338</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.8899905</td>
+<td align="right">-0.1306765</td>
+</tr>
+</tbody>
+</table>
+<p>the associated standard deviation estimates <span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\gamma}})}\)</span> with</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod2<span class="op">$</span>gamma_se)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">marker1</th>
+<th align="right">marker2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">0.0681025</td>
+<td align="right">0.0601803</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">0.0631465</td>
+<td align="right">0.0588423</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.1450606</td>
+<td align="right">0.1348479</td>
+</tr>
+</tbody>
+</table>
+<p>and the associated p-values with</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod2<span class="op">$</span>gamma_pval)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="right">marker1</th>
+<th align="right">marker2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="right">0.9157016</td>
+<td align="right">0.2028521</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="right">0.0000000</td>
+<td align="right">0.3325126</td>
+</tr>
+</tbody>
+</table>
+<p>An overall formatted dataframe containing the <span class="math inline">\(\hat{\mathbf{\gamma}}\)</span> (<span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\gamma}})}\)</span>) and p-values to test the null hypotheses <span class="math inline">\(H_{0_{\gamma_{pk}}}\)</span> can be obtained as</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod2<span class="op">$</span>gamma_se_p)</a></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th align="left">marker1 est</th>
+<th align="left">marker1 pval</th>
+<th align="left">marker2 est</th>
+<th align="left">marker2 pval</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>x1</td>
+<td align="left">-1.01 (0.07)</td>
+<td align="left">&lt;.001</td>
+<td align="left">-0.43 (0.06)</td>
+<td align="left">&lt;.001</td>
+</tr>
+<tr class="even">
+<td>x2</td>
+<td align="left">-0.01 (0.06)</td>
+<td align="left">0.916</td>
+<td align="left">0.07 (0.06)</td>
+<td align="left">0.203</td>
+</tr>
+<tr class="odd">
+<td>x3</td>
+<td align="left">0.89 (0.15)</td>
+<td align="left">&lt;.001</td>
+<td align="left">-0.13 (0.13)</td>
+<td align="left">0.333</td>
+</tr>
+</tbody>
+</table>
+<p>The estimates and heterogeneity p-values for disease subtypes formed by cross-classifying these individual tumor markers can be obtained as described in <a href="#subtype">Pre-specified subtypes</a>.</p>
 </div>
   </div>
 
@@ -123,7 +419,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#pre-specified-subtypes">Pre-specified subtypes</a></li>
+      <li><a href="#subtype">Pre-specified subtypes</a></li>
       <li><a href="#subtypes-formed-by-cross-classification-of-disease-markers">Subtypes formed by cross-classification of disease markers</a></li>
       </ul>
 </div>

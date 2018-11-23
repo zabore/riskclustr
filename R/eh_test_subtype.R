@@ -22,7 +22,7 @@
 #' numeric variable with values 0 through M, where 0 indicates control subjects.
 #' Must be supplied in quotes, e.g. \code{label = "subtype"}.
 #' quotes.
-#' @param M is the number of subtypes
+#' @param M is the number of subtypes. For M>=2.
 #' @param factors a list of the names of the binary or continuous risk factors.
 #' For binary risk factors the lowest level will be used as the reference level.
 #' e.g. \code{factors = list("age", "sex", "race")}.
@@ -54,7 +54,12 @@
 #'
 #' @examples
 #'
-#' eh_test_subtype("subtype", 4, list("x1", "x2", "x3"), subtype_data)
+#' eh_test_subtype(
+#'     label = "subtype",
+#'     M = 4,
+#'     factors = list("x1", "x2", "x3"),
+#'     data = subtype_data,
+#'     digits = 2)
 #'
 #' @export
 #'
@@ -128,14 +133,16 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   pval <- sapply(1:p, function(i) {
     aod::wald.test(b = beta_plr[i, ],
                    Sigma = V[[i]], L = Lmat)$result$chi2["P"]})
-  names(pval) <- coefnames
+  pval <- as.data.frame(pval)
+  rownames(pval) <- coefnames
+  colnames(pval) <- "p_het"
 
   # Store results on both beta and OR scale
   beta_se_p <- data.frame(matrix(paste0(round(beta_plr, digits), " (",
                                         round(beta_se, digits), ")"), ncol = M),
                           round(pval, 3), stringsAsFactors = FALSE)
 
-  or_ci_p <- data.frame(matrix(paste0(or, " (", lci, " - ", uci, ")"), ncol = M),
+  or_ci_p <- data.frame(matrix(paste0(or, " (", lci, "-", uci, ")"), ncol = M),
                         round(pval, 3), stringsAsFactors = FALSE)
 
   # Format the resulting dataframes

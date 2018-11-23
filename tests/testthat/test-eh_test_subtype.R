@@ -1,17 +1,17 @@
 context("test-eh_test_subtype")
 
-testfit <- eh_test_subtype("subtype", 4, list("x1", "x2", "x3"), subtype_data)
+  testfit <- eh_test_subtype("subtype", 4, list("x1", "x2", "x3"), subtype_data)
 
-testdat <- dplyr::rename(subtype_data,
-                         `risk:x1` = x1)
+  testdat <- dplyr::rename(subtype_data,
+                           `risk:x1` = x1)
 
 
-test_that("eh_test_subtype produces expected eh_pval", {
-  expect_equal(
-    unname(round(testfit$eh_pval[2], 3)),
-    0.478
-  )
-})
+  test_that("eh_test_subtype produces expected eh_pval", {
+    expect_equal(
+      round(testfit$eh_pval[2, ], 3),
+      0.478
+    )
+  })
 
 
 test_that("eh_test_subtype produces expected dimension of beta", {

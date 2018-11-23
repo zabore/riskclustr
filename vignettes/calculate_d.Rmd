@@ -42,21 +42,15 @@ To estimate $D$, we use the `d()` function.
 
 The calculation of $D$ using `d()` relies on the `mlogit` function from the `mlogit` package to fit the polytomous logistic regression model.
 
-First, we need to specify the model formula using an `mFormula` object from the `mlogit` package. For example, we can use the pre-specified numeric `subtype` variable as the outcome and all three risk factors as predictors.
-
-```{r}
-mform <- mlogit::mFormula(subtype ~ 1 | x1 + x2 + x3)
-```
-
-Then we can supply this to the `formula` argument of `d()`, along with specification of the name of the subtype variable, the number of subtypes, and the dataset. Note that the variable name supplied to the `label` argument must be a quoted string. The subtype variable must be a numeric variable where controls are coded as 0 and cases are coded as 1 through M according to the subtype to which they belong. 
+We supply `d()`, with specification of the name of the subtype variable, the number of subtypes, a list of risk factors, and the dataset. See the function documentation for details of argument specification.
 
 ```{r}
 library(riskclustr)
 
 d(
-  formula = mform,
   label = "subtype",
   M = 4, 
+  factors = list("x1", "x2", "x3"),
   data = subtype_data
 )
 ```
@@ -76,15 +70,13 @@ To demonstrate the usage, first let's limit the `subtype_data` to the cases only
 subtype_cases <- subtype_data[subtype_data$subtype != 0, ]
 ```
 
-We can use the same model formula saved to object `mform` that was specified for the case-control example, to obtain a case-only estimate of $D^\ast$ for the pre-specified `subtype` variable and based on all three risk factors.
-
-Then we specify the arguments to `dstar()` as before, but supplying our new case-only dataset to the `data` argument. Now, the subtype variable must be numeric, with cases coded as 1 through M according to the subtype to which they belong. 
+We specify the arguments to `dstar()` as before for `d()`, but supplying our new case-only dataset to the `data` argument. Now, the subtype variable must be numeric, with cases coded as 1 through M according to the subtype to which they belong. The highest frequency level of label will be used as the reference level for stability.
 
 ```{r}
 dstar(
-  formula = mform,
   label = "subtype",
   M = 4, 
+  factors = list("x1", "x2", "x3"),
   data = subtype_cases
 )
 ```

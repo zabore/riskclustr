@@ -13,7 +13,7 @@ numeric variable with values 0 through M, where 0 indicates control subjects.
 Must be supplied in quotes, e.g. \code{label = "subtype"}.
 quotes.}
 
-\item{M}{is the number of subtypes}
+\item{M}{is the number of subtypes. For M>=2.}
 
 \item{factors}{a list of the names of the binary or continuous risk factors.
 For binary risk factors the lowest level will be used as the reference level.
@@ -65,7 +65,12 @@ logistic regression model is fit using \code{\link[mlogit]{mlogit}}.
 }
 \examples{
 
-eh_test_subtype("subtype", 4, list("x1", "x2", "x3"), subtype_data)
+eh_test_subtype(
+    label = "subtype",
+    M = 4,
+    factors = list("x1", "x2", "x3"),
+    data = subtype_data,
+    digits = 2)
 
 }
 \author{

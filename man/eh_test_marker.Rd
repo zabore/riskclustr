@@ -85,12 +85,12 @@ created.
 \examples{
 
 # Run for two binary tumor markers, which will combine to form four subtypes
-eh_test_marker(list("marker1", "marker2"),
-               list("x1", "x2", "x3"),
-               "case",
-               subtype_data,
-               digits = 2)
-
+eh_test_marker(
+    markers = list("marker1", "marker2"),
+    factors = list("x1", "x2", "x3"),
+    case = "case",
+    data = subtype_data,
+    digits = 2)
 
 }
 \author{
