@@ -20,9 +20,9 @@
 #' indicator variables for each remaining level of the risk factor should be
 #' created.
 #'
-#' @param markers a list of the names of the binary tumor markers.
+#' @param markers a list of the names of the binary disease markers.
 #' Each must have levels 0 or 1 for case subjects. This value will be missing
-#' for all control subjects. e.g. \code{markers = list(marker1, marker2)}
+#' for all control subjects. e.g. \code{markers = list("marker1", "marker2")}
 #' @param factors a list of the names of the binary or continuous risk factors.
 #' For binary risk factors the lowest level will be used as the reference level.
 #' e.g. \code{factors = list("age", "sex", "race")}
@@ -86,7 +86,7 @@
 
 eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
-  # Check if levels of each element in tm have only values 0 or 1
+  # Check if levels of each element in markers have only values 0 or 1
   if (any(sapply(
     lapply(markers, function(x) {
       levels(as.factor(data[, x]))

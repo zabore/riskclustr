@@ -17,6 +17,8 @@ navbar:
       href: articles/calculate_d.html
     - text: "Test for etiologic heterogeneity"
       href: articles/eh_test.html
+    - text: "Identify the optimal D solution"
+      href: articles/optimal_d.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/zabore/riskclustr
@@ -30,7 +32,9 @@ reference:
     contents:
       - eh_test_subtype
       - eh_test_marker
-
+  - title: "Identify optimal D solution"
+    contents:
+      - optimal_kmeans_d
   - title: "Example Datasets"
     desc: >
       Simulated data to illustrate package use

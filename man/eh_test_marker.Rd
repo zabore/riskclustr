@@ -8,9 +8,9 @@ disease markers in a case-control study}
 eh_test_marker(markers, factors, case, data, digits = 2)
 }
 \arguments{
-\item{markers}{a list of the names of the binary tumor markers.
+\item{markers}{a list of the names of the binary disease markers.
 Each must have levels 0 or 1 for case subjects. This value will be missing
-for all control subjects. e.g. \code{markers = list(marker1, marker2)}}
+for all control subjects. e.g. \code{markers = list("marker1", "marker2")}}
 
 \item{factors}{a list of the names of the binary or continuous risk factors.
 For binary risk factors the lowest level will be used as the reference level.

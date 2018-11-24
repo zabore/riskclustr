@@ -1,0 +1,67 @@
+---
+title: "Tutorial: Identify the optimal D subtype solution"
+author: "Emily C. Zabor"
+date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Tutorial: Identify the optimal D subtype solution}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+Sometimes subtypes will not be pre-defined, but rather it will be of interest to identify subtypes that differ maximally with respect to risk heterogeneity based on some number of disease markers. 
+
+This tutorial will introduce you to the `optimal_kmeans_d()` function, which will run $k$-means clustering on disease marker data and identify the subtype solution that maximizes $D$. This function is currently for use with case-control data only. See [Tutorial: Estimate the extent of etiologic heterogeneity](calculate_d.html) for details on the calculation of the $D$ value.
+
+
+## Example
+
+This tutorial will make use of a simulated example dataset named `subtype_data`. This simulated dataset contains 1200 case subjects and 800 control subjects. There are 30 continuous disease markers available on the cases. There are two continuous risk factors and one binary risk factor available on all subjects.
+
+Let's say we wanted to identify the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers `y1`-`y30` available in `subtype_data`, using all three risk factors `x1`, `x2` and `x3`. We use the default of 100 random starts of the $k$-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is a bit slow to run, so please be patient.
+
+```{r}
+library(riskclustr)
+
+res <- optimal_kmeans_d(
+  markers = c(paste0("y", seq(1:30))),
+  M = 3,
+  factors = list("x1", "x2", "x3"),
+  case = "case",
+  data = subtype_data,
+  nstart = 100,
+  seed = 81110224)
+```
+
+The function returns a list with one element for the optimal $D$ value and one element that is the original data frame with a column added for the optimal $D$ class solution.
+
+First let's look at a tabulation of `optimal_d_label` from the `optimal_d_data` object:
+
+```{r}
+table(res[["optimal_d_data"]]$optimal_d_label)
+```
+
+These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with `eh_test_subtype` to obtain measures of risk factor association as well as heterogeneity $p$-values. See [Tutorial: test for etiologic heterogeneity in a case-control study](eh_test.html) for details.
+
+Next we can see the $D$ value that goes long with the optimal subtype solution:
+
+```{r}
+res[["optimal_d"]]
+```
+
+
+
+
+
