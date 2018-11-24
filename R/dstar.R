@@ -20,14 +20,14 @@
 #' @param data the name of the dataframe that contains the relevant variables.
 #'
 #' @examples
-#'
+#' 
 #' # Exclude controls from data as this is a case-only calculation
 #' dstar(
 #'   label = "subtype",
 #'   M = 4,
 #'   factors = list("x1", "x2", "x3"),
-#'   data = subtype_data[subtype_data$subtype > 0, ])
-#'
+#'   data = subtype_data[subtype_data$subtype > 0, ]
+#' )
 #' @references
 #' Begg, C. B., Seshan, V. E., Zabor, E. C., Furberg, H., Arora, A.,
 #' Shen, R., . . . Hsieh, J. J. (2014). Genomic investigation of etiologic

@@ -72,15 +72,15 @@
 #' their associated p-values.
 #'
 #' @examples
-#'
+#' 
 #' # Run for two binary tumor markers, which will combine to form four subtypes
 #' eh_test_marker(
-#'     markers = list("marker1", "marker2"),
-#'     factors = list("x1", "x2", "x3"),
-#'     case = "case",
-#'     data = subtype_data,
-#'     digits = 2)
-#'
+#'   markers = list("marker1", "marker2"),
+#'   factors = list("x1", "x2", "x3"),
+#'   case = "case",
+#'   data = subtype_data,
+#'   digits = 2
+#' )
 #' @export
 #'
 

@@ -35,7 +35,7 @@
 #' This has the subtype assignment for cases, and is 0 for all controls.
 #'
 #' @examples
-#'
+#' 
 #' # Cluster 30 disease markers to identify the optimally
 #' # etiologically heterogeneous 3-subtype solution
 #' res <- optimal_kmeans_d(
@@ -45,14 +45,14 @@
 #'   case = "case",
 #'   data = subtype_data,
 #'   nstart = 100,
-#'   seed = 81110224)
-#'
+#'   seed = 81110224
+#' )
+#' 
 #' # Look at the value of D for the optimal D solution
 #' res[["optimal_d"]]
-#'
+#' 
 #' # Look at a table of the optimal D solution
 #' table(res[["optimal_d_data"]]$optimal_d_label)
-#'
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
 #' Seshan, V. E. (2013). A conceptual and methodological framework for
@@ -77,8 +77,11 @@ optimal_kmeans_d <- function(markers, M, factors, case, data,
 
   # set the seed, if supplied
   # otherwise print a message
-  if (!is.null(seed)) set.seed(seed) else
+  if (!is.null(seed)) {
+    set.seed(seed)
+  } else {
     message("When no seed is set the results will not be reproducible.")
+  }
 
   # Add a rowname variable to the dataframe for later merging
   data[["rowname"]] <- rownames(data)
@@ -88,29 +91,39 @@ optimal_kmeans_d <- function(markers, M, factors, case, data,
 
   # Run k-means clustering
   # This returns a list of cluster labels
-  kres <- lapply(1:nstart,
-                 function(i) {
-                   stats::kmeans(x = y,
-                          centers = M,
-                          algorithm = "MacQueen",
-                          iter.max = 30)$cluster
-                 })
+  kres <- lapply(
+    1:nstart,
+    function(i) {
+      stats::kmeans(
+        x = y,
+        centers = M,
+        algorithm = "MacQueen",
+        iter.max = 30
+      )$cluster
+    }
+  )
 
   # Dalculate D for each solution
-  d_kres <- lapply(1:nstart,
-                   function(j) {
-                     temp <- dplyr::right_join(
-                       dplyr::data_frame(
-                         rowname = rownames(data[data[[case]] == 1, ]),
-                         cls = kres[[j]]),
-                       data,
-                       by = "rowname")
-                     temp$cls[is.na(temp$cls)] <- 0
-                     d(label = "cls",
-                          M = M,
-                          factors = factors,
-                          data = temp)
-                     })
+  d_kres <- lapply(
+    1:nstart,
+    function(j) {
+      temp <- dplyr::right_join(
+        dplyr::data_frame(
+          rowname = rownames(data[data[[case]] == 1, ]),
+          cls = kres[[j]]
+        ),
+        data,
+        by = "rowname"
+      )
+      temp$cls[is.na(temp$cls)] <- 0
+      d(
+        label = "cls",
+        M = M,
+        factors = factors,
+        data = temp
+      )
+    }
+  )
 
   # Convert d_kres to vector
   d_kres <- unlist(d_kres)
@@ -122,13 +135,16 @@ optimal_kmeans_d <- function(markers, M, factors, case, data,
   optimal_d_data <- dplyr::right_join(
     dplyr::data_frame(
       rowname = rownames(data[data[[case]] == 1, ]),
-      optimal_d_label = kres[[max_res]]),
+      optimal_d_label = kres[[max_res]]
+    ),
     data,
-    by = "rowname")
+    by = "rowname"
+  )
   optimal_d_data$optimal_d_label[is.na(optimal_d_data$optimal_d_label)] <- 0
 
   # Return results
-  return(list(optimal_d = d_kres[max_res],
-              optimal_d_data = optimal_d_data))
-
+  return(list(
+    optimal_d = d_kres[max_res],
+    optimal_d_data = optimal_d_data
+  ))
 }

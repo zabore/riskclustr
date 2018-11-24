@@ -18,13 +18,13 @@
 #' @param data the name of the dataframe that contains the relevant variables.
 #'
 #' @examples
-#'
+#' 
 #' d(
-#'  label = "subtype",
-#'  M = 4,
-#'  factors = list("x1", "x2", "x2"),
-#'  data = subtype_data)
-#'
+#'   label = "subtype",
+#'   M = 4,
+#'   factors = list("x1", "x2", "x2"),
+#'   data = subtype_data
+#' )
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
 #' Seshan, V. E. (2013). A conceptual and methodological framework for
