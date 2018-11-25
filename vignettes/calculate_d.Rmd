@@ -81,5 +81,5 @@ dstar(
 )
 ```
 
-And we see that using all three risk factors, $D*=0.402$ for the four disease subtypes of interest in the case-only setting.
+And we see that using all three risk factors, $D^\ast=0.402$ for the four disease subtypes of interest in the case-only setting.
 

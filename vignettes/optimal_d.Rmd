@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 Sometimes subtypes will not be pre-defined, but rather it will be of interest to identify subtypes that differ maximally with respect to risk heterogeneity based on some number of disease markers. 
 
-This tutorial will introduce you to the `optimal_kmeans_d()` function, which will run $k$-means clustering on disease marker data and identify the subtype solution that maximizes $D$. When $k$-means clustering is run with multiple random starts, it will return a variety of class solutions, as the algorithm typically reaches a local rather than global maxima. Then for each candidate class solution, $D$ can be computed and the solution that maximizes $D$, a measure of etiologic heterogeneity, can be identified. This function is currently for use with case-control data only. See [Tutorial: Estimate the extent of etiologic heterogeneity](calculate_d.html) for details on the calculation of the $D$ value.
+This tutorial will introduce you to the `optimal_kmeans_d()` function, which will run $k$-means clustering on disease marker data and identify the subtype solution that maximizes $D$. When $k$-means clustering is run with multiple random starts, it will return a variety of class solutions, as the algorithm typically reaches a local rather than global maxima. Then for each candidate class solution, $D$ can be computed and the solution that maximizes $D$, a measure of etiologic heterogeneity, can be identified. This function is currently for use with case-control data only. See Tutorial: Estimate the extent of etiologic heterogeneity for details on the calculation of the $D$ value.
 
 
 ## Example
@@ -53,7 +53,7 @@ First let's look at a tabulation of `optimal_d_label` from the `optimal_d_data` 
 table(res[["optimal_d_data"]]$optimal_d_label)
 ```
 
-These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with `eh_test_subtype()` to obtain measures of risk factor association as well as heterogeneity $p$-values. See [Tutorial: test for etiologic heterogeneity in a case-control study](eh_test.html) for details.
+These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with `eh_test_subtype()` to obtain measures of risk factor association as well as heterogeneity $p$-values. See Tutorial: test for etiologic heterogeneity in a case-control study for details.
 
 Next we can see the $D$ value that goes long with the optimal subtype solution:
 
