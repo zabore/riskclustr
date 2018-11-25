@@ -22,7 +22,7 @@
 #' @param data the name of the case-only dataframe that contains the relevant variables.
 #'
 #' @examples
-#'
+#' 
 #' # Exclude controls from data as this is a case-only calculation
 #' dstar(
 #'   label = "subtype",

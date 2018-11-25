@@ -52,7 +52,7 @@
 #' etiologic heterogeneity p-values.
 #'
 #' @examples
-#'
+#' 
 #' eh_test_subtype(
 #'   label = "subtype",
 #'   M = 4,
