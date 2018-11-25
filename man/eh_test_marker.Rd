@@ -42,18 +42,18 @@ risk factor differs across the levels of the disease subtype.
 
 \code{gamma} is a matrix containing the estimated disease marker parameters,
 obtained as linear combinations of the \code{\link{beta}} estimates,
-with a row for each risk factor and a column for each tumor marker.
+with a row for each risk factor and a column for each disease marker.
 
 \code{gamma_se} is a matrix containing the estimated disease marker
 standard errors, obtained based on a transformation of the \code{\link{beta}}
 standard errors, with a row for each risk factor and a column for each
-tumor marker.
+disease marker.
 
 \code{gamma_p} is a matrix of p-values for testing whether each risk factor
-differs across levels of each tumor marker, with a row for each risk
-factor and a column for each tumor marker.
+differs across levels of each disease marker, with a row for each risk
+factor and a column for each disease marker.
 
-\code{or_ci_p} is a dataframe with the odds ratio (95% CI) for each risk
+\code{or_ci_p} is a dataframe with the odds ratio (95\% CI) for each risk
 factor/subtype combination, as well as a column of formatted etiologic
 heterogeneity p-values.
 
@@ -65,18 +65,20 @@ etiologic heterogeneity p-values.
 their associated p-values.
 }
 \description{
-\code{eh_test_marker} takes a list of individual disease markers
-and a list of risk factors and returns results related to the question of
+\code{eh_test_marker} takes a list of individual disease
+markers,
+a list of risk factors, a variable name denoting case versus control status,
+and a dataframe, and returns results related to the question of
 whether each risk factor differs across levels of the disease subtypes and
 the question of whether each risk factor differs across levels of each
 individual tumor marker of which the disease subtypes are comprised.
-
 Input is a dataframe that contains the individual disease markers, the risk
 factors of interest, and an indicator of case or control status.
-The tumor markers must be binary and must have levels
-0 or 1 for cases. The tumor markers should be left missing for control
-subjects. For categorical tumor markers, a reference level should be selected
-and then indicator variables for each remaining level of the tumor marker
+The disease markers must be binary and must have levels
+0 or 1 for cases. The disease markers should be left missing for control
+subjects. For categorical disease markers, a reference level should be
+selected
+and then indicator variables for each remaining level of the disease marker
 should be created. Risk factors can be either binary or continuous. For
 categorical risk factors, a reference level should be selected and then
 indicator variables for each remaining level of the risk factor should be
@@ -86,12 +88,12 @@ created.
 
 # Run for two binary tumor markers, which will combine to form four subtypes
 eh_test_marker(
-    markers = list("marker1", "marker2"),
-    factors = list("x1", "x2", "x3"),
-    case = "case",
-    data = subtype_data,
-    digits = 2)
-
+  markers = list("marker1", "marker2"),
+  factors = list("x1", "x2", "x3"),
+  case = "case",
+  data = subtype_data,
+  digits = 2
+)
 }
 \author{
 Emily C Zabor \email{zabore@mskcc.org}

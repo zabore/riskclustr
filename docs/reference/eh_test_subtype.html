@@ -34,18 +34,19 @@ subtypes in a case-control study — eh_test_subtype • riskclustr</title>
 <meta property="og:title" content="Test for etiologic heterogeneity of risk factors according to disease
 subtypes in a case-control study — eh_test_subtype" />
 
-<meta property="og:description" content="eh_test_subtype takes a vector of class labels for
-pre-specified subtypes and a list of risk factors and returns results
+<meta property="og:description" content="eh_test_subtype takes the name of the variable containing
+the pre-specified subtype labels, the number of subtypes, a list of risk
+factors, and the name of the dataframe and returns results
 related to the
 question of whether each risk factor differs across levels of the disease
-subtypes
-Input is a dataframe that contains the risk factors of interest and a
+subtypes. Input is a dataframe that contains the risk factors of interest and
+a
 variable containing numeric class labels that is 0 for control subjects.
 Risk factors can be either binary or continuous. For categorical risk
 factors, a reference level should be selected and then indicator variables
 for each remaining level of the risk factor should be created.
 Categorical risk factors entered as is will be treated as ordinal.
-Class labels for the cases can be specified as a vector. The multinomial
+The multinomial
 logistic regression model is fit using mlogit." />
 <meta name="twitter:card" content="summary" />
 
@@ -106,7 +107,7 @@ logistic regression model is fit using mlogit." />
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -139,18 +140,19 @@ subtypes in a case-control study</h1>
 
     <div class="ref-description">
     
-    <p><code>eh_test_subtype</code> takes a vector of class labels for
-pre-specified subtypes and a list of risk factors and returns results
+    <p><code>eh_test_subtype</code> takes the name of the variable containing
+the pre-specified subtype labels, the number of subtypes, a list of risk
+factors, and the name of the dataframe and returns results
 related to the
 question of whether each risk factor differs across levels of the disease
-subtypes</p>
-<p>Input is a dataframe that contains the risk factors of interest and a
+subtypes. Input is a dataframe that contains the risk factors of interest and
+a
 variable containing numeric class labels that is 0 for control subjects.
 Risk factors can be either binary or continuous. For categorical risk
 factors, a reference level should be selected and then indicator variables
 for each remaining level of the risk factor should be created.
 Categorical risk factors entered as is will be treated as ordinal.
-Class labels for the cases can be specified as a vector. The multinomial
+The multinomial
 logistic regression model is fit using <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>.</p>
     
     </div>
@@ -164,8 +166,7 @@ logistic regression model is fit using <code><a href='https://www.rdocumentation
       <th>label</th>
       <td><p>the name of the subtype variable in the data. This should be a
 numeric variable with values 0 through M, where 0 indicates control subjects.
-Must be supplied in quotes, e.g. <code>label = "subtype"</code>.
-quotes.</p></td>
+Must be supplied in quotes, e.g. <code>label = "subtype"</code>.</p></td>
     </tr>
     <tr>
       <th>M</th>
@@ -200,7 +201,7 @@ polytomous logistic regression model fit with <code><a href='https://www.rdocume
 with a row for each risk factor and a column for each disease subtype.</p>
 <p><code>eh_pval</code> is a vector of unformatted p-values for testing whether each
 risk factor differs across the levels of the disease subtype.</p>
-<p><code>or_ci_p</code> is a dataframe with the odds ratio (95<!-- % CI) for each risk -->
+<p><code>or_ci_p</code> is a dataframe with the odds ratio (95% CI) for each risk
 factor/subtype combination, as well as a column of formatted etiologic
 heterogeneity p-values.</p>
 <p><code>beta_se_p</code> is a dataframe with the estimates (SE) for
@@ -211,11 +212,12 @@ etiologic heterogeneity p-values.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>eh_test_subtype</span>(
-    <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
-    <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-    <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
-    <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $beta
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
+  <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>
+)</div><div class='output co'>#&gt; $beta
 #&gt;            1         2         3         4
 #&gt; x1 1.5555082 0.8232515 0.2410591 0.1086845
 #&gt; x2 0.3031594 0.4335048 0.3518870 0.3714092
@@ -248,8 +250,7 @@ etiologic heterogeneity p-values.</p>
 #&gt; x1 1.56 (0.09) 0.82 (0.07) 0.24 (0.08) 0.11 (0.07) &lt;.001
 #&gt; x2  0.3 (0.08) 0.43 (0.07) 0.35 (0.08) 0.37 (0.07) 0.478
 #&gt; x3  0.8 (0.22) 1.99 (0.18) 3.01 (0.18) 1.56 (0.18) &lt;.001
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -34,10 +34,10 @@ data in a case-control study — optimal_kmeans_d • riskclustr</title>
 <meta property="og:title" content="Obtain optimal D solution based on k-means clustering of disease marker
 data in a case-control study — optimal_kmeans_d" />
 
-<meta property="og:description" content="optimal_kmeans_d applies K-means clustering using the
+<meta property="og:description" content="optimal_kmeans_d applies k-means clustering using the
 kmeans function with many random starts. The D value is
-then calculated for the cluster solution at each random start using
-d and the cluster solution that maximizes D is returned,
+then calculated for the cluster solution at each random start using the
+d function, and the cluster solution that maximizes D is returned,
 along with the corresponding value of D. In this way the optimally
 etiologically heterogenous subtype solution can be identified from possibly
 high-dimensional disease marker data." />
@@ -100,7 +100,7 @@ high-dimensional disease marker data." />
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -133,10 +133,10 @@ data in a case-control study</h1>
 
     <div class="ref-description">
     
-    <p><code>optimal_kmeans_d</code> applies K-means clustering using the
+    <p><code>optimal_kmeans_d</code> applies k-means clustering using the
 <code><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></code> function with many random starts. The D value is
-then calculated for the cluster solution at each random start using
-<code><a href='d.html'>d</a></code> and the cluster solution that maximizes D is returned,
+then calculated for the cluster solution at each random start using the
+<code><a href='d.html'>d</a></code> function, and the cluster solution that maximizes D is returned,
 along with the corresponding value of D. In this way the optimally
 etiologically heterogenous subtype solution can be identified from possibly
 high-dimensional disease marker data.</p>
@@ -152,7 +152,7 @@ high-dimensional disease marker data.</p>
     <tr>
       <th>markers</th>
       <td><p>a vector of the names of the disease markers. These markers
-should be of a type and pre-processed in a way that is suitable for use with
+should be of a type that is suitable for use with
 <code><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></code> clustering. All markers will will be missing
 for control subjects. e.g. <code>markers = c("marker1", "marker2")</code></p></td>
     </tr>
@@ -192,17 +192,17 @@ Default is NULL. Recommended to set in order to obtain reproducible results.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a list</p>
-<p><code>optimal_d</code> The D value for the optimal D solution
-<code>optimal_d_data</code> The original data frame supplied through the
-<code>data</code> argument, with a column added for the optimal D subtype label.
+<p><code>optimal_d</code> The D value for the optimal D solution</p>
+<p><code>optimal_d_data</code> The original data frame supplied through the
+<code>data</code> argument, with a column called <code>optimal_d_label</code>
+added for the optimal D subtype label.
 This has the subtype assignment for cases, and is 0 for all controls.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &amp;
 Seshan, V. E. (2013). A conceptual and methodological framework for
-investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.
-doi: 10.1002/sim.5902</p>
+investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -216,15 +216,15 @@ doi: 10.1002/sim.5902</p>
   <span class='kw'>case</span> <span class='kw'>=</span> <span class='st'>"case"</span>,
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
   <span class='kw'>nstart</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>81110224</span>)
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='fl'>81110224</span>
+)
 
 <span class='co'># Look at the value of D for the optimal D solution</span>
 <span class='no'>res</span><span class='kw'>[[</span><span class='st'>"optimal_d"</span>]]</div><div class='output co'>#&gt; [1] 0.3385876</div><div class='input'>
 <span class='co'># Look at a table of the optimal D solution</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>res</span><span class='kw'>[[</span><span class='st'>"optimal_d_data"</span>]]$<span class='no'>optimal_d_label</span>)</div><div class='output co'>#&gt; 
 #&gt;   0   1   2   3 
-#&gt; 800 300 599 301 </div><div class='input'>
-</div></pre>
+#&gt; 800 300 599 301 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

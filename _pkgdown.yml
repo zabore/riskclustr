@@ -17,7 +17,7 @@ navbar:
       href: articles/calculate_d.html
     - text: "Test for etiologic heterogeneity"
       href: articles/eh_test.html
-    - text: "Identify the optimal D solution"
+    - text: "Identify the optimal D subtype solution"
       href: articles/optimal_d.html
   right:
   - icon: fa-github fa-lg

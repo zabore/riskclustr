@@ -59,7 +59,7 @@
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
       <h1>Tutorial: test for etiologic heterogeneity in a case-control study</h1>
                         <h4 class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: November 24, 2018</h4>
+            <h4 class="date">Last updated: November 25, 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/eh_test.Rmd"><code>vignettes/eh_test.Rmd</code></a></small>
       <div class="hidden name"><code>eh_test.Rmd</code></div>
@@ -98,7 +98,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>In epidemiologic studies polytomous logistic regression is commonly used in the study of etiologic heterogeneity when data are from a case-control study, and the method has good statistical properties. Although polytomous logistic regression can be implemented using available software, the additional calculations needed to perform a thorough analysis of etiologic heterogeneity are cumbersome. To facilitate use of this method we provide functions <code>eh_test_subtype</code> and <code>eh_test_marker</code> to address two key questions regarding etiologic heterogeneity:</p>
+<p>In epidemiologic studies polytomous logistic regression is commonly used in the study of etiologic heterogeneity when data are from a case-control study, and the method has good statistical properties. Although polytomous logistic regression can be implemented using available software, the additional calculations needed to perform a thorough analysis of etiologic heterogeneity are cumbersome. To facilitate use of this method we provide functions <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> and <code><a href="../reference/eh_test_marker.html">eh_test_marker()</a></code> to address two key questions regarding etiologic heterogeneity:</p>
 <ol style="list-style-type: decimal">
 <li>Do risk factor effects differ according to disease subtypes?</li>
 <li>Do risk factor effects differ according to individual disease markers that combine to form disease subtypes?</li>
@@ -109,9 +109,9 @@
 <div id="subtype" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subtype" class="anchor"></a>Pre-specified subtypes</h2>
-<p>If disease subtypes are pre-specified, either based on clustering high-dimensional disease marker data or based on a single disease marker or combinations of disease markers, then statistical tests for etiologic heterogeneity according to each risk factor can be conducted using the <code>eh_test_subtype</code> function.</p>
-<p>Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, <span class="math inline">\(\hat{\mathbf{\beta}}\)</span>, and the associated estimated variance-covariance matrix, <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}})\)</span>, are obtained directly from the resulting polytomous logistic regression model. These estimates can be obtained using many standard statistical software programs. Each <span class="math inline">\(\beta_{pm}\)</span> parameter represents the log odds ratio for a one-unit change in risk factor <span class="math inline">\(p\)</span> for subtype <span class="math inline">\(m\)</span> disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor <span class="math inline">\(p\)</span> using a Wald test of the hypothesis</p>
-<p><span class="math display">\[H_{0_{\beta_{p.}}}: \beta_{p1} = \dots = \beta_{pM}\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the 4 pre-specified disease subtypes in variable <code>subtype</code> using the following line of code:</p>
+<p>If disease subtypes are pre-specified, either based on clustering high-dimensional disease marker data or based on a single disease marker or combinations of disease markers, then statistical tests for etiologic heterogeneity according to each risk factor can be conducted using the <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> function.</p>
+<p>Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, <span class="math inline">\(\hat{\mathbf{\beta}}\)</span>, and the associated estimated variance-covariance matrix, <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}})\)</span>, are obtained directly from the resulting polytomous logistic regression model. Each <span class="math inline">\(\beta_{pm}\)</span> parameter represents the log odds ratio for a one-unit change in risk factor <span class="math inline">\(p\)</span> for subtype <span class="math inline">\(m\)</span> disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor <span class="math inline">\(p\)</span> using a Wald test of the hypothesis</p>
+<p><span class="math display">\[H_{0_{\beta_{p.}}}: \beta_{p1} = \dots = \beta_{pM}\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the 4 pre-specified disease subtypes in variable <code>subtype</code> using the following code:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span>(
   <span class="dt">label =</span> <span class="st">"subtype"</span>, 
   <span class="dt">M =</span> <span class="dv">4</span>, 
@@ -208,7 +208,7 @@
 </tr>
 </tbody>
 </table>
-<p>An overall formatted dataframe containing the <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> (<span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}\)</span>) and heterogeneity p-values <code>p_het</code> to test the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> can be obtained as</p>
+<p>An overall formatted dataframe containing <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> (<span class="math inline">\(\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}\)</span>) and heterogeneity p-values <code>p_het</code> to test the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> can be obtained as</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>beta_se_p)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -246,7 +246,7 @@
 </tr>
 </tbody>
 </table>
-<p>Because it is often of interest to examine associations in a case-control study on the odds ratio (OR) scale rather than the original parameter estimate scale, it is also possible to obtain a matrix containing <span class="math inline">\(OR=\exp(\hat{\mathbf{\beta}})\)</span>, along with 95% confidence intervals and heterogeneity p-values <code>p_het</code> to the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> using</p>
+<p>Because it is often of interest to examine associations in a case-control study on the odds ratio (OR) scale rather than the original parameter estimate scale, it is also possible to obtain a matrix containing <span class="math inline">\(OR=\exp(\hat{\mathbf{\beta}})\)</span>, along with 95% confidence intervals and heterogeneity p-values <code>p_het</code> to test the null hypotheses <span class="math inline">\(H_{0_{\beta_{p.}}}\)</span> using</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(mod1<span class="op">$</span>or_ci_p)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -288,13 +288,13 @@
 <div id="subtypes-formed-by-cross-classification-of-disease-markers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#subtypes-formed-by-cross-classification-of-disease-markers" class="anchor"></a>Subtypes formed by cross-classification of disease markers</h2>
-<p>If disease subtypes are formed by cross-classifying individual binary disease markers, then statistical tests for associations between risk factors and individual disease markers canc be conducted using the <code>eh_test_marker</code> funtion.</p>
+<p>If disease subtypes are formed by cross-classifying individual binary disease markers, then statistical tests for associations between risk factors and individual disease markers can be conducted using the <code><a href="../reference/eh_test_marker.html">eh_test_marker()</a></code> funtion.</p>
 <p>Let <span class="math inline">\(k\)</span> index disease markers, <span class="math inline">\(k = 1, \ldots, K\)</span>. Here the <span class="math inline">\(M\)</span> disease subtypes are formed by cross-classification of the <span class="math inline">\(K\)</span> binary tumor markers, so that we have <span class="math inline">\(M = 2^K\)</span> disease subtypes.</p>
 <p>To evaluate the independent influences of individual disease markers, it is convenient to transform the parameters in <span class="math inline">\(\mathbf{\beta}\)</span> using the one-to-one linear transformation</p>
-<p><span class="math display">\[\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.\]</span> <span class="math display">\[\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.\]</span> Here <span class="math inline">\(\mathbf{L}\)</span> is an <span class="math inline">\(M \times K\)</span> contrast matrix such that the entries are -1 if tumor marker <span class="math inline">\(k\)</span> is absent for disease subtype <span class="math inline">\(m\)</span> and 1 if tumor marker <span class="math inline">\(k\)</span> is present for disease subtype <span class="math inline">\(m\)</span>. <span class="math inline">\(\mathbf{\gamma}\)</span> is then the <span class="math inline">\((P+1) \times K\)</span> matrix of parameters that reflect the independent effects of distinct tumor markers. Each element of the <span class="math inline">\(\mathbf{\gamma}\)</span> parameters represents the average of differences in log odds ratios between disease subtypes defined by different levels of the <span class="math inline">\(k\)</span>th tumor marker with respect to the <span class="math inline">\(p\)</span>th risk factor when the other tumor markers are held constant. Variance estimates corresponding to each <span class="math inline">\(\hat{\gamma}_{pk}\)</span> are obtained using</p>
+<p><span class="math display">\[\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.\]</span> Here <span class="math inline">\(\mathbf{L}\)</span> is an <span class="math inline">\(M \times K\)</span> contrast matrix such that the entries are -1 if tumor marker <span class="math inline">\(k\)</span> is absent for disease subtype <span class="math inline">\(m\)</span> and 1 if tumor marker <span class="math inline">\(k\)</span> is present for disease subtype <span class="math inline">\(m\)</span>. <span class="math inline">\(\mathbf{\gamma}\)</span> is then the <span class="math inline">\((P+1) \times K\)</span> matrix of parameters that reflect the independent effects of distinct tumor markers. Each element of the <span class="math inline">\(\mathbf{\gamma}\)</span> parameters represents the average of differences in log odds ratios between disease subtypes defined by different levels of the <span class="math inline">\(k\)</span>th tumor marker with respect to the <span class="math inline">\(p\)</span>th risk factor when the other tumor markers are held constant. Variance estimates corresponding to each <span class="math inline">\(\hat{\gamma}_{pk}\)</span> are obtained using</p>
 <p><span class="math display">\[\widehat{var}(\hat{\gamma}_{pk}) = \left(\frac{M}{2}\right)^{-2} \mathbf{L}_{\boldsymbol{\cdot} k}^T \widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}}^T) \mathbf{L}_{\boldsymbol{\cdot} k}\]</span> where <span class="math inline">\(\mathbf{L}_{\boldsymbol{\cdot} k}\)</span> is the <span class="math inline">\(k\)</span>th column of the <span class="math inline">\(\mathbf{L}\)</span> matrix and the estimated variance-covariance matrix <span class="math inline">\(\widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}})\)</span> for each risk factor <span class="math inline">\(p\)</span> is obtained directly from the polytomous logistic regression model.</p>
 <p>Hypothesis tests for the question of whether a risk factor effect differs across levels of each individual disease marker of which the disease subtypes are comprised can be conducted separately for each combination of risk factor <span class="math inline">\(p\)</span> and tumor marker <span class="math inline">\(k\)</span> using a Wald test of the hypothesis</p>
-<p><span class="math display">\[H_{0_{{\gamma_{pk}}}}: \gamma_{pk} = 0.\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the two individual disease markers <code>marker</code> and <code>marker2</code>. These markers will be cross-classified to fit the polytomous logisitc regression model to obtain the <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> estimates, which are then transformed in order to obtain estimates and hypothesis tests related to the individual disease markers.</p>
+<p><span class="math display">\[H_{0_{{\gamma_{pk}}}}: \gamma_{pk} = 0.\]</span> Using the <code>subtype_data</code> simulated dataset, we can examine the influence of risk factors <code>x1</code>, <code>x2</code>, and <code>x3</code> on the two individual disease markers <code>marker1</code> and <code>marker2</code>. These two binary disease markers will be cross-classified to form four disease subtypes that will be used as the outcome in the polytomous logistic regression model to obtain the <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> estimates, which are then transformed in order to obtain estimates and hypothesis tests related to the individual disease markers.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mod2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eh_test_marker.html">eh_test_marker</a></span>(
   <span class="dt">markers =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"marker1"</span>, <span class="st">"marker2"</span>),
   <span class="dt">factors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),
@@ -413,7 +413,7 @@
 </tr>
 </tbody>
 </table>
-<p>The estimates and heterogeneity p-values for disease subtypes formed by cross-classifying these individual tumor markers can be obtained as described in <a href="#subtype">Pre-specified subtypes</a>.</p>
+<p>The estimates and heterogeneity p-values for disease subtypes formed by cross-classifying these individual tumor markers can also be accessed in objects <code>beta_se_p</code> and <code>or_ci_p</code>, as described in the section on <a href="#subtype">Pre-specified subtypes</a>.</p>
 </div>
   </div>
 

@@ -18,17 +18,19 @@ quotes.}
 For binary risk factors the lowest level will be used as the reference level.
 e.g. \code{factors = list("age", "sex", "race")}.}
 
-\item{data}{the name of the dataframe that contains the relevant variables.}
+\item{data}{the name of the case-only dataframe that contains the relevant variables.}
 }
 \description{
 \code{dstar} estimates the incremental explained risk variation
 across a set of pre-specified disease subtypes in a case-only study.
 The highest frequency level of label is used as the reference level,
 for stability.
-This function takes a model formula and a wide dataset and does the needed
-transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model using \code{\link[mlogit]{mlogit}},
-and calculates D based on the resulting risk predictions.
+This function takes the name of the disease subtype variable, the number
+of disease subtypes, a list of risk factors, and a wide case-only dataset,
+and does the needed
+transformation on the dataset to get the correct format. Then the polytomous
+logistic regression model is fit using \code{\link[mlogit]{mlogit}},
+and D* is calculated based on the resulting risk predictions.
 }
 \examples{
 
@@ -37,12 +39,11 @@ dstar(
   label = "subtype",
   M = 4,
   factors = list("x1", "x2", "x3"),
-  data = subtype_data[subtype_data$subtype > 0, ])
-
+  data = subtype_data[subtype_data$subtype > 0, ]
+)
 }
 \references{
 Begg, C. B., Seshan, V. E., Zabor, E. C., Furberg, H., Arora, A.,
 Shen, R., . . . Hsieh, J. J. (2014). Genomic investigation of etiologic
 heterogeneity: methodologic challenges. BMC Med Res Methodol, 14, 138.
-doi: 10.1186/1471-2288-14-138
 }

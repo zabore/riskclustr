@@ -59,7 +59,7 @@
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -86,7 +86,7 @@
       <h1>Tutorial: Identify the optimal D subtype solution</h1>
                         <h4 class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: November 24, 2018</h4>
+            <h4 class="date">Last updated: November 25, 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/optimal_d.Rmd"><code>vignettes/optimal_d.Rmd</code></a></small>
       <div class="hidden name"><code>optimal_d.Rmd</code></div>
@@ -99,13 +99,13 @@
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>Sometimes subtypes will not be pre-defined, but rather it will be of interest to identify subtypes that differ maximally with respect to risk heterogeneity based on some number of disease markers.</p>
-<p>This tutorial will introduce you to the <code><a href="../reference/optimal_kmeans_d.html">optimal_kmeans_d()</a></code> function, which will run <span class="math inline">\(k\)</span>-means clustering on disease marker data and identify the subtype solution that maximizes <span class="math inline">\(D\)</span>. This function is currently for use with case-control data only. See <a href="calculate_d.html">Tutorial: Estimate the extent of etiologic heterogeneity</a> for details on the calculation of the <span class="math inline">\(D\)</span> value.</p>
+<p>This tutorial will introduce you to the <code><a href="../reference/optimal_kmeans_d.html">optimal_kmeans_d()</a></code> function, which will run <span class="math inline">\(k\)</span>-means clustering on disease marker data and identify the subtype solution that maximizes <span class="math inline">\(D\)</span>. When <span class="math inline">\(k\)</span>-means clustering is run with multiple random starts, it will return a variety of class solutions, as the algorithm typically reaches a local rather than global maxima. Then for each candidate class solution, <span class="math inline">\(D\)</span> can be computed and the solution that maximizes <span class="math inline">\(D\)</span>, a measure of etiologic heterogeneity, can be identified. This function is currently for use with case-control data only. See <a href="calculate_d.html">Tutorial: Estimate the extent of etiologic heterogeneity</a> for details on the calculation of the <span class="math inline">\(D\)</span> value.</p>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This tutorial will make use of a simulated example dataset named <code>subtype_data</code>. This simulated dataset contains 1200 case subjects and 800 control subjects. There are 30 continuous disease markers available on the cases. There are two continuous risk factors and one binary risk factor available on all subjects.</p>
-<p>Let’s say we wanted to identify the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers <code>y1</code>-<code>y30</code> available in <code>subtype_data</code>, using all three risk factors <code>x1</code>, <code>x2</code> and <code>x3</code>. We use the default of 100 random starts of the <span class="math inline">\(k\)</span>-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is a bit slow to run, so please be patient.</p>
+<p>Let’s say we wanted to identify the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers <code>y1</code>-<code>y30</code> available in <code>subtype_data</code>, using all three risk factors <code>x1</code>, <code>x2</code> and <code>x3</code>. We use the default of 100 random starts of the <span class="math inline">\(k\)</span>-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is currently a bit slow to run due to the fitting of numerous models, so please be patient.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(riskclustr)
 
 res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/optimal_kmeans_d.html">optimal_kmeans_d</a></span>(
@@ -117,15 +117,16 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/optimal
   <span class="dt">nstart =</span> <span class="dv">100</span>,
   <span class="dt">seed =</span> <span class="dv">81110224</span>)</code></pre></div>
 <p>The function returns a list with one element for the optimal <span class="math inline">\(D\)</span> value and one element that is the original data frame with a column added for the optimal <span class="math inline">\(D\)</span> class solution.</p>
-<p>First let’s look at a tabulation of <code>optimal_d_label</code> from the <code>optimal_d_data</code> object:</p>
+<p>First let’s look at a tabulation of <code>optimal_d_label</code> from the <code>optimal_d_data</code> object to see how each case was classified into a subtype:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res[[<span class="st">"optimal_d_data"</span>]]<span class="op">$</span>optimal_d_label)
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   0   1   2   3 </span>
 <span class="co">#&gt; 800 300 599 301</span></code></pre></div>
-<p>These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with <code>eh_test_subtype</code> to obtain measures of risk factor association as well as heterogeneity <span class="math inline">\(p\)</span>-values. See <a href="eh_test.html">Tutorial: test for etiologic heterogeneity in a case-control study</a> for details.</p>
+<p>These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> to obtain measures of risk factor association as well as heterogeneity <span class="math inline">\(p\)</span>-values. See <a href="eh_test.html">Tutorial: test for etiologic heterogeneity in a case-control study</a> for details.</p>
 <p>Next we can see the <span class="math inline">\(D\)</span> value that goes long with the optimal subtype solution:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res[[<span class="st">"optimal_d"</span>]]
 <span class="co">#&gt; [1] 0.3385876</span></code></pre></div>
+<p>We see that this optimal 3-subtype solution based on clustering the 30 disease markers results in <span class="math inline">\(D=0.339\)</span>.</p>
 </div>
   </div>
 

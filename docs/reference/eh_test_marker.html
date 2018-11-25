@@ -34,17 +34,20 @@ disease markers in a case-control study — eh_test_marker • riskclustr</title
 <meta property="og:title" content="Test for etiologic heterogeneity of risk factors according to individual
 disease markers in a case-control study — eh_test_marker" />
 
-<meta property="og:description" content="eh_test_marker takes a list of individual disease markers
-and a list of risk factors and returns results related to the question of
+<meta property="og:description" content="eh_test_marker takes a list of individual disease
+markers,
+a list of risk factors, a variable name denoting case versus control status,
+and a dataframe, and returns results related to the question of
 whether each risk factor differs across levels of the disease subtypes and
 the question of whether each risk factor differs across levels of each
 individual tumor marker of which the disease subtypes are comprised.
 Input is a dataframe that contains the individual disease markers, the risk
 factors of interest, and an indicator of case or control status.
-The tumor markers must be binary and must have levels
-0 or 1 for cases. The tumor markers should be left missing for control
-subjects. For categorical tumor markers, a reference level should be selected
-and then indicator variables for each remaining level of the tumor marker
+The disease markers must be binary and must have levels
+0 or 1 for cases. The disease markers should be left missing for control
+subjects. For categorical disease markers, a reference level should be
+selected
+and then indicator variables for each remaining level of the disease marker
 should be created. Risk factors can be either binary or continuous. For
 categorical risk factors, a reference level should be selected and then
 indicator variables for each remaining level of the risk factor should be
@@ -108,7 +111,7 @@ created." />
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -141,17 +144,20 @@ disease markers in a case-control study</h1>
 
     <div class="ref-description">
     
-    <p><code>eh_test_marker</code> takes a list of individual disease markers
-and a list of risk factors and returns results related to the question of
+    <p><code>eh_test_marker</code> takes a list of individual disease
+markers,
+a list of risk factors, a variable name denoting case versus control status,
+and a dataframe, and returns results related to the question of
 whether each risk factor differs across levels of the disease subtypes and
 the question of whether each risk factor differs across levels of each
-individual tumor marker of which the disease subtypes are comprised.</p>
-<p>Input is a dataframe that contains the individual disease markers, the risk
+individual tumor marker of which the disease subtypes are comprised.
+Input is a dataframe that contains the individual disease markers, the risk
 factors of interest, and an indicator of case or control status.
-The tumor markers must be binary and must have levels
-0 or 1 for cases. The tumor markers should be left missing for control
-subjects. For categorical tumor markers, a reference level should be selected
-and then indicator variables for each remaining level of the tumor marker
+The disease markers must be binary and must have levels
+0 or 1 for cases. The disease markers should be left missing for control
+subjects. For categorical disease markers, a reference level should be
+selected
+and then indicator variables for each remaining level of the disease marker
 should be created. Risk factors can be either binary or continuous. For
 categorical risk factors, a reference level should be selected and then
 indicator variables for each remaining level of the risk factor should be
@@ -207,15 +213,15 @@ with a row for each risk factor and a column for each disease subtype.</p>
 risk factor differs across the levels of the disease subtype.</p>
 <p><code>gamma</code> is a matrix containing the estimated disease marker parameters,
 obtained as linear combinations of the <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta</a></code> estimates,
-with a row for each risk factor and a column for each tumor marker.</p>
+with a row for each risk factor and a column for each disease marker.</p>
 <p><code>gamma_se</code> is a matrix containing the estimated disease marker
 standard errors, obtained based on a transformation of the <code><a href='https://www.rdocumentation.org/packages/base/topics/Special'>beta</a></code>
 standard errors, with a row for each risk factor and a column for each
-tumor marker.</p>
+disease marker.</p>
 <p><code>gamma_p</code> is a matrix of p-values for testing whether each risk factor
-differs across levels of each tumor marker, with a row for each risk
-factor and a column for each tumor marker.</p>
-<p><code>or_ci_p</code> is a dataframe with the odds ratio (95<!-- % CI) for each risk -->
+differs across levels of each disease marker, with a row for each risk
+factor and a column for each disease marker.</p>
+<p><code>or_ci_p</code> is a dataframe with the odds ratio (95% CI) for each risk
 factor/subtype combination, as well as a column of formatted etiologic
 heterogeneity p-values.</p>
 <p><code>beta_se_p</code> is a dataframe with the estimates (SE) for
@@ -229,11 +235,12 @@ their associated p-values.</p>
     <pre class="examples"><div class='input'>
 <span class='co'># Run for two binary tumor markers, which will combine to form four subtypes</span>
 <span class='fu'>eh_test_marker</span>(
-    <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"marker1"</span>, <span class='st'>"marker2"</span>),
-    <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
-    <span class='kw'>case</span> <span class='kw'>=</span> <span class='st'>"case"</span>,
-    <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
-    <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; $beta
+  <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"marker1"</span>, <span class='st'>"marker2"</span>),
+  <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
+  <span class='kw'>case</span> <span class='kw'>=</span> <span class='st'>"case"</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
+  <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>
+)</div><div class='output co'>#&gt; $beta
 #&gt;            1         2         3         4
 #&gt; x1 1.5555082 0.2410591 0.8232515 0.1086845
 #&gt; x2 0.3031594 0.3518870 0.4335048 0.3714092
@@ -288,8 +295,7 @@ their associated p-values.</p>
 #&gt; x1 -1.01 (0.07)        &lt;.001 -0.43 (0.06)        &lt;.001
 #&gt; x2 -0.01 (0.06)        0.916  0.07 (0.06)        0.203
 #&gt; x3  0.89 (0.15)        &lt;.001 -0.13 (0.13)        0.333
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

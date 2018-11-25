@@ -23,18 +23,21 @@ e.g. \code{factors = list("age", "sex", "race")}.}
 \description{
 \code{d} estimates the incremental explained risk variation
 across a set of pre-specified disease subtypes in a case-control study.
-This function takes a model formula and a wide dataset and does the needed
-transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model using \code{\link[mlogit]{mlogit}},
-and calculates D based on the resulting risk predictions.
+This function takes the name of the disease subtype variable, the number
+of disease subtypes, a list of risk factors, and a wide dataset,
+and does the needed
+transformation on the dataset to get the correct format. Then the polytomous
+logistic regression model is fit using \code{\link[mlogit]{mlogit}},
+and D is calculated based on the resulting risk predictions.
 }
 \examples{
 
 d(
- label = "subtype",
- M = 4,
- factors = list("x1", "x2", "x2"),
- data = subtype_data)
+  label = "subtype",
+  M = 4,
+  factors = list("x1", "x2", "x3"),
+  data = subtype_data
+)
 
 }
 \references{

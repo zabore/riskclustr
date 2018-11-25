@@ -1,16 +1,16 @@
 #' Obtain optimal D solution based on k-means clustering of disease marker
 #' data in a case-control study
 #'
-#' @description \code{optimal_kmeans_d} applies K-means clustering using the
+#' @description \code{optimal_kmeans_d} applies k-means clustering using the
 #' \code{\link[stats]{kmeans}} function with many random starts. The D value is
-#' then calculated for the cluster solution at each random start using
-#' \code{\link{d}} and the cluster solution that maximizes D is returned,
+#' then calculated for the cluster solution at each random start using the
+#' \code{\link{d}} function, and the cluster solution that maximizes D is returned,
 #' along with the corresponding value of D. In this way the optimally
 #' etiologically heterogenous subtype solution can be identified from possibly
 #' high-dimensional disease marker data.
 #'
 #' @param markers a vector of the names of the disease markers. These markers
-#' should be of a type and pre-processed in a way that is suitable for use with
+#' should be of a type that is suitable for use with
 #' \code{\link[stats]{kmeans}} clustering. All markers will will be missing
 #' for control subjects. e.g. \code{markers = c("marker1", "marker2")}
 #' @param M is the number of clusters to identify using
@@ -30,12 +30,14 @@
 #' @return Returns a list
 #'
 #' \code{optimal_d} The D value for the optimal D solution
+#'
 #' \code{optimal_d_data} The original data frame supplied through the
-#' \code{data} argument, with a column added for the optimal D subtype label.
+#' \code{data} argument, with a column called \code{optimal_d_label}
+#' added for the optimal D subtype label.
 #' This has the subtype assignment for cases, and is 0 for all controls.
 #'
 #' @examples
-#' 
+#'
 #' # Cluster 30 disease markers to identify the optimally
 #' # etiologically heterogeneous 3-subtype solution
 #' res <- optimal_kmeans_d(
@@ -47,17 +49,16 @@
 #'   nstart = 100,
 #'   seed = 81110224
 #' )
-#' 
+#'
 #' # Look at the value of D for the optimal D solution
 #' res[["optimal_d"]]
-#' 
+#'
 #' # Look at a table of the optimal D solution
 #' table(res[["optimal_d_data"]]$optimal_d_label)
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
 #' Seshan, V. E. (2013). A conceptual and methodological framework for
 #' investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.
-#' doi: 10.1002/sim.5902
 #'
 #' @export
 #'

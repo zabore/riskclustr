@@ -10,8 +10,7 @@ eh_test_subtype(label, M, factors, data, digits = 2)
 \arguments{
 \item{label}{the name of the subtype variable in the data. This should be a
 numeric variable with values 0 through M, where 0 indicates control subjects.
-Must be supplied in quotes, e.g. \code{label = "subtype"}.
-quotes.}
+Must be supplied in quotes, e.g. \code{label = "subtype"}.}
 
 \item{M}{is the number of subtypes. For M>=2.}
 
@@ -39,7 +38,7 @@ with a row for each risk factor and a column for each disease subtype.
 \code{eh_pval} is a vector of unformatted p-values for testing whether each
 risk factor differs across the levels of the disease subtype.
 
-\code{or_ci_p} is a dataframe with the odds ratio (95% CI) for each risk
+\code{or_ci_p} is a dataframe with the odds ratio (95\% CI) for each risk
 factor/subtype combination, as well as a column of formatted etiologic
 heterogeneity p-values.
 
@@ -48,30 +47,30 @@ each risk factor/subtype combination, as well as a column of formatted
 etiologic heterogeneity p-values.
 }
 \description{
-\code{eh_test_subtype} takes a vector of class labels for
-pre-specified subtypes and a list of risk factors and returns results
+\code{eh_test_subtype} takes the name of the variable containing
+the pre-specified subtype labels, the number of subtypes, a list of risk
+factors, and the name of the dataframe and returns results
 related to the
 question of whether each risk factor differs across levels of the disease
-subtypes
-
-Input is a dataframe that contains the risk factors of interest and a
+subtypes. Input is a dataframe that contains the risk factors of interest and
+a
 variable containing numeric class labels that is 0 for control subjects.
 Risk factors can be either binary or continuous. For categorical risk
 factors, a reference level should be selected and then indicator variables
 for each remaining level of the risk factor should be created.
 Categorical risk factors entered as is will be treated as ordinal.
-Class labels for the cases can be specified as a vector. The multinomial
+The multinomial
 logistic regression model is fit using \code{\link[mlogit]{mlogit}}.
 }
 \examples{
 
 eh_test_subtype(
-    label = "subtype",
-    M = 4,
-    factors = list("x1", "x2", "x3"),
-    data = subtype_data,
-    digits = 2)
-
+  label = "subtype",
+  M = 4,
+  factors = list("x1", "x2", "x3"),
+  data = subtype_data,
+  digits = 2
+)
 }
 \author{
 Emily C Zabor \email{zabore@mskcc.org}

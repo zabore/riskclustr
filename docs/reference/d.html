@@ -34,10 +34,12 @@
 
 <meta property="og:description" content="d estimates the incremental explained risk variation
 across a set of pre-specified disease subtypes in a case-control study.
-This function takes a model formula and a wide dataset and does the needed
-transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model using mlogit,
-and calculates D based on the resulting risk predictions." />
+This function takes the name of the disease subtype variable, the number
+of disease subtypes, a list of risk factors, and a wide dataset,
+and does the needed
+transformation on the dataset to get the correct format. Then the polytomous
+logistic regression model is fit using mlogit,
+and D is calculated based on the resulting risk predictions." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -97,7 +99,7 @@ and calculates D based on the resulting risk predictions." />
       <a href="../articles/eh_test.html">Test for etiologic heterogeneity</a>
     </li>
     <li>
-      <a href="../articles/optimal_d.html">Identify the optimal D solution</a>
+      <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
   </ul>
 </li>
@@ -131,10 +133,12 @@ and calculates D based on the resulting risk predictions." />
     
     <p><code>d</code> estimates the incremental explained risk variation
 across a set of pre-specified disease subtypes in a case-control study.
-This function takes a model formula and a wide dataset and does the needed
-transformation on the dataset to get the correct format, fits the polytomous
-logistic regression model using <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>,
-and calculates D based on the resulting risk predictions.</p>
+This function takes the name of the disease subtype variable, the number
+of disease subtypes, a list of risk factors, and a wide dataset,
+and does the needed
+transformation on the dataset to get the correct format. Then the polytomous
+logistic regression model is fit using <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>,
+and D is calculated based on the resulting risk predictions.</p>
     
     </div>
 
@@ -177,10 +181,11 @@ doi: 10.1002/sim.5902</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>d</span>(
- <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
- <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
- <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x2"</span>),
- <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>)</div><div class='output co'>#&gt; [1] 0.2494268</div><div class='input'>
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
+  <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>
+)</div><div class='output co'>#&gt; [1] 0.4100995</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
