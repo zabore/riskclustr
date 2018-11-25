@@ -38,7 +38,6 @@ d(
   factors = list("x1", "x2", "x3"),
   data = subtype_data
 )
-
 }
 \references{
 Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
