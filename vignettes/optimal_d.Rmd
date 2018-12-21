@@ -23,14 +23,14 @@ knitr::opts_chunk$set(
 
 Sometimes subtypes will not be pre-defined, but rather it will be of interest to identify subtypes that differ maximally with respect to risk heterogeneity based on some number of disease markers. 
 
-This tutorial will introduce you to the `optimal_kmeans_d()` function, which will run $k$-means clustering on disease marker data and identify the subtype solution that maximizes $D$. When $k$-means clustering is run with multiple random starts, it will return a variety of class solutions, as the algorithm typically reaches a local rather than global maxima. Then for each candidate class solution, $D$ can be computed and the solution that maximizes $D$, a measure of etiologic heterogeneity, can be identified. This function is currently for use with case-control data only. See [Tutorial: Estimate the extent of etiologic heterogeneity](calculate_d.html) for details on the calculation of the $D$ value.
+This tutorial will introduce you to the `optimal_kmeans_d()` function, which will run $k$-means clustering, using the `kmeans()` function, on disease marker data and identify the subtype solution that maximizes $D$. When $k$-means clustering is run with multiple random starts, it will return a variety of class solutions, as the algorithm typically reaches a local rather than global maxima. Then for each candidate class solution, $D$ can be computed and the solution that maximizes $D$, a measure of etiologic heterogeneity, can be identified. This function is currently for use with case-control data only. See [Tutorial: Estimate the extent of etiologic heterogeneity](calculate_d.html) for details on the calculation of the $D$ value.
 
 
 ## Example
 
 This tutorial will make use of a simulated example dataset named `subtype_data`. This simulated dataset contains 1200 case subjects and 800 control subjects. There are 30 continuous disease markers available on the cases. There are two continuous risk factors and one binary risk factor available on all subjects.
 
-Let's say we wanted to identify the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers `y1`-`y30` available in `subtype_data`, using all three risk factors `x1`, `x2` and `x3`. We use the default of 100 random starts of the $k$-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is currently a bit slow to run due to the fitting of numerous models, so please be patient.
+Say for example that interest was in identifying the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers `y1`-`y30` available in `subtype_data`, using all three risk factors `x1`, `x2` and `x3`. We use the default of 100 random starts of the $k$-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is currently a bit slow to run due to the fitting of numerous models, so please be patient.
 
 ```{r}
 library(riskclustr)

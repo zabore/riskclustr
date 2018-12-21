@@ -40,7 +40,7 @@ $$D = \sum_{m=1}^M \pi_m C_m^2 - C^2,$$
 
 where $\pi_m$ represents the prevalence of the $m$th disease subtype. 
 
-To estimate $D$ in the context of a case-control study, we use the `d()` function.`d()` relies on the `mlogit` function from the `mlogit` package to fit the polytomous logistic regression model. We supply `d()` with the name of the subtype variable, the number of subtypes, a list of risk factors, and the dataset name. See the for details of argument specification.
+To estimate $D$ in the context of a case-control study, we use the `d()` function.`d()` relies on the `mlogit` function from the `mlogit` package to fit the polytomous logistic regression model. We supply `d()` with the name of the subtype variable, the number of subtypes, a list of risk factors, and the dataset name. See the function [documentation](http://www.emilyzabor.com/riskclustr/reference/d.html) for details of argument specification.
 
 ```{r}
 library(riskclustr)
@@ -70,7 +70,7 @@ To demonstrate the usage, we first limit `subtype_data` to the cases only. Contr
 subtype_cases <- subtype_data[subtype_data$subtype != 0, ]
 ```
 
-We specify the arguments to `dstar()` as before for `d()`, but supplying our new case-only dataset to the `data` argument. Now, the subtype variable must be numeric, with cases coded as $1$ through $M$ according to the subtype to which they belong. The highest frequency level of label will be used as the reference level, for model stability.
+We specify the arguments to `dstar()` as before for `d()`, but supplying our new case-only dataset to the `data` argument. Now, the subtype variable must be numeric, with cases coded as $1$ through $M$ according to the subtype to which they belong. The highest frequency level of `label` will be used as the reference level, for model stability.
 
 ```{r}
 dstar(
