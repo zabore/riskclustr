@@ -6,7 +6,7 @@
 #' then calculated for the cluster solution at each random start using the
 #' \code{\link{d}} function, and the cluster solution that maximizes D is returned,
 #' along with the corresponding value of D. In this way the optimally
-#' etiologically heterogenous subtype solution can be identified from possibly
+#' etiologically heterogeneous subtype solution can be identified from possibly
 #' high-dimensional disease marker data.
 #'
 #' @param markers a vector of the names of the disease markers. These markers
