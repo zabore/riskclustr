@@ -1,9 +1,9 @@
 Package: riskclustr
 Type: Package
-Title: Functions to study etiologic heterogeneity
-Version: 0.0.9
+Title: Functions to Study Etiologic Heterogeneity
+Version: 0.1.0
 Authors@R: person(given = "Emily C.", family = "Zabor", email = "zabore@mskcc.org", role = c("aut", "cre"))
-Description: riskclustr is a collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors.
+Description: A collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual tumor markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors.
 Depends:
     R (>= 3.4)
 License: GPL-2

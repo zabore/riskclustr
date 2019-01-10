@@ -37,7 +37,7 @@
 #' This has the subtype assignment for cases, and is 0 for all controls.
 #'
 #' @examples
-#' 
+#' \donttest{
 #' # Cluster 30 disease markers to identify the optimally
 #' # etiologically heterogeneous 3-subtype solution
 #' res <- optimal_kmeans_d(
@@ -49,12 +49,14 @@
 #'   nstart = 100,
 #'   seed = 81110224
 #' )
-#' 
+#'
 #' # Look at the value of D for the optimal D solution
 #' res[["optimal_d"]]
-#' 
+#'
 #' # Look at a table of the optimal D solution
 #' table(res[["optimal_d_data"]]$optimal_d_label)
+#' }
+#'
 #' @references
 #' Begg, C. B., Zabor, E. C., Bernstein, J. L., Bernstein, L., Press, M. F., &
 #' Seshan, V. E. (2013). A conceptual and methodological framework for
