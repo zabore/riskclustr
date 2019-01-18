@@ -2,9 +2,9 @@ pandoc: '2.4'
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
-  calculate_d: ../../../../../G:/GitHub/riskclustr/vignettes/calculate_d.html
-  eh_test: ../../../../../G:/GitHub/riskclustr/vignettes/eh_test.html
-  optimal_d: ../../../../../G:/GitHub/riskclustr/vignettes/optimal_d.html
+  calculate_d: calculate_d.html
+  eh_test: eh_test.html
+  optimal_d: optimal_d.html
 urls:
   reference: http://www.emilyzabor.com/riskclustr//reference
   article: http://www.emilyzabor.com/riskclustr//articles

@@ -39,7 +39,7 @@ kmeans function with many random starts. The D value is
 then calculated for the cluster solution at each random start using the
 d function, and the cluster solution that maximizes D is returned,
 along with the corresponding value of D. In this way the optimally
-etiologically heterogenous subtype solution can be identified from possibly
+etiologically heterogeneous subtype solution can be identified from possibly
 high-dimensional disease marker data." />
 <meta name="twitter:card" content="summary" />
 
@@ -71,7 +71,7 @@ high-dimensional disease marker data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">riskclustr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -138,7 +138,7 @@ data in a case-control study</h1>
 then calculated for the cluster solution at each random start using the
 <code><a href='d.html'>d</a></code> function, and the cluster solution that maximizes D is returned,
 along with the corresponding value of D. In this way the optimally
-etiologically heterogenous subtype solution can be identified from possibly
+etiologically heterogeneous subtype solution can be identified from possibly
 high-dimensional disease marker data.</p>
     
     </div>
@@ -206,8 +206,7 @@ investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Cluster 30 disease markers to identify the optimally</span>
+    <pre class="examples"><div class='input'><span class='co'># Cluster 30 disease markers to identify the optimally</span>
 <span class='co'># etiologically heterogeneous 3-subtype solution</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>optimal_kmeans_d</span>(
   <span class='kw'>markers</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"y"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/seq'>seq</a></span>(<span class='fl'>1</span>:<span class='fl'>30</span>))),
@@ -224,7 +223,8 @@ investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.</p>
 <span class='co'># Look at a table of the optimal D solution</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>res</span><span class='kw'>[[</span><span class='st'>"optimal_d_data"</span>]]$<span class='no'>optimal_d_label</span>)</div><div class='output co'>#&gt; 
 #&gt;   0   1   2   3 
-#&gt; 800 300 599 301 </div></pre>
+#&gt; 800 300 599 301 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
