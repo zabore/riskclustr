@@ -9,7 +9,7 @@
 #' and a dataframe, and returns results related to the question of
 #' whether each risk factor differs across levels of the disease subtypes and
 #' the question of whether each risk factor differs across levels of each
-#' individual tumor marker of which the disease subtypes are comprised.
+#' individual disease marker of which the disease subtypes are comprised.
 #' Input is a dataframe that contains the individual disease markers, the risk
 #' factors of interest, and an indicator of case or control status.
 #' The disease markers must be binary and must have levels
@@ -74,7 +74,7 @@
 #' their associated p-values.
 #'
 #' @examples
-#' 
+#'
 #' # Run for two binary tumor markers, which will combine to form four subtypes
 #' eh_test_marker(
 #'   markers = list("marker1", "marker2"),

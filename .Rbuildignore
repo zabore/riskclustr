@@ -1,3 +1,4 @@
+^CRAN-RELEASE$
 ^codecov\.yml$
 ^\.travis\.yml$
 ^.*\.Rproj$
@@ -7,5 +8,4 @@
 ^README\.Rmd$
 ^docs$
 ^_pkgdown\.yml$
-^README\.Rmd$
 cran-comments.md

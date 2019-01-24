@@ -29,15 +29,15 @@ In epidemiologic studies polytomous logistic regression is commonly used in the 
 
 Whether disease subtypes are pre-specified or formed by cross-classification of individual disease markers, the resulting polytomous logistic regression model is the same. Let $i$ index study subjects, $i = 1, \ldots, N$, let $m$ index disease subtypes, $m = 0, \ldots M$, where $m=0$ denotes control subjects, and let $p$ index risk factors, $p = 1, \ldots, P$. The polytomous logistic regression model is specified as
 
-$$\Pr(Y = m | \mathbf{X}) = \frac{\exp(\mathbf{X}^T \mathbf{\beta}_{\boldsymbol{\cdot} m})}{\mathbf{1} + \exp(\mathbf{X}^T \mathbf{\beta}) \mathbf{1}}$$
-where $\mathbf{X}$ is the $(P+1) \times N$ matrix of risk factor values, with the first row all ones for the intercept, and $\mathbf{\beta}$ is the $(P+1) \times M$ matrix of regression coefficients. $\mathbf{\beta}_{\boldsymbol{\cdot} m}$ indicates the $m$th column of the matrix $\mathbf{\beta}$ and $\mathbf{1}$ represents a vector of ones of length $M$.
+$$\Pr(Y = m | \mathbf{X}) = \frac{\exp(\mathbf{X}^T \boldsymbol{\beta}_{\boldsymbol{\cdot} m})}{\mathbf{1} + \exp(\mathbf{X}^T \boldsymbol{\beta}) \mathbf{1}}$$
+where $\mathbf{X}$ is the $(P+1) \times N$ matrix of risk factor values, with the first row all ones for the intercept, and $\boldsymbol{\beta}$ is the $(P+1) \times M$ matrix of regression coefficients. $\boldsymbol{\beta}_{\boldsymbol{\cdot} m}$ indicates the $m$th column of the matrix $\boldsymbol{\beta}$ and $\mathbf{1}$ represents a vector of ones of length $M$.
 
 
 ## Pre-specified subtypes {#subtype}
 
 If disease subtypes are pre-specified, either based on clustering high-dimensional disease marker data or based on a single disease marker or combinations of disease markers, then statistical tests for etiologic heterogeneity according to each risk factor can be conducted using the `eh_test_subtype()` function. 
 
-Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, $\hat{\mathbf{\beta}}$, and the associated estimated variance-covariance matrix, $\widehat{cov}(\hat{\mathbf{\beta}})$, are obtained directly from the resulting polytomous logistic regression model. Each $\beta_{pm}$ parameter represents the log odds ratio for a one-unit change in risk factor $p$ for subtype $m$ disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor $p$ using a Wald test of the hypothesis 
+Estimates of the parameters of interest related to the question of whether risk factor effects differ across subtypes of disease, $\hat{\boldsymbol{\beta}}$, and the associated estimated variance-covariance matrix, $\widehat{cov}(\hat{\boldsymbol{\beta}})$, are obtained directly from the resulting polytomous logistic regression model. Each $\beta_{pm}$ parameter represents the log odds ratio for a one-unit change in risk factor $p$ for subtype $m$ disease versus controls. Hypothesis tests for the question of whether a specific risk factor effect differs across subtypes of disease can be conducted separately for each risk factor $p$ using a Wald test of the hypothesis 
 
 $$H_{0_{\beta_{p.}}}: \beta_{p1} = \dots = \beta_{pM}$$ 
 Using the `subtype_data` simulated dataset, we can examine the influence of risk factors `x1`, `x2`, and `x3` on the 4 pre-specified disease subtypes in variable `subtype` using the following code:
@@ -54,7 +54,7 @@ mod1 <- eh_test_subtype(
 
 See the function [documentation](http://www.emilyzabor.com/riskclustr/reference/eh_test_subtype.html) for details of function arguments.  
 
-The resulting estimates $\hat{\mathbf{\beta}}$ can be accessed with
+The resulting estimates $\hat{\boldsymbol{\beta}}$ can be accessed with
 
 ```{r eval = FALSE}
 mod1$beta
@@ -65,7 +65,7 @@ mod1$beta
 knitr::kable(mod1$beta)
 ```
 
-the associated standard deviation estimates $\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}$ with
+the associated standard deviation estimates $\sqrt{\widehat{var}(\hat{\boldsymbol{\beta}})}$ with
 
 ```{r eval = FALSE}
 mod1$beta_se
@@ -87,7 +87,7 @@ mod1$eh_pval
 knitr::kable(mod1$eh_pval)
 ```
 
-An overall formatted dataframe containing $\hat{\mathbf{\beta}} \Big(\sqrt{\widehat{var}(\hat{\mathbf{\beta}})}\Big)$ and heterogeneity p-values `p_het` to test the null hypotheses $H_{0_{\beta_{p.}}}$ can be obtained as
+An overall formatted dataframe containing $\hat{\boldsymbol{\beta}} \Big(\sqrt{\widehat{var}(\hat{\boldsymbol{\beta}})}\Big)$ and heterogeneity p-values `p_het` to test the null hypotheses $H_{0_{\beta_{p.}}}$ can be obtained as
 
 ```{r eval = FALSE}
 mod1$beta_se_p
@@ -98,7 +98,7 @@ mod1$beta_se_p
 knitr::kable(mod1$beta_se_p)
 ```
 
-Because it is often of interest to examine associations in a case-control study on the odds ratio (OR) scale rather than the original parameter estimate scale, it is also possible to obtain a matrix containing $OR=\exp(\hat{\mathbf{\beta}})$, along with 95\% confidence intervals and heterogeneity p-values `p_het` to test the null hypotheses $H_{0_{\beta_{p.}}}$ using
+Because it is often of interest to examine associations in a case-control study on the odds ratio (OR) scale rather than the original parameter estimate scale, it is also possible to obtain a matrix containing $OR=\exp(\hat{\boldsymbol{\beta}})$, along with 95\% confidence intervals and heterogeneity p-values `p_het` to test the null hypotheses $H_{0_{\beta_{p.}}}$ using
 
 ```{r eval = FALSE}
 mod1$or_ci_p
@@ -116,18 +116,18 @@ If disease subtypes are formed by cross-classifying individual binary disease ma
 
 Let $k$ index disease markers, $k = 1, \ldots, K$. Here the $M$ disease subtypes are formed by cross-classification of the $K$ binary disease markers, so that we have $M = 2^K$ disease subtypes.
 
-To evaluate the independent influences of individual disease markers, it is convenient to transform the parameters in $\mathbf{\beta}$ using the one-to-one linear transformation 
+To evaluate the independent influences of individual disease markers, it is convenient to transform the parameters in $\boldsymbol{\beta}$ using the one-to-one linear transformation 
 
-$$\hat{\mathbf{\gamma}} = \frac{\hat{\mathbf{\beta}} \mathbf{L}}{M/2}.$$
-Here $\mathbf{L}$ is an $M \times K$ contrast matrix such that the entries are -1 if disease marker $k$ is absent for disease subtype $m$ and 1 if disease marker $k$ is present for disease subtype $m$. $\mathbf{\gamma}$ is then the $(P+1) \times K$ matrix of parameters that reflect the independent effects of distinct disease markers. Each element of the $\mathbf{\gamma}$ parameters represents the average of differences in log odds ratios between disease subtypes defined by different levels of the $k$th disease marker with respect to the $p$th risk factor when the other disease markers are held constant. Variance estimates corresponding to each $\hat{\gamma}_{pk}$ are obtained using
+$$\hat{\boldsymbol{\gamma}} = \frac{\hat{\boldsymbol{\beta}} \mathbf{L}}{M/2}.$$
+Here $\mathbf{L}$ is an $M \times K$ contrast matrix such that the entries are -1 if disease marker $k$ is absent for disease subtype $m$ and 1 if disease marker $k$ is present for disease subtype $m$. $\boldsymbol{\gamma}$ is then the $(P+1) \times K$ matrix of parameters that reflect the independent effects of distinct disease markers. Each element of the $\boldsymbol{\gamma}$ parameters represents the average of differences in log odds ratios between disease subtypes defined by different levels of the $k$th disease marker with respect to the $p$th risk factor when the other disease markers are held constant. Variance estimates corresponding to each $\hat{\gamma}_{pk}$ are obtained using
 
-$$\widehat{var}(\hat{\gamma}_{pk}) = \left(\frac{M}{2}\right)^{-2} \mathbf{L}_{\boldsymbol{\cdot} k}^T \widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}}^T) \mathbf{L}_{\boldsymbol{\cdot} k}$$
-where $\mathbf{L}_{\boldsymbol{\cdot} k}$ is the $k$th column of the $\mathbf{L}$ matrix and the estimated variance-covariance matrix $\widehat{cov}(\hat{\mathbf{\beta}}_{p \boldsymbol{\cdot}})$ for each risk factor $p$ is obtained directly from the polytomous logistic regression model. 
+$$\widehat{var}(\hat{\gamma}_{pk}) = \left(\frac{M}{2}\right)^{-2} \mathbf{L}_{\boldsymbol{\cdot} k}^T \widehat{cov}(\hat{\boldsymbol{\beta}}_{p \boldsymbol{\cdot}}^T) \mathbf{L}_{\boldsymbol{\cdot} k}$$
+where $\mathbf{L}_{\boldsymbol{\cdot} k}$ is the $k$th column of the $\mathbf{L}$ matrix and the estimated variance-covariance matrix $\widehat{cov}(\hat{\boldsymbol{\beta}}_{p \boldsymbol{\cdot}})$ for each risk factor $p$ is obtained directly from the polytomous logistic regression model. 
 
 Hypothesis tests for the question of whether a risk factor effect differs across levels of each individual disease marker of which the disease subtypes are comprised can be conducted separately for each combination of risk factor $p$ and disease marker $k$ using a Wald test of the hypothesis 
 
 $$H_{0_{{\gamma_{pk}}}}: \gamma_{pk} = 0.$$
-Using the `subtype_data` simulated dataset, we can examine the influence of risk factors `x1`, `x2`, and `x3` on the two individual disease markers `marker1` and `marker2`. These two binary disease markers will be cross-classified to form four disease subtypes that will be used as the outcome in the polytomous logistic regression model to obtain the $\hat{\mathbf{\beta}}$ estimates, which are then transformed in order to obtain estimates and hypothesis tests related to the individual disease markers.
+Using the `subtype_data` simulated dataset, we can examine the influence of risk factors `x1`, `x2`, and `x3` on the two individual disease markers `marker1` and `marker2`. These two binary disease markers will be cross-classified to form four disease subtypes that will be used as the outcome in the polytomous logistic regression model to obtain the $\hat{\boldsymbol{\beta}}$ estimates, which are then transformed in order to obtain estimates and hypothesis tests related to the individual disease markers.
 
 ```{r}
 library(riskclustr)
@@ -141,7 +141,7 @@ mod2 <- eh_test_marker(
 
 See the function [documentation](http://www.emilyzabor.com/riskclustr/reference/eh_test_marker.html) for details of function arguments.  
 
-The resulting estimates $\hat{\mathbf{\gamma}}$ can be accessed with
+The resulting estimates $\hat{\boldsymbol{\gamma}}$ can be accessed with
 
 ```{r eval = FALSE}
 mod2$gamma
@@ -152,7 +152,7 @@ mod2$gamma
 knitr::kable(mod2$gamma)
 ```
 
-the associated standard deviation estimates $\sqrt{\widehat{var}(\hat{\mathbf{\gamma}})}$ with
+the associated standard deviation estimates $\sqrt{\widehat{var}(\hat{\boldsymbol{\gamma}})}$ with
 
 ```{r eval = FALSE}
 mod2$gamma_se
@@ -174,7 +174,7 @@ mod2$gamma_pval
 knitr::kable(mod2$gamma_pval)
 ```
 
-An overall formatted dataframe containing the $\hat{\mathbf{\gamma}} \Big(\sqrt{\widehat{var}(\hat{\mathbf{\gamma}})}\Big)$ and p-values to test the null hypotheses $H_{0_{\gamma_{pk}}}$ can be obtained as
+An overall formatted dataframe containing the $\hat{\boldsymbol{\gamma}} \Big(\sqrt{\widehat{var}(\hat{\boldsymbol{\gamma}})}\Big)$ and p-values to test the null hypotheses $H_{0_{\gamma_{pk}}}$ can be obtained as
 
 ```{r eval = FALSE}
 mod2$gamma_se_p
