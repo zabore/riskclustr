@@ -19,6 +19,8 @@ navbar:
       href: articles/eh_test.html
     - text: "Identify the optimal D subtype solution"
       href: articles/optimal_d.html
+  - text: Contribute
+    href: articles/contribute.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/zabore/riskclustr

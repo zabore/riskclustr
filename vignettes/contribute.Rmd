@@ -1,0 +1,36 @@
+---
+title: "Contribute to `riskclustr`"
+author: "Emily C. Zabor"
+date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{Contribute to riskclustr}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+I encourage others working in this area to contribute to the `riskclustr` package by reporting issues, suggesting changes, or contributing new functionality.
+
+## Report an issue
+
+If you find a bug or error in `riskclustr` functionality, please report it by [opening an issue](https://github.com/zabore/riskclustr/issues). Include a minimal reproducible example, if applicable.
+
+
+## Suggest a change
+
+If you have a suggestion or a change or improvement to `riskclustr` functionality, please suggest it on the [issues page](https://github.com/zabore/riskclustr/issues).
+
+
+## Contribute new functionality
+
+Changes and improvements to `riskclustr`, as well as any new functionality, can be contributed via GitHub. Submit a [pull request](https://github.com/zabore/riskclustr/pulls) with any suggested changes or additions.
