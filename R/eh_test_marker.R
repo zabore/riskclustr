@@ -142,8 +142,8 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
     strsplit(rownames(summary(fit)$CoefTable), ":"),
     "[[", 2
   ))[-1]
-  beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, ]
-  beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, ]
+  beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, , drop = FALSE]
+  beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, , drop = FALSE]
   colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[["sub"]]))[-1]
   rownames(beta_plr) <- rownames(beta_se) <- coefnames
 

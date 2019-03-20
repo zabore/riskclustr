@@ -107,8 +107,8 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
     strsplit(rownames(summary(fit)$CoefTable), ":"),
     "[[", 2
   ))[-1]
-  beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = M, byrow = T)[-1, ]
-  beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = M, byrow = T)[-1, ]
+  beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = M, byrow = T)[-1, , drop = FALSE]
+  beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = M, byrow = T)[-1, , drop = FALSE]
   colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[[label]]))[-1]
   rownames(beta_plr) <- rownames(beta_se) <- coefnames
 
