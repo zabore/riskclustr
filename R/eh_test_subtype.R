@@ -52,7 +52,7 @@
 #' etiologic heterogeneity p-values.
 #'
 #' @examples
-#' 
+#'
 #' eh_test_subtype(
 #'   label = "subtype",
 #'   M = 4,
@@ -109,7 +109,7 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   ))[-1]
   beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = M, byrow = T)[-1, ]
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = M, byrow = T)[-1, ]
-  colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[, label]))[-1]
+  colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[[label]]))[-1]
   rownames(beta_plr) <- rownames(beta_se) <- coefnames
 
   # Calculate the ORs and 95% CIs
@@ -162,7 +162,7 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   # Format the resulting dataframes
   rownames(or_ci_p) <- rownames(beta_se_p) <- coefnames
   colnames(or_ci_p) <- colnames(beta_se_p) <-
-    c(levels(as.factor(data[, label]))[-1], "p_het")
+    c(levels(as.factor(data[[label]]))[-1], "p_het")
   or_ci_p$p_het[or_ci_p$p_het == "0"] <- "<.001"
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
 

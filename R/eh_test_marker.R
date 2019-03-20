@@ -91,7 +91,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   # Check if levels of each element in markers have only values 0 or 1
   if (any(sapply(
     lapply(markers, function(x) {
-      levels(as.factor(data[, x]))
+      levels(as.factor(data[[x]]))
     }),
     function(y) {
       any(!(y %in% c("0", "1")))
@@ -101,7 +101,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   }
 
   # Check if levels of case-control indicator are all 0 or 1
-  if (any(!(as.factor(data[, case]) %in% c("0", "1"))) == TRUE) {
+  if (any(!(as.factor(data[[case]]) %in% c("0", "1"))) == TRUE) {
     stop("All elements of case must have values 0 or 1")
   }
 
@@ -122,7 +122,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   # Need to create a subtype variable in the data based on matrix st
   data <- merge(data, st, by = unlist(markers), all = T)
-  data$sub[data[, case] == 0] <- 0 # value of subtype is 0 for controls
+  data$sub[data[[case]] == 0] <- 0 # value of subtype is 0 for controls
 
   # Order the subtype names to correspond to the numbered order
   data$sub_name <- factor(data$sub_name, levels = unique(st$sub_name))
@@ -144,7 +144,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   ))[-1]
   beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, ]
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, ]
-  colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[, "sub"]))[-1]
+  colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[["sub"]]))[-1]
   rownames(beta_plr) <- rownames(beta_se) <- coefnames
 
   # Calculate the ORs and 95% CIs
@@ -197,7 +197,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   # Format the resulting dataframes
   rownames(or_ci_p) <- rownames(beta_se_p) <- coefnames
   colnames(or_ci_p) <- colnames(beta_se_p) <-
-    c(levels(as.factor(data[, "sub"]))[-1], "p_het")
+    c(levels(as.factor(data[["sub"]]))[-1], "p_het")
   or_ci_p$p_het[or_ci_p$p_het == "0"] <- "<.001"
   beta_se_p$p_het[beta_se_p$p_het == "0"] <- "<.001"
 
