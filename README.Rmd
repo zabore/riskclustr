@@ -19,13 +19,30 @@ Etiologic heterogeneity refers to the concept of subtypes of disease that are in
 
 ## Installation
 
-You can install `riskclustr` by running:
+You can install the development version of `riskclustr` by running:
 
 ```{r, eval = FALSE}
 devtools::install_github("zabore/riskclustr")
 library(riskclustr)
 ```
 
+Or the prodcution version from CRAN by running:
+
+```{r, eval = FALSE}
+install.packages("riskclustr")
+library(riskclustr)
+```
+
+
+## Documentation
+
 This package is documented using [pkgdown](https://pkgdown.r-lib.org/articles/pkgdown.html), and the resulting website is available at [http://www.emilyzabor.com/riskclustr/](http://www.emilyzabor.com/riskclustr/), where detailed Tutorials can be found covering all of the package functionality.
 
 See [http://www.emilyzabor.com/riskclustr/reference/](http://www.emilyzabor.com/riskclustr/reference/) for detailed function documentation.
+
+
+## References
+
+> Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE. A conceptual and methodological framework for investigating etiologic heterogeneity. *Stat Med.* 2013;32(29):5039-52. doi: 10.1002/sim.5902
+
+> Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of etiologic heterogeneity: methodologic challenges. *BMC Med Res Methodol.* 2014;14:138. doi: 10.1186/1471-2288-14-138
