@@ -31,13 +31,13 @@ posthoc_factor_test <- function(fit, factor, nlevels) {
   V <- fit$var_covar[
     which(stringr::str_detect(rownames(fit$var_covar), factor)),
     which(stringr::str_detect(rownames(fit$var_covar), factor))
-    ]
+  ]
 
   # Extract beta coefficients for the factor variable
   # Uses name matching - unique names required!!
   B <- fit$beta[
     which(stringr::str_detect(rownames(fit$beta), factor)),
-    ]
+  ]
 
   # Convert B into a vector, row-wise
   Bvec <- as.vector(t(B))
@@ -64,7 +64,3 @@ posthoc_factor_test <- function(fit, factor, nlevels) {
     pval = pval
   ))
 }
-
-
-
-

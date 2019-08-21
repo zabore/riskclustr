@@ -20,7 +20,7 @@
 #' @param data the name of the dataframe that contains the relevant variables.
 #'
 #' @examples
-#' 
+#'
 #' d(
 #'   label = "subtype",
 #'   M = 4,
