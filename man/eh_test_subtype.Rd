@@ -15,7 +15,8 @@ Must be supplied in quotes, e.g. \code{label = "subtype"}.}
 \item{M}{is the number of subtypes. For M>=2.}
 
 \item{factors}{a list of the names of the binary or continuous risk factors.
-For binary risk factors the lowest level will be used as the reference level.
+For binary or categorical risk factors the lowest level will be used as the
+reference level.
 e.g. \code{factors = list("age", "sex", "race")}.}
 
 \item{data}{the name of the dataframe that contains the relevant variables.}
@@ -45,6 +46,9 @@ heterogeneity p-values.
 \code{beta_se_p} is a dataframe with the estimates (SE) for
 each risk factor/subtype combination, as well as a column of formatted
 etiologic heterogeneity p-values.
+
+\code{var_covar} contains the variance-covariance matrix associated with
+the model estimates contained in \code{beta}.
 }
 \description{
 \code{eh_test_subtype} takes the name of the variable containing

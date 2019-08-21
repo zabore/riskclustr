@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • riskclustr</title>
+<title>Post-hoc test to obtain overall p-value for a factor variable used in a
+<code>eh_test_subtype</code> fit. — posthoc_factor_test • riskclustr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +31,12 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Post-hoc test to obtain overall p-value for a factor variable used in a
+<code>eh_test_subtype</code> fit. — posthoc_factor_test" />
+
+<meta property="og:description" content="posthoc_factor_test takes a eh_test_subtype fit
+and returns an overall p-value for a specified factor variable." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -47,7 +53,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -120,21 +126,58 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Post-hoc test to obtain overall p-value for a factor variable used in a
+<code>eh_test_subtype</code> fit.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/zabore/riskclustr/blob/master/R/posthoc_factor_test.R'><code>R/posthoc_factor_test.R</code></a></small>
+    <div class="hidden name"><code>posthoc_factor_test.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="calculate_d.html">Tutorial: Estimate the extent of etiologic heterogeneity</a></li>
-        <li><a href="contribute.html">Contribute to `riskclustr`</a></li>
-        <li><a href="eh_test.html">Tutorial: Test for etiologic heterogeneity in a case-control study</a></li>
-        <li><a href="factor_pvalue.html">Tutorial: Obtain an overall p-value for a factor variable</a></li>
-        <li><a href="optimal_d.html">Tutorial: Identify the optimal D subtype solution</a></li>
-      </ul>
+    <div class="ref-description">
+    
+    <p><code>posthoc_factor_test</code> takes a <code>eh_test_subtype</code> fit
+and returns an overall p-value for a specified factor variable.</p>
+    
     </div>
+
+    <pre class="usage"><span class='fu'>posthoc_factor_test</span>(<span class='no'>fit</span>, <span class='no'>factor</span>, <span class='no'>nlevels</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>fit</th>
+      <td><p>the resulting <code>eh_test_subtype</code> fit.</p></td>
+    </tr>
+    <tr>
+      <th>factor</th>
+      <td><p>is the name of the factor variable of interest, supplied
+in quotes, e.g. <code>factor = "race"</code>. Only supports a single factor.</p></td>
+    </tr>
+    <tr>
+      <th>nlevels</th>
+      <td><p>is the number of levels the factor variable in <code>factor</code>
+has.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns a list.</p>
+<p><code>pval</code> is a formatted p-value.</p>
+<p><code>pval_raw</code> is the raw, unformatted p-value.</p>
+    
+
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
+
+    <h2>Author</h2>
+    <p>Emily C Zabor <a href='mailto:zabore@mskcc.org'>zabore@mskcc.org</a></p>
   </div>
 </div>
 

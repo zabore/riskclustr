@@ -23,7 +23,8 @@
 #' Must be supplied in quotes, e.g. \code{label = "subtype"}.
 #' @param M is the number of subtypes. For M>=2.
 #' @param factors a list of the names of the binary or continuous risk factors.
-#' For binary risk factors the lowest level will be used as the reference level.
+#' For binary or categorical risk factors the lowest level will be used as the
+#' reference level.
 #' e.g. \code{factors = list("age", "sex", "race")}.
 #' @param data the name of the dataframe that contains the relevant variables.
 #' @param digits the number of digits to round the odds ratios and associated
@@ -50,6 +51,9 @@
 #' \code{beta_se_p} is a dataframe with the estimates (SE) for
 #' each risk factor/subtype combination, as well as a column of formatted
 #' etiologic heterogeneity p-values.
+#'
+#' \code{var_covar} contains the variance-covariance matrix associated with
+#' the model estimates contained in \code{beta}.
 #'
 #' @examples
 #'
@@ -90,8 +94,6 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
     stop("Risk factor names cannot include colons. Please rename the offending risk factor and try again.")
   }
 
-  p <- length(factors) # number of covariates
-
   # write the formula
   mform <- mlogit::mFormula(
     stats::as.formula(paste0(label, " ~ 1 |", paste(factors, collapse = " + ")))
@@ -111,6 +113,8 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = M, byrow = T)[-1, , drop = FALSE]
   colnames(beta_plr) <- colnames(beta_se) <- levels(as.factor(data[[label]]))[-1]
   rownames(beta_plr) <- rownames(beta_se) <- coefnames
+
+  p <- nrow(beta_plr) # number of covariates (accounts for possibility of factors)
 
   # Calculate the ORs and 95% CIs
   or <- round(exp(beta_plr), digits)
@@ -138,7 +142,8 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   pval <- sapply(1:p, function(i) {
     aod::wald.test(
       b = beta_plr[i, ],
-      Sigma = V[[i]], L = Lmat
+      Sigma = V[[i]],
+      L = Lmat
     )$result$chi2["P"]
   })
   pval <- as.data.frame(pval)
@@ -172,6 +177,7 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
     beta_se = beta_se,
     eh_pval = pval,
     or_ci_p = or_ci_p,
-    beta_se_p = beta_se_p
+    beta_se_p = beta_se_p,
+    var_covar = vcov_plr
   ))
 }

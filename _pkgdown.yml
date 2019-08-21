@@ -19,6 +19,8 @@ navbar:
       href: articles/eh_test.html
     - text: "Identify the optimal D subtype solution"
       href: articles/optimal_d.html
+    - text: "Obtain an overall p-value for a factor variable"
+      href: articles/factor_pvalue.html
   - text: Contribute
     href: articles/contribute.html
   right:
@@ -37,6 +39,9 @@ reference:
   - title: "Identify optimal D solution"
     contents:
       - optimal_kmeans_d
+  - title: "Obtain overall p-value for factor variable"
+    contents:
+      - posthoc_factor_test
   - title: "Example Datasets"
     desc: >
       Simulated data to illustrate package use

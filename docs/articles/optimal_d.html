@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">riskclustr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
       </span>
     </div>
 
@@ -61,6 +61,9 @@
     <li>
       <a href="../articles/optimal_d.html">Identify the optimal D subtype solution</a>
     </li>
+    <li>
+      <a href="../articles/factor_pvalue.html">Obtain an overall p-value for a factor variable</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -89,7 +92,7 @@
       <h1>Tutorial: Identify the optimal D subtype solution</h1>
                         <h4 class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: March 26, 2019</h4>
+            <h4 class="date">Last updated: August 21, 2019</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/optimal_d.Rmd"><code>vignettes/optimal_d.Rmd</code></a></small>
       <div class="hidden name"><code>optimal_d.Rmd</code></div>
@@ -109,26 +112,26 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <p>This tutorial will make use of a simulated example dataset named <code>subtype_data</code>. This simulated dataset contains 1200 case subjects and 800 control subjects. There are 30 continuous disease markers available on the cases. There are two continuous risk factors and one binary risk factor available on all subjects.</p>
 <p>Say for example that interest was in identifying the optimally etiologically heterogeneous 3-subtype solution based on all 30 markers <code>y1</code>-<code>y30</code> available in <code>subtype_data</code>, using all three risk factors <code>x1</code>, <code>x2</code> and <code>x3</code>. We use the default of 100 random starts of the <span class="math inline">\(k\)</span>-means clustering algorithm, and set a seed so that results would be reproduced if we were to run this code again on a later date. Note that this function is currently a bit slow to run due to the fitting of numerous models, so please be patient.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(riskclustr)</a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/optimal_kmeans_d.html">optimal_kmeans_d</a></span>(</a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">markers =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"y"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>))),</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">M =</span> <span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">factors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</a>
-<a class="sourceLine" id="cb1-7" title="7">  <span class="dt">case =</span> <span class="st">"case"</span>,</a>
-<a class="sourceLine" id="cb1-8" title="8">  <span class="dt">data =</span> subtype_data,</a>
-<a class="sourceLine" id="cb1-9" title="9">  <span class="dt">nstart =</span> <span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb1-10" title="10">  <span class="dt">seed =</span> <span class="dv">81110224</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(riskclustr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/optimal_kmeans_d.html">optimal_kmeans_d</a></span>(</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">markers =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"y"</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">30</span>))),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">M =</span> <span class="dv">3</span>,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">factors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">case =</span> <span class="st">"case"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="dt">data =</span> subtype_data,</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="dt">nstart =</span> <span class="dv">100</span>,</span>
+<span id="cb1-10"><a href="#cb1-10"></a>  <span class="dt">seed =</span> <span class="dv">81110224</span>)</span></code></pre></div>
 <p>The function returns a list with one element for the optimal <span class="math inline">\(D\)</span> value and one element that is the original data frame with a column added for the optimal <span class="math inline">\(D\)</span> class solution.</p>
 <p>First let’s look at a tabulation of <code>optimal_d_label</code> from the <code>optimal_d_data</code> object to see how each case was classified into a subtype:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res[[<span class="st">"optimal_d_data"</span>]]<span class="op">$</span>optimal_d_label)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt;   0   1   2   3 </span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; 800 300 599 301</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res[[<span class="st">"optimal_d_data"</span>]]<span class="op">$</span>optimal_d_label)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; </span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt;   0   1   2   3 </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; 800 301 300 599</span></span></code></pre></div>
 <p>These subtype labels could now be used as the outcome in a polytomous logistic regression model fit with <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> to obtain measures of risk factor association as well as heterogeneity <span class="math inline">\(p\)</span>-values. See <a href="eh_test.html">Tutorial: test for etiologic heterogeneity in a case-control study</a> for details.</p>
 <p>Next we can see the <span class="math inline">\(D\)</span> value that goes long with the optimal subtype solution:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">res[[<span class="st">"optimal_d"</span>]]</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; [1] 0.3385876</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>res[[<span class="st">"optimal_d"</span>]]</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; [1] 0.3385876</span></span></code></pre></div>
 <p>We see that this optimal 3-subtype solution based on clustering the 30 disease markers results in <span class="math inline">\(D=0.339\)</span>.</p>
 </div>
   </div>
