@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorial: Obtain an overall p-value for a factor variable • riskclustr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: Obtain an overall p-value for a factor variable">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -86,13 +87,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Tutorial: Obtain an overall p-value for a factor variable</h1>
                         <h4 class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: August 21, 2019</h4>
+            <h4 class="date">Last updated: September 06, 2019</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/factor_pvalue.Rmd"><code>vignettes/factor_pvalue.Rmd</code></a></small>
       <div class="hidden name"><code>factor_pvalue.Rmd</code></div>
@@ -111,17 +113,17 @@
 <h1 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load needed packages</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(riskclustr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(riskclustr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># create a new example dataset that contains a factor variable</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>factor_data &lt;-<span class="st"> </span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span>subtype_data <span class="op">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw">mutate</span>(</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">x4 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cut">cut</a></span>(</span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="dt">x4 =</span> <span class="kw"><a href="https://rdrr.io/r/base/cut.html">cut</a></span>(</span>
 <span id="cb2-6"><a href="#cb2-6"></a>      x1,</span>
-<span id="cb2-7"><a href="#cb2-7"></a>      <span class="dt">breaks =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="fl">3.4</span>, <span class="fl">-0.4</span>, <span class="fl">0.3</span>, <span class="fl">1.1</span>, <span class="fl">3.8</span>),</span>
+<span id="cb2-7"><a href="#cb2-7"></a>      <span class="dt">breaks =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">3.4</span>, <span class="fl">-0.4</span>, <span class="fl">0.3</span>, <span class="fl">1.1</span>, <span class="fl">3.8</span>),</span>
 <span id="cb2-8"><a href="#cb2-8"></a>      <span class="dt">include.lowest =</span> T,</span>
-<span id="cb2-9"><a href="#cb2-9"></a>      <span class="dt">labels =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"1st quart"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9"></a>      <span class="dt">labels =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"1st quart"</span>,</span>
 <span id="cb2-10"><a href="#cb2-10"></a>                 <span class="st">"2nd quart"</span>,</span>
 <span id="cb2-11"><a href="#cb2-11"></a>                 <span class="st">"3rd quart"</span>,</span>
 <span id="cb2-12"><a href="#cb2-12"></a>                 <span class="st">"4th quart"</span>)</span>
@@ -131,7 +133,7 @@
 <span id="cb3-2"><a href="#cb3-2"></a>mod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span>(</span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">label =</span> <span class="st">"subtype"</span>,</span>
 <span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">M =</span> <span class="dv">4</span>,</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">factors =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="st">"x4"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">factors =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"x4"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">data =</span> factor_data,</span>
 <span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">digits =</span> <span class="dv">2</span></span>
 <span id="cb3-8"><a href="#cb3-8"></a>)</span></code></pre></div>
@@ -153,6 +155,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -166,17 +169,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Emily C. Zabor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

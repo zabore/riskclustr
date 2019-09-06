@@ -9,21 +9,25 @@
 <title>Test for etiologic heterogeneity of risk factors according to disease
 subtypes in a case-control study — eh_test_subtype • riskclustr</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,9 +35,9 @@ subtypes in a case-control study — eh_test_subtype • riskclustr</title>
 
 
 
+
 <meta property="og:title" content="Test for etiologic heterogeneity of risk factors according to disease
 subtypes in a case-control study — eh_test_subtype" />
-
 <meta property="og:description" content="eh_test_subtype takes the name of the variable containing
 the pre-specified subtype labels, the number of subtypes, a list of risk
 factors, and the name of the dataframe and returns results
@@ -52,6 +56,7 @@ logistic regression model is fit using mlogit." />
 
 
 
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -60,6 +65,7 @@ logistic regression model is fit using mlogit." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -118,7 +124,6 @@ logistic regression model is fit using mlogit." />
   <a href="../articles/contribute.html">Contribute</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/zabore/riskclustr">
@@ -133,6 +138,7 @@ logistic regression model is fit using mlogit." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -145,7 +151,6 @@ subtypes in a case-control study</h1>
     </div>
 
     <div class="ref-description">
-    
     <p><code>eh_test_subtype</code> takes the name of the variable containing
 the pre-specified subtype labels, the number of subtypes, a list of risk
 factors, and the name of the dataframe and returns results
@@ -159,12 +164,11 @@ factors, a reference level should be selected and then indicator variables
 for each remaining level of the risk factor should be created.
 Categorical risk factors entered as is will be treated as ordinal.
 The multinomial
-logistic regression model is fit using <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>.</p>
-    
+logistic regression model is fit using <code><a href='https://rdrr.io/pkg/mlogit/man/mlogit.html'>mlogit</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>eh_test_subtype</span>(<span class='no'>label</span>, <span class='no'>M</span>, <span class='no'>factors</span>, <span class='no'>data</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -196,15 +200,15 @@ confidence intervals, and the estimates and associated standard errors.
 Defaults to 2.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Returns a list.</p>
 <p><code>beta</code> is a matrix containing the raw estimates from the
-polytomous logistic regression model fit with <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>
+polytomous logistic regression model fit with <code><a href='https://rdrr.io/pkg/mlogit/man/mlogit.html'>mlogit</a></code>
 with a row for each risk factor and a column for each disease subtype.</p>
 <p><code>beta_se</code> is a matrix containing the raw standard errors from the
-polytomous logistic regression model fit with <code><a href='https://www.rdocumentation.org/packages/mlogit/topics/mlogit'>mlogit</a></code>
+polytomous logistic regression model fit with <code><a href='https://rdrr.io/pkg/mlogit/man/mlogit.html'>mlogit</a></code>
 with a row for each risk factor and a column for each disease subtype.</p>
 <p><code>eh_pval</code> is a vector of unformatted p-values for testing whether each
 risk factor differs across the levels of the disease subtype.</p>
@@ -216,14 +220,13 @@ each risk factor/subtype combination, as well as a column of formatted
 etiologic heterogeneity p-values.</p>
 <p><code>var_covar</code> contains the variance-covariance matrix associated with
 the model estimates contained in <code>beta</code>.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>eh_test_subtype</span>(
   <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"subtype"</span>,
   <span class='kw'>M</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
+  <span class='kw'>factors</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>),
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>subtype_data</span>,
   <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>
 )</div><div class='output co'>#&gt; $beta
@@ -335,9 +338,7 @@ the model estimates contained in <code>beta</code>.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -346,19 +347,23 @@ the model estimates contained in <code>beta</code>.</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Emily C. Zabor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
