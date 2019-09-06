@@ -11,7 +11,7 @@
 #'
 #' @param markers a vector of the names of the disease markers. These markers
 #' should be of a type that is suitable for use with
-#' \code{\link[stats]{kmeans}} clustering. All markers will be missing
+#' \code{\link[stats]{kmeans}} clustering. All markers will will be missing
 #' for control subjects. e.g. \code{markers = c("marker1", "marker2")}
 #' @param M is the number of clusters to identify using
 #' \code{\link[stats]{kmeans}} clustering. For M>=2.
