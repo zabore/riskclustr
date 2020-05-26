@@ -1,6 +1,6 @@
 ## Test environments
 * local Windows 7 Professional install, R 4.0.0
-* Ubuntu 14.04.5 LTS (on travis-ci.org), R 3.5.1 
+* Ubuntu 16.04.6 LTS (on travis-ci.org), R 4.0.0
 * win-builder (devel and release)
 
 
