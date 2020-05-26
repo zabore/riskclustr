@@ -5,8 +5,7 @@
 \title{Obtain optimal D solution based on k-means clustering of disease marker
 data in a case-control study}
 \usage{
-optimal_kmeans_d(markers, M, factors, case, data, nstart = 100,
-  seed = NULL)
+optimal_kmeans_d(markers, M, factors, case, data, nstart = 100, seed = NULL)
 }
 \arguments{
 \item{markers}{a vector of the names of the disease markers. These markers

@@ -140,7 +140,7 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
 
   coefnames <- unique(sapply(
     strsplit(rownames(summary(fit)$CoefTable), ":"),
-    "[[", 2
+    "[[", 1
   ))[-1]
   beta_plr <- matrix(summary(fit)$CoefTable[, 1], ncol = m, byrow = T)[-1, , drop = FALSE]
   beta_se <- matrix(summary(fit)$CoefTable[, 2], ncol = m, byrow = T)[-1, , drop = FALSE]
@@ -160,8 +160,8 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   vcov_plr <- stats::vcov(fit)
   V <- lapply(coefnames, function(x) {
     vcov_plr[
-      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x),
-      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 2) == x)
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 1) == x),
+      which(sapply(strsplit(rownames(vcov_plr), ":"), "[[", 1) == x)
     ]
   })
 

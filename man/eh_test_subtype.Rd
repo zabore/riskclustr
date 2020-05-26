@@ -39,7 +39,7 @@ with a row for each risk factor and a column for each disease subtype.
 \code{eh_pval} is a vector of unformatted p-values for testing whether each
 risk factor differs across the levels of the disease subtype.
 
-\code{or_ci_p} is a dataframe with the odds ratio (95\% CI) for each risk
+\code{or_ci_p} is a dataframe with the odds ratio (95\\% CI) for each risk
 factor/subtype combination, as well as a column of formatted etiologic
 heterogeneity p-values.
 

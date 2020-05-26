@@ -1,11 +1,11 @@
 Package: riskclustr
 Type: Package
 Title: Functions to Study Etiologic Heterogeneity
-Version: 0.2
+Version: 0.3
 Authors@R: person(given = "Emily C.", family = "Zabor", email = "zabore2@ccf.org", role = c("aut", "cre"))
 Description: A collection of functions related to the study of etiologic heterogeneity both across disease subtypes and across individual disease markers. The included functions allow one to quantify the extent of etiologic heterogeneity in the context of a case-control study, and provide p-values to test for etiologic heterogeneity across individual risk factors. Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE (2013) <doi: 10.1002/sim.5902>.
 Depends:
-    R (>= 3.5)
+    R (>= 4.0)
 License: GPL-2
 URL: http://www.emilyzabor.com/riskclustr/, https://github.com/zabore/riskclustr
 BugReports: https://github.com/zabore/riskclustr/issues
@@ -13,13 +13,12 @@ Encoding: UTF-8
 Imports:
     aod, 
     mlogit, 
-    gtools,
     stringr,
     Matrix
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr
 Suggests: 
     testthat,

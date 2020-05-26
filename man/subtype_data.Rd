@@ -4,7 +4,8 @@
 \name{subtype_data}
 \alias{subtype_data}
 \title{Simulated subtype data}
-\format{A data frame with 2000 rows--one row per patient
+\format{
+A data frame with 2000 rows--one row per patient
 \describe{
 \item{case}{Indicator of case control status, 1 for cases and 0 for controls}
 \item{subtype}{Numeric subtype label, 0 for control subjects}
@@ -44,7 +45,8 @@
 \item{y28}{Continuous tumor marker 28}
 \item{y29}{Continuous tumor marker 29}
 \item{y30}{Continuous tumor marker 30}
-}}
+}
+}
 \usage{
 subtype_data
 }
