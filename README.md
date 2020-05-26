@@ -8,6 +8,7 @@ Status](https://travis-ci.com/zabore/riskclustr.svg?branch=master)](https://trav
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
+[![status](https://joss.theoj.org/papers/10.21105/joss.01269/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01269)
 
 # riskclustr
 
