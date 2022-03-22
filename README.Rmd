@@ -5,8 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Coverage status](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://codecov.io/github/zabore/riskclustr?branch=master)
-[![Build Status](https://travis-ci.com/zabore/riskclustr.svg?branch=master)](https://travis-ci.com/zabore/riskclustr)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R-CMD-check](https://github.com/zabore/riskclustr/workflows/R-CMD-check/badge.svg)](https://github.com/zabore/riskclustr/actions)
 [![CRAN status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
 [![status](https://joss.theoj.org/papers/10.21105/joss.01269/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01269)
 
