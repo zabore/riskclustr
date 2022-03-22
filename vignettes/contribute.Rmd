@@ -5,7 +5,7 @@ date: "Last updated: `r format(Sys.Date(), '%B %d, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{Contribute to riskclustr}
+  %\VignetteIndexEntry{Contribute to `riskclustr`}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console

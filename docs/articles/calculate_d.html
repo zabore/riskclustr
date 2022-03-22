@@ -6,19 +6,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tutorial: Estimate the extent of etiologic heterogeneity • riskclustr</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/lumen/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: Estimate the extent of etiologic heterogeneity">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="riskclustr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">riskclustr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
   <a href="../reference/index.html">Function Documentation</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Tutorials
      
     <span class="caret"></span>
@@ -73,7 +75,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/zabore/riskclustr">
+  <a href="https://github.com/zabore/riskclustr" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -91,27 +93,27 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Tutorial: Estimate the extent of etiologic heterogeneity</h1>
-                        <h4 class="author">Emily C. Zabor</h4>
+      <h1 data-toc-skip>Tutorial: Estimate the extent of etiologic heterogeneity</h1>
+                        <h4 data-toc-skip class="author">Emily C. Zabor</h4>
             
-            <h4 class="date">Last updated: September 06, 2019</h4>
+            <h4 data-toc-skip class="date">Last updated: March 22, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/master/vignettes/calculate_d.Rmd"><code>vignettes/calculate_d.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/HEAD/vignettes/calculate_d.Rmd" class="external-link"><code>vignettes/calculate_d.Rmd</code></a></small>
       <div class="hidden name"><code>calculate_d.Rmd</code></div>
 
     </div>
 
     
     
-<div id="introduction" class="section level2">
-<h2 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h2>
+<div class="section level2">
+<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
 <p>This tutorial will introduce you to the calculations underlying estimation of the extent of etiologic heterogeneity in either a case-control or case-only study.</p>
 <p>This tutorial will also demonstrate how to use the functions included in this package based on a simulated example dataset named <code>subtype_data</code>. This simulated dataset contains 1200 case subjects and 800 control subjects. Cases are split into four pre-defined etiologically distinct subtypes. There are two continuous risk factors and one binary risk factor available on all subjects.</p>
 </div>
-<div id="case-control-methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#case-control-methods" class="anchor"></a>Case-control methods</h2>
+<div class="section level2">
+<h2 id="case-control-methods">Case-control methods<a class="anchor" aria-label="anchor" href="#case-control-methods"></a>
+</h2>
 <p>The primary methodology was introduced in detail in:</p>
 <blockquote>
 <p>Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE. A conceptual and methodological framework for investigating etiologic heterogeneity. <em>Stat Med.</em> 2013;32(29):5039-52.</p>
@@ -121,62 +123,60 @@
 <p><span class="math display">\[D = \sum_{m=1}^M \pi_m C_m^2 - C^2,\]</span></p>
 <p>where <span class="math inline">\(\pi_m\)</span> represents the prevalence of the <span class="math inline">\(m\)</span>th disease subtype.</p>
 <p>To estimate <span class="math inline">\(D\)</span> in the context of a case-control study, we use the <code><a href="../reference/d.html">d()</a></code> function.<code><a href="../reference/d.html">d()</a></code> relies on the <code>mlogit</code> function from the <code>mlogit</code> package to fit the polytomous logistic regression model. We supply <code><a href="../reference/d.html">d()</a></code> with the name of the subtype variable, the number of subtypes, a list of risk factors, and the dataset name. See the function <a href="http://www.emilyzabor.com/riskclustr/reference/d.html">documentation</a> for details of argument specification.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(riskclustr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="../reference/d.html">d</a></span>(</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="dt">label =</span> <span class="st">"subtype"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="dt">M =</span> <span class="dv">4</span>, </span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">factors =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="dt">data =</span> subtype_data</span>
-<span id="cb1-8"><a href="#cb1-8"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="co">#&gt; [1] 0.4100995</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.com/riskclustr/">riskclustr</a></span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/d.html">d</a></span><span class="op">(</span>
+  label <span class="op">=</span> <span class="st">"subtype"</span>,
+  M <span class="op">=</span> <span class="fl">4</span>, 
+  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">subtype_data</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] 0.4100995</span></code></pre></div>
 <p>And we see that using all three risk factors, <span class="math inline">\(D=0.410\)</span> for the four disease subtypes of interest in the case-control setting.</p>
 </div>
-<div id="case-only-methods" class="section level2">
-<h2 class="hasAnchor">
-<a href="#case-only-methods" class="anchor"></a>Case-only methods</h2>
+<div class="section level2">
+<h2 id="case-only-methods">Case-only methods<a class="anchor" aria-label="anchor" href="#case-only-methods"></a>
+</h2>
 <p>When control subjects are not available, then a case-only approximation of <span class="math inline">\(D\)</span>, denoted <span class="math inline">\(D^\ast\)</span>, can be applied. The details of this calculation can be found in:</p>
 <blockquote>
 <p>Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of etiologic heterogeneity: methodologic challenges. <em>BMC Med Res Methodol.</em> 2014;14:138.</p>
 </blockquote>
 <p>Briefly, whereas the variance and covariance terms in the equation for <span class="math inline">\(D\)</span> are averaged over the controls in the case-control setting, in a case-only setting they are averaged over the cases, which represent a risk-biased sample from the population. The goal of an analysis of this type is not to interpret the magnitude of <span class="math inline">\(D^\ast\)</span>, but rather to use <span class="math inline">\(D^\ast\)</span> to rank different subtyping schemes and identify the one that maximizes etiologic heterogeneity.</p>
 <p>To demonstrate the usage, we first limit <code>subtype_data</code> to the cases only. Controls are denoted by a <code>0</code> for the <code>subtype</code> variable.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>subtype_cases &lt;-<span class="st"> </span>subtype_data[subtype_data<span class="op">$</span>subtype <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">subtype_cases</span> <span class="op">&lt;-</span> <span class="va">subtype_data</span><span class="op">[</span><span class="va">subtype_data</span><span class="op">$</span><span class="va">subtype</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="op">]</span></code></pre></div>
 <p>We specify the arguments to <code><a href="../reference/dstar.html">dstar()</a></code> as before for <code><a href="../reference/d.html">d()</a></code>, but supplying our new case-only dataset to the <code>data</code> argument. Now, the subtype variable must be numeric, with cases coded as <span class="math inline">\(1\)</span> through <span class="math inline">\(M\)</span> according to the subtype to which they belong. The highest frequency level of <code>label</code> will be used as the reference level, for model stability.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="../reference/dstar.html">dstar</a></span>(</span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="dt">label =</span> <span class="st">"subtype"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">M =</span> <span class="dv">4</span>, </span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">factors =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">data =</span> subtype_cases</span>
-<span id="cb3-6"><a href="#cb3-6"></a>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; [1] 0.4022017</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/dstar.html">dstar</a></span><span class="op">(</span>
+  label <span class="op">=</span> <span class="st">"subtype"</span>,
+  M <span class="op">=</span> <span class="fl">4</span>, 
+  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,
+  data <span class="op">=</span> <span class="va">subtype_cases</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] 0.4022017</span></code></pre></div>
 <p>And we see that using all three risk factors, <span class="math inline">\(D^\ast=0.402\)</span> for the four disease subtypes of interest in the case-only setting.</p>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li><a href="#case-control-methods">Case-control methods</a></li>
-      <li><a href="#case-only-methods">Case-only methods</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Emily C. Zabor.</p>
+  <p></p>
+<p>Developed by Emily C. Zabor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -184,6 +184,8 @@
 
   
 
+
+  
 
   </body>
 </html>
