@@ -25,4 +25,5 @@ Suggests:
     rmarkdown,
     dplyr,
     knitr,
-    usethis
+    usethis,
+    spelling
