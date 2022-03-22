@@ -51,11 +51,10 @@ posthoc_factor_test <- function(fit, factor, nlevels) {
   Lblock <- Matrix::bdiag(rep(list(Lmat), nlevels - 1))
   Lblock <- as.matrix(Lblock)
 
-  pval_raw <- aod::wald.test(
-    b = Bvec,
-    Sigma = V,
-    L = Lblock
-  )$result$chi2["P"]
+  pval_raw <- 1 - stats::pchisq(t(Lblock %*% Bvec) %*%
+                                  solve(Lblock %*% V %*% t(Lblock)) %*%
+                                  (Lblock %*% Bvec), df = nrow(Lblock)
+                                )
 
   pval <- ifelse(pval_raw < .001, "<.001", round(pval_raw, 3))
 

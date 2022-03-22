@@ -140,11 +140,10 @@ eh_test_subtype <- function(label, M, factors, data, digits = 2) {
   Lmat[row(Lmat) - col(Lmat) == -1] <- -1
 
   pval <- sapply(1:p, function(i) {
-    aod::wald.test(
-      b = beta_plr[i, ],
-      Sigma = V[[i]],
-      L = Lmat
-    )$result$chi2["P"]
+    chisq1 <- t(Lmat %*% beta_plr[i, ]) %*%
+      solve(Lmat %*% V[[i]] %*% t(Lmat)) %*%
+      (Lmat %*% beta_plr[i, ])
+    1 - stats::pchisq(chisq1, df = nrow(Lmat))
   })
   pval <- as.data.frame(pval)
   rownames(pval) <- coefnames
