@@ -4,7 +4,7 @@
 
 # riskclustr 0.3
 
-* Updating for compatibility with changes to mlogit
+* Updating for compatibility with changes to `mlogit`
 
 # riskclustr 0.2
 

@@ -52,9 +52,8 @@ posthoc_factor_test <- function(fit, factor, nlevels) {
   Lblock <- as.matrix(Lblock)
 
   pval_raw <- 1 - stats::pchisq(t(Lblock %*% Bvec) %*%
-                                  solve(Lblock %*% V %*% t(Lblock)) %*%
-                                  (Lblock %*% Bvec), df = nrow(Lblock)
-                                )
+    solve(Lblock %*% V %*% t(Lblock)) %*%
+    (Lblock %*% Bvec), df = nrow(Lblock))
 
   pval <- ifelse(pval_raw < .001, "<.001", round(pval_raw, 3))
 

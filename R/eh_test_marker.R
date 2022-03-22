@@ -212,8 +212,10 @@ eh_test_marker <- function(markers, factors, case, data, digits = 2) {
   gamma_plr <- matrix(beta_plr %*% d / (m / 2), nrow = p)
 
   # Get the standard error ests
-  gamma_plr_se <- t(sapply(V, function(x) sqrt((m / 2)^(-2) *
-      diag(t(d) %*% x %*% d))))
+  gamma_plr_se <- t(sapply(V, function(x) {
+    sqrt((m / 2)^(-2) *
+      diag(t(d) %*% x %*% d))
+  }))
 
   # Calculate the p-values for each tumor marker
   gamma_plr_pval <- matrix(sapply(1:k, function(j) {
