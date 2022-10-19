@@ -93,10 +93,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Tutorial: Estimate the extent of etiologic heterogeneity</h1>
-                        <h4 data-toc-skip class="author">Emily C. Zabor</h4>
+      <h1 data-toc-skip>Tutorial: Estimate the extent of etiologic
+heterogeneity</h1>
+                        <h4 data-toc-skip class="author">Emily C.
+Zabor</h4>
             
-            <h4 data-toc-skip class="date">Last updated: March 22, 2022</h4>
+            <h4 data-toc-skip class="date">Last updated: October 19,
+2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/HEAD/vignettes/calculate_d.Rmd" class="external-link"><code>vignettes/calculate_d.Rmd</code></a></small>
       <div class="hidden name"><code>calculate_d.Rmd</code></div>
@@ -108,54 +111,118 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This tutorial will introduce you to the calculations underlying estimation of the extent of etiologic heterogeneity in either a case-control or case-only study.</p>
-<p>This tutorial will also demonstrate how to use the functions included in this package based on a simulated example dataset named <code>subtype_data</code>. This simulated dataset contains 1200 case subjects and 800 control subjects. Cases are split into four pre-defined etiologically distinct subtypes. There are two continuous risk factors and one binary risk factor available on all subjects.</p>
+<p>This tutorial will introduce you to the calculations underlying
+estimation of the extent of etiologic heterogeneity in either a
+case-control or case-only study.</p>
+<p>This tutorial will also demonstrate how to use the functions included
+in this package based on a simulated example dataset named
+<code>subtype_data</code>. This simulated dataset contains 1200 case
+subjects and 800 control subjects. Cases are split into four pre-defined
+etiologically distinct subtypes. There are two continuous risk factors
+and one binary risk factor available on all subjects.</p>
 </div>
 <div class="section level2">
 <h2 id="case-control-methods">Case-control methods<a class="anchor" aria-label="anchor" href="#case-control-methods"></a>
 </h2>
 <p>The primary methodology was introduced in detail in:</p>
 <blockquote>
-<p>Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE. A conceptual and methodological framework for investigating etiologic heterogeneity. <em>Stat Med.</em> 2013;32(29):5039-52.</p>
+<p>Begg CB, Zabor EC, Bernstein JL, Bernstein L, Press MF, Seshan VE. A
+conceptual and methodological framework for investigating etiologic
+heterogeneity. <em>Stat Med.</em> 2013;32(29):5039-52.</p>
 </blockquote>
-<p>The method involves identifying a pre-defined subtype solution involving a set of <span class="math inline">\(M\)</span> disease subtypes, and calculating a measure of etiologic heterogeneity.</p>
-<p>In a case-control study, the measure of etiologic heterogeneity is denoted <span class="math inline">\(D\)</span>. To calculate <span class="math inline">\(D\)</span>, one must first perform polytomous logistic regression of the known risk factors for disease on the subtypes and obtain estimated risk predictions from this model for each of the subtypes for each control subject. Since the measure is population-based it is calculated solely using the study controls. Let <span class="math inline">\(i\)</span> denote these control subjects <span class="math inline">\(i=1, \ldots, N_H\)</span>, where <span class="math inline">\(N_H\)</span> denotes the total number of non-diseased control subjects, and let <span class="math inline">\(m\)</span> index the set of disease subtypes, <span class="math inline">\(m=1, \ldots, M\)</span>. The risk predictions obtained from the polytomous logistic regression model for the <span class="math inline">\(i\)</span>th individual are denoted <span class="math inline">\(r_{mi}\)</span> such that the total risk of disease for that individual is <span class="math inline">\(r_i = \sum_{m=1}^M r_{mi}\)</span>. Let the coefficients of variation of the subtype risks in the population be denoted <span class="math inline">\(C_m^2 = v_m / \mu_m^2\)</span> where <span class="math inline">\(v_m = N_H^{-1}\sum_{i=1}^{N_H} r_{mi}^2 - \mu_m^2\)</span> and <span class="math inline">\(\mu_m = N_H^{-1}\sum_{i=1}^{N_H} r_{mi}\)</span>. Let the corresponding total coefficient of variation be denoted <span class="math inline">\(C^2 = v / \mu^2\)</span>, where <span class="math inline">\(\mu\)</span> and <span class="math inline">\(v\)</span> are the overall disease risk mean and variance, respectively. Then the measure of etiologic heterogeneity is defined as</p>
-<p><span class="math display">\[D = \sum_{m=1}^M \pi_m C_m^2 - C^2,\]</span></p>
-<p>where <span class="math inline">\(\pi_m\)</span> represents the prevalence of the <span class="math inline">\(m\)</span>th disease subtype.</p>
-<p>To estimate <span class="math inline">\(D\)</span> in the context of a case-control study, we use the <code><a href="../reference/d.html">d()</a></code> function.<code><a href="../reference/d.html">d()</a></code> relies on the <code>mlogit</code> function from the <code>mlogit</code> package to fit the polytomous logistic regression model. We supply <code><a href="../reference/d.html">d()</a></code> with the name of the subtype variable, the number of subtypes, a list of risk factors, and the dataset name. See the function <a href="http://www.emilyzabor.com/riskclustr/reference/d.html">documentation</a> for details of argument specification.</p>
+<p>The method involves identifying a pre-defined subtype solution
+involving a set of <span class="math inline">\(M\)</span> disease
+subtypes, and calculating a measure of etiologic heterogeneity.</p>
+<p>In a case-control study, the measure of etiologic heterogeneity is
+denoted <span class="math inline">\(D\)</span>. To calculate <span class="math inline">\(D\)</span>, one must first perform polytomous
+logistic regression of the known risk factors for disease on the
+subtypes and obtain estimated risk predictions from this model for each
+of the subtypes for each control subject. Since the measure is
+population-based it is calculated solely using the study controls. Let
+<span class="math inline">\(i\)</span> denote these control subjects
+<span class="math inline">\(i=1, \ldots, N_H\)</span>, where <span class="math inline">\(N_H\)</span> denotes the total number of
+non-diseased control subjects, and let <span class="math inline">\(m\)</span> index the set of disease subtypes,
+<span class="math inline">\(m=1, \ldots, M\)</span>. The risk
+predictions obtained from the polytomous logistic regression model for
+the <span class="math inline">\(i\)</span>th individual are denoted
+<span class="math inline">\(r_{mi}\)</span> such that the total risk of
+disease for that individual is <span class="math inline">\(r_i =
+\sum_{m=1}^M r_{mi}\)</span>. Let the coefficients of variation of the
+subtype risks in the population be denoted <span class="math inline">\(C_m^2 = v_m / \mu_m^2\)</span> where <span class="math inline">\(v_m = N_H^{-1}\sum_{i=1}^{N_H} r_{mi}^2 -
+\mu_m^2\)</span> and <span class="math inline">\(\mu_m =
+N_H^{-1}\sum_{i=1}^{N_H} r_{mi}\)</span>. Let the corresponding total
+coefficient of variation be denoted <span class="math inline">\(C^2 = v
+/ \mu^2\)</span>, where <span class="math inline">\(\mu\)</span> and
+<span class="math inline">\(v\)</span> are the overall disease risk mean
+and variance, respectively. Then the measure of etiologic heterogeneity
+is defined as</p>
+<p><span class="math display">\[D = \sum_{m=1}^M \pi_m C_m^2 -
+C^2,\]</span></p>
+<p>where <span class="math inline">\(\pi_m\)</span> represents the
+prevalence of the <span class="math inline">\(m\)</span>th disease
+subtype.</p>
+<p>To estimate <span class="math inline">\(D\)</span> in the context of
+a case-control study, we use the <code><a href="../reference/d.html">d()</a></code>
+function.<code><a href="../reference/d.html">d()</a></code> relies on the <code>mlogit</code> function
+from the <code>mlogit</code> package to fit the polytomous logistic
+regression model. We supply <code><a href="../reference/d.html">d()</a></code> with the name of the
+subtype variable, the number of subtypes, a list of risk factors, and
+the dataset name. See the function <a href="http://www.emilyzabor.me/riskclustr/reference/d.html">documentation</a>
+for details of argument specification.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.com/riskclustr/">riskclustr</a></span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/d.html">d</a></span><span class="op">(</span>
-  label <span class="op">=</span> <span class="st">"subtype"</span>,
-  M <span class="op">=</span> <span class="fl">4</span>, 
-  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">subtype_data</span>
-<span class="op">)</span>
-<span class="co">#&gt; [1] 0.4100995</span></code></pre></div>
-<p>And we see that using all three risk factors, <span class="math inline">\(D=0.410\)</span> for the four disease subtypes of interest in the case-control setting.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.me/riskclustr/">riskclustr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/d.html">d</a></span><span class="op">(</span></span>
+<span>  label <span class="op">=</span> <span class="st">"subtype"</span>,</span>
+<span>  M <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">subtype_data</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.4100995</span></span></code></pre></div>
+<p>And we see that using all three risk factors, <span class="math inline">\(D=0.410\)</span> for the four disease subtypes of
+interest in the case-control setting.</p>
 </div>
 <div class="section level2">
 <h2 id="case-only-methods">Case-only methods<a class="anchor" aria-label="anchor" href="#case-only-methods"></a>
 </h2>
-<p>When control subjects are not available, then a case-only approximation of <span class="math inline">\(D\)</span>, denoted <span class="math inline">\(D^\ast\)</span>, can be applied. The details of this calculation can be found in:</p>
+<p>When control subjects are not available, then a case-only
+approximation of <span class="math inline">\(D\)</span>, denoted <span class="math inline">\(D^\ast\)</span>, can be applied. The details of
+this calculation can be found in:</p>
 <blockquote>
-<p>Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of etiologic heterogeneity: methodologic challenges. <em>BMC Med Res Methodol.</em> 2014;14:138.</p>
+<p>Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of
+etiologic heterogeneity: methodologic challenges. <em>BMC Med Res
+Methodol.</em> 2014;14:138.</p>
 </blockquote>
-<p>Briefly, whereas the variance and covariance terms in the equation for <span class="math inline">\(D\)</span> are averaged over the controls in the case-control setting, in a case-only setting they are averaged over the cases, which represent a risk-biased sample from the population. The goal of an analysis of this type is not to interpret the magnitude of <span class="math inline">\(D^\ast\)</span>, but rather to use <span class="math inline">\(D^\ast\)</span> to rank different subtyping schemes and identify the one that maximizes etiologic heterogeneity.</p>
-<p>To demonstrate the usage, we first limit <code>subtype_data</code> to the cases only. Controls are denoted by a <code>0</code> for the <code>subtype</code> variable.</p>
+<p>Briefly, whereas the variance and covariance terms in the equation
+for <span class="math inline">\(D\)</span> are averaged over the
+controls in the case-control setting, in a case-only setting they are
+averaged over the cases, which represent a risk-biased sample from the
+population. The goal of an analysis of this type is not to interpret the
+magnitude of <span class="math inline">\(D^\ast\)</span>, but rather to
+use <span class="math inline">\(D^\ast\)</span> to rank different
+subtyping schemes and identify the one that maximizes etiologic
+heterogeneity.</p>
+<p>To demonstrate the usage, we first limit <code>subtype_data</code> to
+the cases only. Controls are denoted by a <code>0</code> for the
+<code>subtype</code> variable.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">subtype_cases</span> <span class="op">&lt;-</span> <span class="va">subtype_data</span><span class="op">[</span><span class="va">subtype_data</span><span class="op">$</span><span class="va">subtype</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="op">]</span></code></pre></div>
-<p>We specify the arguments to <code><a href="../reference/dstar.html">dstar()</a></code> as before for <code><a href="../reference/d.html">d()</a></code>, but supplying our new case-only dataset to the <code>data</code> argument. Now, the subtype variable must be numeric, with cases coded as <span class="math inline">\(1\)</span> through <span class="math inline">\(M\)</span> according to the subtype to which they belong. The highest frequency level of <code>label</code> will be used as the reference level, for model stability.</p>
+<code class="sourceCode R"><span><span class="va">subtype_cases</span> <span class="op">&lt;-</span> <span class="va">subtype_data</span><span class="op">[</span><span class="va">subtype_data</span><span class="op">$</span><span class="va">subtype</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="op">]</span></span></code></pre></div>
+<p>We specify the arguments to <code><a href="../reference/dstar.html">dstar()</a></code> as before for
+<code><a href="../reference/d.html">d()</a></code>, but supplying our new case-only dataset to the
+<code>data</code> argument. Now, the subtype variable must be numeric,
+with cases coded as <span class="math inline">\(1\)</span> through <span class="math inline">\(M\)</span> according to the subtype to which they
+belong. The highest frequency level of <code>label</code> will be used
+as the reference level, for model stability.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/dstar.html">dstar</a></span><span class="op">(</span>
-  label <span class="op">=</span> <span class="st">"subtype"</span>,
-  M <span class="op">=</span> <span class="fl">4</span>, 
-  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">subtype_cases</span>
-<span class="op">)</span>
-<span class="co">#&gt; [1] 0.4022017</span></code></pre></div>
-<p>And we see that using all three risk factors, <span class="math inline">\(D^\ast=0.402\)</span> for the four disease subtypes of interest in the case-only setting.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/dstar.html">dstar</a></span><span class="op">(</span></span>
+<span>  label <span class="op">=</span> <span class="st">"subtype"</span>,</span>
+<span>  M <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">subtype_cases</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.4022017</span></span></code></pre></div>
+<p>And we see that using all three risk factors, <span class="math inline">\(D^\ast=0.402\)</span> for the four disease
+subtypes of interest in the case-only setting.</p>
 </div>
   </div>
 
@@ -176,7 +243,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

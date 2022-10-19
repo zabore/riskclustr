@@ -49,10 +49,10 @@ library(riskclustr)
 This package is documented using
 [pkgdown](https://pkgdown.r-lib.org/articles/pkgdown.html), and the
 resulting website is available at
-<http://www.emilyzabor.com/riskclustr/>, where detailed Tutorials can be
+<http://www.emilyzabor.me/riskclustr/>, where detailed Tutorials can be
 found covering all of the package functionality.
 
-See <http://www.emilyzabor.com/riskclustr/reference/> for detailed
+See <http://www.emilyzabor.me/riskclustr/reference/> for detailed
 function documentation.
 
 ## References

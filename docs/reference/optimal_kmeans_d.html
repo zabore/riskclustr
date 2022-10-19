@@ -93,7 +93,7 @@ high-dimensional disease marker data.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">optimal_kmeans_d</span><span class="op">(</span><span class="va">markers</span>, <span class="va">M</span>, <span class="va">factors</span>, <span class="va">case</span>, <span class="va">data</span>, nstart <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">optimal_kmeans_d</span><span class="op">(</span><span class="va">markers</span>, <span class="va">M</span>, <span class="va">factors</span>, <span class="va">case</span>, <span class="va">data</span>, nstart <span class="op">=</span> <span class="fl">100</span>, seed <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -103,32 +103,54 @@ high-dimensional disease marker data.</p>
 should be of a type that is suitable for use with
 <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> clustering. All markers will be missing
 for control subjects. e.g. <code>markers = c("marker1", "marker2")</code></p></dd>
+
+
 <dt>M</dt>
 <dd><p>is the number of clusters to identify using
 <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> clustering. For M&gt;=2.</p></dd>
+
+
 <dt>factors</dt>
 <dd><p>a list of the names of the binary or continuous risk factors.
 For binary risk factors the lowest level will be used as the reference level.
 e.g. <code>factors = list("age", "sex", "race")</code></p></dd>
+
+
 <dt>case</dt>
 <dd><p>denotes the variable that contains each subject's status as a
 case or control. This value should be 1 for cases and 0 for controls.
 Argument must be supplied in quotes, e.g. <code>case = "status"</code>.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>the name of the dataframe that contains the relevant variables.</p></dd>
+
+
 <dt>nstart</dt>
 <dd><p>the number of random starts to use with
 <code><a href="https://rdrr.io/r/stats/kmeans.html" class="external-link">kmeans</a></code> clustering. Defaults to 100.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>an integer argument passed to <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code>.
 Default is NULL. Recommended to set in order to obtain reproducible results.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns a list
-<code>optimal_d</code> The D value for the optimal D solution
-<code>optimal_d_data</code> The original data frame supplied through the
-<code>data</code> argument, with a column called <code>optimal_d_label</code>added for the optimal D subtype label.
+    
+
+<p>Returns a list</p>
+
+
+<p><code>optimal_d</code> The D value for the optimal D solution</p>
+
+
+<p><code>optimal_d_data</code> The original data frame supplied through the
+<code>data</code> argument, with a column called <code>optimal_d_label</code></p>
+
+
+<p>added for the optimal D subtype label.
 This has the subtype assignment for cases, and is 0 for all controls.</p>
     </div>
     <div id="references">
@@ -140,34 +162,32 @@ investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># Cluster 30 disease markers to identify the optimally</span></span>
-<span class="r-in"><span class="co"># etiologically heterogeneous 3-subtype solution</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">optimal_kmeans_d</span><span class="op">(</span></span>
-<span class="r-in">  markers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">  M <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span>
-<span class="r-in">  case <span class="op">=</span> <span class="st">"case"</span>,</span>
-<span class="r-in">  data <span class="op">=</span> <span class="va">subtype_data</span>,</span>
-<span class="r-in">  nstart <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">  seed <span class="op">=</span> <span class="fl">81110224</span></span>
-<span class="r-in"><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Cluster 30 disease markers to identify the optimally</span></span></span>
+<span class="r-in"><span><span class="co"># etiologically heterogeneous 3-subtype solution</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">optimal_kmeans_d</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  markers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  M <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  case <span class="op">=</span> <span class="st">"case"</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">subtype_data</span>,</span></span>
+<span class="r-in"><span>  nstart <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>  seed <span class="op">=</span> <span class="fl">81110224</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`data_frame()` was deprecated in tibble 1.1.0.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Please use `tibble()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Look at the value of D for the optimal D solution</span></span>
-<span class="r-in"><span class="va">res</span><span class="op">[[</span><span class="st">"optimal_d"</span><span class="op">]</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Look at the value of D for the optimal D solution</span></span></span>
+<span class="r-in"><span><span class="va">res</span><span class="op">[[</span><span class="st">"optimal_d"</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3385876</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Look at a table of the optimal D solution</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">res</span><span class="op">[[</span><span class="st">"optimal_d_data"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">optimal_d_label</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Look at a table of the optimal D solution</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">res</span><span class="op">[[</span><span class="st">"optimal_d_data"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">optimal_d_label</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0   1   2   3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 800 301 300 599 </span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -182,7 +202,7 @@ investigating etiologic heterogeneity. Stat Med, 32(29), 5039-5052.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

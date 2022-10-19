@@ -93,10 +93,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Tutorial: Obtain an overall p-value for a factor variable</h1>
-                        <h4 data-toc-skip class="author">Emily C. Zabor</h4>
+      <h1 data-toc-skip>Tutorial: Obtain an overall p-value for a factor
+variable</h1>
+                        <h4 data-toc-skip class="author">Emily C.
+Zabor</h4>
             
-            <h4 data-toc-skip class="date">Last updated: March 22, 2022</h4>
+            <h4 data-toc-skip class="date">Last updated: October 19,
+2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/zabore/riskclustr/blob/HEAD/vignettes/factor_pvalue.Rmd" class="external-link"><code>vignettes/factor_pvalue.Rmd</code></a></small>
       <div class="hidden name"><code>factor_pvalue.Rmd</code></div>
@@ -108,57 +111,64 @@
 <div class="section level2">
 <h2 id="context">Context<a class="anchor" aria-label="anchor" href="#context"></a>
 </h2>
-<p>After using <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> to obtain a model fit, if factor variables are involved in the analysis it will be of interest to obtain overall p-values testing for differences across subtypes across all levels of the factor variable.</p>
-<p>The <code><a href="../reference/posthoc_factor_test.html">posthoc_factor_test()</a></code> function allows for post-hoc testing of a factor variable.</p>
+<p>After using <code><a href="../reference/eh_test_subtype.html">eh_test_subtype()</a></code> to obtain a model fit, if
+factor variables are involved in the analysis it will be of interest to
+obtain overall p-values testing for differences across subtypes across
+all levels of the factor variable.</p>
+<p>The <code><a href="../reference/posthoc_factor_test.html">posthoc_factor_test()</a></code> function allows for post-hoc
+testing of a factor variable.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Load needed packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.com/riskclustr/">riskclustr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Load needed packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.me/riskclustr/">riskclustr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: package 'dplyr' was built under R version 4.2.1</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create a new example dataset that contains a factor variable</span>
-<span class="va">factor_data</span> <span class="op">&lt;-</span> 
-  <span class="va">subtype_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
-    x4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span>
-      <span class="va">x1</span>,
-      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.4</span>, <span class="op">-</span><span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">1.1</span>, <span class="fl">3.8</span><span class="op">)</span>,
-      include.lowest <span class="op">=</span> <span class="cn">T</span>,
-      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1st quart"</span>,
-                 <span class="st">"2nd quart"</span>,
-                 <span class="st">"3rd quart"</span>,
-                 <span class="st">"4th quart"</span><span class="op">)</span>
-      <span class="op">)</span>
-    <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># create a new example dataset that contains a factor variable</span></span>
+<span><span class="va">factor_data</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">subtype_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    x4 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span></span>
+<span>      <span class="va">x1</span>,</span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.4</span>, <span class="op">-</span><span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">1.1</span>, <span class="fl">3.8</span><span class="op">)</span>,</span>
+<span>      include.lowest <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1st quart"</span>,</span>
+<span>                 <span class="st">"2nd quart"</span>,</span>
+<span>                 <span class="st">"3rd quart"</span>,</span>
+<span>                 <span class="st">"4th quart"</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Fit the model using x4 in place of x1</span>
-<span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span><span class="op">(</span>
-  label <span class="op">=</span> <span class="st">"subtype"</span>,
-  M <span class="op">=</span> <span class="fl">4</span>,
-  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x4"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,
-  data <span class="op">=</span> <span class="va">factor_data</span>,
-  digits <span class="op">=</span> <span class="fl">2</span>
-<span class="op">)</span></code></pre></div>
-<p>After we have the model fit, we can obtain the p-value testing all levels of <code>x4</code> simulaneously.</p>
+<code class="sourceCode R"><span><span class="co"># Fit the model using x4 in place of x1</span></span>
+<span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span><span class="op">(</span></span>
+<span>  label <span class="op">=</span> <span class="st">"subtype"</span>,</span>
+<span>  M <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x4"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">factor_data</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>After we have the model fit, we can obtain the p-value testing all
+levels of <code>x4</code> simulaneously.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mypval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/posthoc_factor_test.html">posthoc_factor_test</a></span><span class="op">(</span>
-  fit <span class="op">=</span> <span class="va">mod1</span>, 
-  factor <span class="op">=</span> <span class="st">"x4"</span>, 
-  nlevels <span class="op">=</span> <span class="fl">4</span>
-  <span class="op">)</span></code></pre></div>
-<p>The function returns both a formatted and unformatted p-value. The formatted p-value can be accessed as <code>pval</code>:</p>
+<code class="sourceCode R"><span><span class="va">mypval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/posthoc_factor_test.html">posthoc_factor_test</a></span><span class="op">(</span></span>
+<span>  fit <span class="op">=</span> <span class="va">mod1</span>, </span>
+<span>  factor <span class="op">=</span> <span class="st">"x4"</span>, </span>
+<span>  nlevels <span class="op">=</span> <span class="fl">4</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>The function returns both a formatted and unformatted p-value. The
+formatted p-value can be accessed as <code>pval</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mypval</span><span class="op">$</span><span class="va">pval</span>
-<span class="co">#&gt;      [,1]   </span>
-<span class="co">#&gt; [1,] "&lt;.001"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mypval</span><span class="op">$</span><span class="va">pval</span></span>
+<span><span class="co">#&gt;      [,1]   </span></span>
+<span><span class="co">#&gt; [1,] "&lt;.001"</span></span></code></pre></div>
 <p>The unformatted p-value can be accessed as <code>pval_raw</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mypval</span><span class="op">$</span><span class="va">pval_raw</span>
-<span class="co">#&gt;      [,1]</span>
-<span class="co">#&gt; [1,]    0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mypval</span><span class="op">$</span><span class="va">pval_raw</span></span>
+<span><span class="co">#&gt;      [,1]</span></span>
+<span><span class="co">#&gt; [1,]    0</span></span></code></pre></div>
 </div>
   </div>
 
@@ -179,7 +189,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
