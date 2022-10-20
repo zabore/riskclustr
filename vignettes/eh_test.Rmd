@@ -52,7 +52,7 @@ mod1 <- eh_test_subtype(
   data = subtype_data)
 ```
 
-See the function [documentation](http://www.emilyzabor.me/riskclustr/reference/eh_test_subtype.html) for details of function arguments.  
+See the function [documentation](http://www.emilyzabor.com/riskclustr/reference/eh_test_subtype.html) for details of function arguments.  
 
 The resulting estimates $\hat{\boldsymbol{\beta}}$ can be accessed with
 
@@ -139,7 +139,7 @@ mod2 <- eh_test_marker(
   data = subtype_data)
 ```
 
-See the function [documentation](http://www.emilyzabor.me/riskclustr/reference/eh_test_marker.html) for details of function arguments.  
+See the function [documentation](http://www.emilyzabor.com/riskclustr/reference/eh_test_marker.html) for details of function arguments.  
 
 The resulting estimates $\hat{\boldsymbol{\gamma}}$ can be accessed with
 
