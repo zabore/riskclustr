@@ -1,0 +1,16 @@
+citHeader("To cite riskclustr in publications use:")
+
+bibentry(
+  bibtype  = "Article",
+  key      = "riskclustr",
+  title    = "riskclustr: Functions to Study Etiologic Heterogeneity",
+  author   = c(person("Emily C.", "Zabor")),
+  journal  = "{Journal of Open Source Software}",
+  year     = "2019",
+  volume   = "4",
+  number   = "35",
+  pages    = "1269",
+  url      = "https://doi.org/10.21105/joss.01269",
+  doi      = "10.21105/joss.01269",
+  textVersion = "Zabor EC. riskclustr: Functions to Study Etiologic Heterogeneity. Journal of Open Source Software 2019;4(35):1269. https://doi.org/10.21105/joss.01269."
+)
