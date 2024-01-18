@@ -1,3 +1,5 @@
+# riskclustr 0.4.1
+
 # riskclustr 0.4
 
 * Removing dependency on `aod` package as it will be archived per CRAN email
