@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">riskclustr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
@@ -164,14 +164,14 @@ dataset, we can examine the influence of risk factors <code>x1</code>,
 <code>x2</code>, and <code>x3</code> on the 4 pre-specified disease
 subtypes in variable <code>subtype</code> using the following code:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.com/riskclustr/">riskclustr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.emilyzabor.com/riskclustr/" class="external-link">riskclustr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eh_test_subtype.html">eh_test_subtype</a></span><span class="op">(</span></span>
 <span>  label <span class="op">=</span> <span class="st">"subtype"</span>, </span>
 <span>  M <span class="op">=</span> <span class="fl">4</span>, </span>
 <span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>, </span>
 <span>  data <span class="op">=</span> <span class="va">subtype_data</span><span class="op">)</span></span></code></pre></div>
-<p>See the function <a href="http://www.emilyzabor.com/riskclustr/reference/eh_test_subtype.html">documentation</a>
+<p>See the function <a href="https://www.emilyzabor.com/riskclustr/reference/eh_test_subtype.html" class="external-link">documentation</a>
 for details of function arguments.</p>
 <p>The resulting estimates <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> can be accessed
 with</p>
@@ -418,14 +418,14 @@ model to obtain the <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span
 are then transformed in order to obtain estimates and hypothesis tests
 related to the individual disease markers.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.emilyzabor.com/riskclustr/">riskclustr</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.emilyzabor.com/riskclustr/" class="external-link">riskclustr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eh_test_marker.html">eh_test_marker</a></span><span class="op">(</span></span>
 <span>  markers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"marker1"</span>, <span class="st">"marker2"</span><span class="op">)</span>,</span>
 <span>  factors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span>,</span>
 <span>  case <span class="op">=</span> <span class="st">"case"</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">subtype_data</span><span class="op">)</span></span></code></pre></div>
-<p>See the function <a href="http://www.emilyzabor.com/riskclustr/reference/eh_test_marker.html">documentation</a>
+<p>See the function <a href="https://www.emilyzabor.com/riskclustr/reference/eh_test_marker.html" class="external-link">documentation</a>
 for details of function arguments.</p>
 <p>The resulting estimates <span class="math inline">\(\hat{\boldsymbol{\gamma}}\)</span> can be accessed
 with</p>

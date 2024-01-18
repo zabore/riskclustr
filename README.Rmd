@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Coverage status](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://codecov.io/github/zabore/riskclustr?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://app.codecov.io/gh/zabore/riskclustr?branch=master)
 [![R-CMD-check](https://github.com/zabore/riskclustr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/zabore/riskclustr/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
 [![status](https://joss.theoj.org/papers/10.21105/joss.01269/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01269)
@@ -36,9 +36,9 @@ library(riskclustr)
 
 ## Documentation
 
-This package is documented using [pkgdown](https://pkgdown.r-lib.org/articles/pkgdown.html), and the resulting website is available at [http://www.emilyzabor.com/riskclustr/](http://www.emilyzabor.com/riskclustr/), where detailed Tutorials can be found covering all of the package functionality.
+This package is documented using [pkgdown](https://pkgdown.r-lib.org/articles/pkgdown.html), and the resulting website is available at [https://www.emilyzabor.com/riskclustr/](https://www.emilyzabor.com/riskclustr/), where detailed Tutorials can be found covering all of the package functionality.
 
-See [http://www.emilyzabor.com/riskclustr/reference/](http://www.emilyzabor.com/riskclustr/reference/) for detailed function documentation.
+See [https://www.emilyzabor.com/riskclustr/reference/](https://www.emilyzabor.com/riskclustr/reference/) for detailed function documentation.
 
 
 ## References

@@ -7,7 +7,7 @@ Description: A collection of functions related to the study of etiologic heterog
 Depends:
     R (>= 4.0)
 License: GPL-2
-URL: http://www.emilyzabor.com/riskclustr/, https://github.com/zabore/riskclustr
+URL: https://www.emilyzabor.com/riskclustr/, https://github.com/zabore/riskclustr
 BugReports: https://github.com/zabore/riskclustr/issues
 Encoding: UTF-8
 Imports:
