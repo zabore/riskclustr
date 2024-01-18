@@ -2,6 +2,7 @@ Arora
 BMC
 BMI
 Begg
+CMD
 Furberg
 Hsieh
 JL
@@ -18,20 +19,16 @@ boldsymbol
 cdot
 cov
 doi
-emilyzabor
 epidemiologic
 et
 etiologically
 frac
 funtion
-http
 immunohistochemical
 ldots
-lifecycle
 mathbf
 menarche
 methodologic
-mlogit
 pM
 pkgdown
 pre
@@ -44,4 +41,3 @@ th
 tibble
 unformatted
 widehat
-www

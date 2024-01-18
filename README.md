@@ -3,7 +3,7 @@
 
 [![Coverage
 status](https://codecov.io/gh/zabore/riskclustr/branch/master/graph/badge.svg)](https://codecov.io/github/zabore/riskclustr?branch=master)
-[![R-CMD-check](https://github.com/zabore/riskclustr/workflows/R-CMD-check/badge.svg)](https://github.com/zabore/riskclustr/actions)
+[![R-CMD-check](https://github.com/zabore/riskclustr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/zabore/riskclustr/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/riskclustr)](https://cran.r-project.org/package=riskclustr)
 [![status](https://joss.theoj.org/papers/10.21105/joss.01269/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01269)
@@ -64,3 +64,7 @@ function documentation.
 > Begg CB, Seshan VE, Zabor EC, et al. Genomic investigation of
 > etiologic heterogeneity: methodologic challenges. *BMC Med Res
 > Methodol.* 2014;14:138. doi: 10.1186/1471-2288-14-138
+
+> Zabor, EC. riskclustr: Functions to Study Etiologic Heterogeneity.
+> *Journal of Open Source Software.* 2019;4(35):1269.
+> <doi:10.21105/joss.01269>

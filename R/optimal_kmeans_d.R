@@ -69,7 +69,7 @@ optimal_kmeans_d <- function(markers, M, factors, case, data,
                              nstart = 100, seed = NULL) {
 
   # Check if M is a numeric variable >=2
-  if (class(M) != "numeric" | M < 2) {
+  if (!is.numeric(M) | M < 2) {
     stop("The argument to M, the total number of subtypes, must be a numeric value >=2.")
   }
 
