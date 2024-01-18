@@ -1,5 +1,7 @@
 # riskclustr 0.4.1
 
+* Added CITATION file to use JOSS publication as citation. Also added as reference to the README.
+
 # riskclustr 0.4
 
 * Removing dependency on `aod` package as it will be archived per CRAN email
