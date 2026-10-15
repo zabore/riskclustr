@@ -22,7 +22,7 @@ Etiologic heterogeneity refers to the concept of subtypes of disease that are in
 You can install the development version of `riskclustr` by running:
 
 ```{r, eval = FALSE}
-devtools::install_github("zabore/riskclustr")
+pak::pak("zabore/riskclustr")
 library(riskclustr)
 ```
 

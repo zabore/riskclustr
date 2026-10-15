@@ -33,7 +33,7 @@ disease markers in the context of a case-control study.
 You can install the development version of `riskclustr` by running:
 
 ``` r
-devtools::install_github("zabore/riskclustr")
+pak::pak("zabore/riskclustr")
 library(riskclustr)
 ```
 
